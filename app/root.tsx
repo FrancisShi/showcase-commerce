@@ -31,6 +31,7 @@ import {DEFAULT_LOCALE, parseMenu, type EnhancedMenu} from './lib/utils';
 import invariant from 'tiny-invariant';
 import {Shop, Cart} from '@shopify/hydrogen/storefront-api-types';
 import {useAnalytics} from './hooks/useAnalytics';
+import {Container} from './plugin';
 
 const seo: SeoHandleFunction<typeof loader> = ({data, pathname}) => ({
   title: data?.layout?.shop?.name,
@@ -101,6 +102,7 @@ export default function App() {
           key={`${locale.language}-${locale.country}`}
         >
           <Outlet />
+          <Container />
         </Layout>
         <ScrollRestoration />
         <Scripts />
