@@ -153,9 +153,10 @@ function App() {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 w-1/2 h-96 bg-indigo-300/90 rounded z-50">
-      <div className={'ml-5 h-full pb-20'}>
+    <div className="fixed bottom-0 right-0 w-64 h-96 bg-indigo-300/90 rounded z-50">
+      <div className={'w-full h-full pb-12'}>
         <ChatList
+          className={'w-full h-full'}
           id="assistantChatList"
           msgList={msgListRef.current}
           isLoading={showListLoading}
@@ -163,7 +164,7 @@ function App() {
       </div>
 
       {/* 底部输入框 */}
-      <div className="absolute bottom-2 left-0 right-0 mx-5 h-10 bg-white rounded-md flex">
+      <div className="absolute bottom-2 left-0 right-0 mx-3 h-10 bg-white rounded-md flex">
         <input
           id="mv_container_input"
           className="p-2 w-11/12 rounded-md bg-red text-black outline-none"

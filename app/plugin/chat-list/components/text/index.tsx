@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 export interface ChatTextProps {
   className?: string;
   content: string;
@@ -6,11 +6,11 @@ export interface ChatTextProps {
 }
 
 export default function ChatText(props: ChatTextProps) {
-  const { content, className, sources } = props;
+  const {content, className, sources} = props;
 
   return (
     <div
-      className={`whitespace-normal break-words box-border rounded py-9 px-3 text-sm font-normal max-w-40 text-black ${className}`}
+      className={`whitespace-normal break-words box-border rounded py-1 px-3 text-sm font-normal max-w-40 text-black ${className}`}
     >
       {content}
     </div>
