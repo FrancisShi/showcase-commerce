@@ -10,7 +10,7 @@ export default function ChatText(props: ChatTextProps) {
 
   return (
     <div
-      className={`whitespace-normal break-words box-border rounded py-1 px-3 text-sm font-normal max-w-40 text-black ${className}`}
+      className={`whitespace-normal break-all box-border rounded py-1 px-2 text-xs font-normal text-black ${className}`}
     >
       {content}
     </div>

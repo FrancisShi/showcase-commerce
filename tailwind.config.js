@@ -58,6 +58,8 @@ module.exports = {
       maxWidth: {
         'prose-narrow': '45ch',
         'prose-wide': '80ch',
+        '1/2': '50%',
+        '2/3': '66%',
       },
       boxShadow: {
         border: 'inset 0px 0px 0px 1px rgb(var(--color-primary) / 0.08)',

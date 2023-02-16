@@ -38,7 +38,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
       const receivedItem = (content: JSX.Element, index: number) => {
         return (
-          <div className={`flex mr-3 mt-2 justify-start w-20`} key={index}>
+          <div className={`flex mt-2 justify-start max-w-2/3`} key={index}>
             {content}
           </div>
         );
@@ -90,11 +90,14 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         } else if (item.type === MessageItemType.SEND) {
           // 发送消息
           return (
-            <div className={`flex mr-3 mt-2 justify-end`} key={index}>
-              <ChatText
-                className={'bg-white border-solid border-2 border-gray-100'}
-                content={item.data.content ?? ''}
-              ></ChatText>
+            // eslint-disable-next-line react/jsx-key
+            <div className={`flex justify-end`}>
+              <div className={`flex mt-2 max-w-2/3`} key={index}>
+                <ChatText
+                  className={'bg-white border-solid border-2 border-gray-100'}
+                  content={item.data.content ?? ''}
+                ></ChatText>
+              </div>
             </div>
           );
         } else if (item.type === MessageItemType.SYSTEM) {
@@ -112,7 +115,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
     return (
       <div
-        className={`pt-2 w-full overflow-y-auto overflow-x-hidden ml-1 ${className}`}
+        className={`h-full pt-2 overflow-y-auto overflow-x-hidden ml-3 mr-3 flex-1 ${className}`}
         id={id}
         ref={ref}
       >
@@ -120,9 +123,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
         {/* loading */}
         <div
-          className={
-            'w-16 h-8 ml-2 bg-white flex mr-3 mt-2 justify-start rounded'
-          }
+          className={'w-16 h-8 bg-white flex mt-2 justify-start rounded'}
           style={showStyle}
         >
           <img

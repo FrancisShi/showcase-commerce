@@ -23,26 +23,28 @@ function App() {
     // createLongLink
     setConfig({
       apiVersion: '1.2.0',
-      platform: 'web',
-      appId: 'os-internal',
-      bizType: 'mindos',
+      platform: 'Saas',
+      appId: 'os_57c4f28d-7203-4c32-9a5f-60b047f44346',
+      bizType: 'SAAS',
+      merchantId: 'c1e4j',
+      mAuthType: 'SAAS_KEY',
 
-      refUserId: '',
+      refUserId: 'shitou-demo',
 
-      merchantBaseURL: 'https://gateway-test.mindverse.com',
-      merchantSocketPath: '/in/rest/os/ws/create',
-      merchantSessionOpenPath: '/in/rest/os/session/open',
-      merchantSessionClosePath: '/in/rest/os/session/close',
-      merchantUserRegisterPath: '/in/rest/os/user/register',
-      merchantSocketCheckPath: '/in/rest/os/ws/get',
-      merchantSessionCheckPath: '/in/rest/os/session/get',
+      merchantBaseURL: 'https://test-accessor.mindverse.com',
+      merchantSocketPath: '/rest/demo/ws/create',
+      merchantSessionOpenPath: '/rest/demo/session/create',
+      merchantSessionClosePath: '/rest/demo/session/close',
+      merchantUserRegisterPath: '/rest/demo/user/register',
+      merchantSocketCheckPath: '/rest/demo/ws/get',
+      merchantSessionCheckPath: '/rest/demo/session/get',
 
-      headers: {token: '5dbb4bcb-cecb-400a-85f7-bcb5a9de53541676481219222'},
+      headers: {},
     });
 
     userRegister(
-      'inner-user', // document.getElementById("#nickname").value,
-      'https://cdn.mindverse.com/img/zzzz202211091668001738693img_v2_5fc578b1-c983-4f72-bc81-b8e6d76af1ag.png', //document.getElementById("#avatar").value
+      'shitou-demo', // document.getElementById("#nickname").value,
+      'http://shitou-demo.com', //document.getElementById("#avatar").value
     ).then((res) => {
       sessionRef.current = new Session()
         .setOnMsgUpdateListener((msgList) => {
@@ -154,9 +156,8 @@ function App() {
 
   return (
     <div className="fixed bottom-0 right-0 w-64 h-96 bg-indigo-300/90 rounded z-50">
-      <div className={'w-full h-full pb-12'}>
+      <div className={'w-full h-full pb-14'}>
         <ChatList
-          className={'w-full h-full'}
           id="assistantChatList"
           msgList={msgListRef.current}
           isLoading={showListLoading}
@@ -167,13 +168,13 @@ function App() {
       <div className="absolute bottom-2 left-0 right-0 mx-3 h-10 bg-white rounded-md flex">
         <input
           id="mv_container_input"
-          className="p-2 w-11/12 rounded-md bg-red text-black outline-none"
+          className="pl-2 w-10/12 rounded-md bg-red text-black outline-none text-xs"
           placeholder={'start chat'}
           value={inputValue}
           onChange={(e: any) => setInputValue(e.target.value)}
         />
         <div
-          className="w-1/12 flex justify-center items-center"
+          className="w-2/12 flex justify-center items-center"
           onClick={() => {
             handleSendMsg(inputValue);
           }}
