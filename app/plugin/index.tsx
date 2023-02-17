@@ -52,7 +52,7 @@ export function injectHook(key: string, data: PRODUCT | USER) {
   } else if (key === 'user' && data) {
     data = data as USER;
     request({
-      url: '/rest/demo/user/init',
+      url: '/rest/demo/init/user',
       method: 'post',
       data,
     })
