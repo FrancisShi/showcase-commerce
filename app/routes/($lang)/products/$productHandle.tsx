@@ -45,6 +45,7 @@ import type {
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import type {Storefront} from '~/lib/type';
 import type {Product} from 'schema-dts';
+import {injectHook} from '~/plugin';
 
 const seo: SeoHandleFunction<typeof loader> = ({data}) => {
   const media = flattenConnection<MediaConnection>(data.product.media).find(
@@ -125,6 +126,25 @@ export default function Product() {
   const {product, shop, recommended} = useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
+
+  const productUrl = `/products/${product.handle}`;
+  const productTitle = product.title;
+
+  const firstVariant = product.variants.nodes[0];
+  const selectedVariant = product.selectedVariant ?? firstVariant;
+
+  const productPrice = selectedVariant?.price?.amount;
+  const productDescription = product.description;
+  const productPic = product.media.nodes[0].previewImage?.url ?? '';
+
+  const mvProduct = {
+    productUrl,
+    productTitle,
+    productPrice,
+    productDescription,
+    productPic,
+  };
+  injectHook('product', mvProduct);
 
   return (
     <>

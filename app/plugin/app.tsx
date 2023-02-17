@@ -12,7 +12,7 @@ import MessageItem, {
   transformNewMsg,
 } from './chat-list/model/message-item';
 
-function App() {
+function App(props: {sessionCb: (sessionId: string) => void}) {
   const sessionRef = useRef<Session>();
   const [inputValue, setInputValue] = useState('');
   const msgListRef = useRef<MessageItem[]>([]);
@@ -24,9 +24,9 @@ function App() {
     setConfig({
       apiVersion: '1.2.0',
       platform: 'Saas',
-      appId: 'os_57c4f28d-7203-4c32-9a5f-60b047f44346',
+      appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
       bizType: 'SAAS',
-      merchantId: 'c1e4j',
+      merchantId: 'c1e3x',
       mAuthType: 'SAAS_KEY',
 
       refUserId: 'shitou-demo',
@@ -69,12 +69,11 @@ function App() {
           console.error('Session Error');
         });
       sessionRef.current?.openSession({
-        mindId: '75262283839836160',
+        mindId: '76643513529405440',
         mindType: WS_MIND_TYPE.original,
         retryCount: 0,
         callback: (res: any) => {
-          console.warn('openSession', res);
-          sessionStorage.setItem('isSessionIdUpdate', 'true');
+          props?.sessionCb && props.sessionCb(res.data.sessionId.sessionId);
         },
       });
     });
