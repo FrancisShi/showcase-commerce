@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {isBrowser, isNode, isWebWorker, isJsDom, isDeno} from 'browser-or-node';
 import showdown from 'showdown';
 
 export interface MarkdownInterface {
