@@ -38,7 +38,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
       const receivedItem = (content: JSX.Element, index: number) => {
         return (
-          <div className={`flex mt-2 justify-start max-w-2/3`} key={index}>
+          <div
+            style={{display: 'flex', justifyContent: 'start', maxWidth: '66%'}}
+            key={index}
+          >
             {content}
           </div>
         );
@@ -56,7 +59,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           case WS_MSG_DATA_TYPE.text:
             return (
               <ChatText
-                className={'border-solid border-2 border-gray-200'}
                 content={item.modal.answer ?? ''}
                 sources={sources}
               ></ChatText>
@@ -72,7 +74,11 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             key={index}
             // eslint-disable-next-line react/no-children-prop
             children={content}
-            className={'bg-white text-xs pr-3'}
+            style={{
+              backgroundColor: 'white',
+              fontSize: '14px',
+              paddingRight: '24px',
+            }}
           />
         );
       };
@@ -92,11 +98,11 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           return (
             // eslint-disable-next-line react/jsx-key
             <div className={`flex justify-end`}>
-              <div className={`flex mt-2 max-w-2/3`} key={index}>
-                <ChatText
-                  className={'bg-white border-solid border-2 border-gray-100'}
-                  content={item.data.content ?? ''}
-                ></ChatText>
+              <div
+                style={{display: 'flex', marginTop: '8px', maxWidth: '66%'}}
+                key={index}
+              >
+                <ChatText content={item.data.content ?? ''}></ChatText>
               </div>
             </div>
           );
@@ -115,7 +121,15 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
     return (
       <div
-        className={`h-full pt-2 overflow-y-auto overflow-x-hidden ml-3 mr-3 flex-1 ${className}`}
+        style={{
+          height: '100%',
+          paddingTop: '8px',
+          overflow: 'auto',
+          overflowX: 'hidden',
+          marginLeft: '24px',
+          marginRight: '24px',
+        }}
+        className={`${className}`}
         id={id}
         ref={ref}
       >
@@ -123,14 +137,29 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
 
         {/* loading */}
         <div
-          className={'w-16 h-8 bg-white flex mt-2 justify-start rounded'}
-          style={showStyle}
+          style={{
+            ...{
+              backgroundColor: 'white',
+              display: 'flex',
+              marginTop: '8px',
+              justifyContent: 'start',
+              borderRadius: '8px',
+              height: '40px',
+              width: '88px',
+            },
+            ...showStyle,
+          }}
         >
           <img
             src={
               'https://cdn.mindverse.com/files/zzzz202302161676550136968loading-loading-forever.gif'
             }
-            className={'w-5 h-5 ml-4 mt-2'}
+            style={{
+              width: '20px',
+              height: '20px',
+              marginLeft: '32px',
+              marginTop: '10px',
+            }}
             alt=""
           />
         </div>

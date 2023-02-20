@@ -8,11 +8,25 @@ export interface ChatTextProps {
 }
 
 export default function ChatText(props: ChatTextProps) {
-  const {content, className, sources} = props;
+  const {content, sources} = props;
 
   return (
     <div
-      className={`whitespace-normal break-all box-border rounded py-1 px-2 text-xs font-normal text-black ${className}`}
+      style={{
+        whiteSpace: 'normal',
+        wordBreak: 'break-all',
+        boxSizing: 'border-box',
+        borderRadius: '4px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        paddingTop: '4px',
+        paddingBottom: '4px',
+        fontSize: '14px',
+        color: 'black',
+        borderStyle: 'solid',
+        borderWidth: '2px',
+        borderColor: '#333333',
+      }}
     >
       {/* {content} */}
       <Markdown content={content}></Markdown>

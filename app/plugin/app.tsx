@@ -154,8 +154,25 @@ function App(props: {sessionCb: (sessionId: string) => void}) {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 w-64 h-96 bg-indigo-300/90 rounded z-50">
-      <div className={'w-full h-full pb-14'}>
+    <div
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        width: '320px',
+        height: '480px',
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        borderRadius: '4px',
+        zIndex: 50,
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          paddingBottom: '40px',
+        }}
+      >
         <ChatList
           id="assistantChatList"
           msgList={msgListRef.current}
@@ -164,22 +181,50 @@ function App(props: {sessionCb: (sessionId: string) => void}) {
       </div>
 
       {/* 底部输入框 */}
-      <div className="absolute bottom-2 left-0 right-0 mx-3 h-10 bg-white rounded-md flex">
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '8px',
+          left: 0,
+          right: 0,
+          marginLeft: '24px',
+          marginRight: '24px',
+          height: '40px',
+          backgroundColor: 'white',
+          borderRadius: '8px',
+          display: 'flex',
+        }}
+      >
         <input
           id="mv_container_input"
-          className="pl-2 w-10/12 rounded-md bg-red text-black outline-none text-xs"
+          style={{
+            paddingLeft: '8px',
+            width: '80%',
+            borderRadius: '8px',
+            color: 'black',
+            outline: 'none',
+            fontSize: '14px',
+          }}
           placeholder={'start chat'}
           value={inputValue}
           onChange={(e: any) => setInputValue(e.target.value)}
         />
         <div
-          className="w-2/12 flex justify-center items-center"
+          style={{
+            width: '20%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
           onClick={() => {
             handleSendMsg(inputValue);
           }}
         >
           <img
-            className="h-2 w-3"
+            style={{
+              width: '10px',
+              height: '10px',
+            }}
             src="https://cdn.mindverse.com/img/zzzz202210121665569536009%E8%B7%AF%E5%BE%84%20%289%29.png"
             alt="enter"
           />
