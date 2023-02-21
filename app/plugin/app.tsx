@@ -258,7 +258,6 @@ function App(props: {
           backgroundColor: 'white',
           display: 'flex',
           alignItems: 'center',
-          width: '100%',
           flexDirection: 'column',
         }}
       >

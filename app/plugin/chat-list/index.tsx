@@ -108,7 +108,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           // 发送消息
           return (
             // eslint-disable-next-line react/jsx-key
-            <div className={`flex justify-end`}>
+            <div style={{display: 'flex', justifyContent: 'end'}}>
               <div
                 style={{
                   display: 'flex',
