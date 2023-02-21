@@ -2,6 +2,7 @@ import React, {CSSProperties, forwardRef, useEffect} from 'react';
 import ChatLink from './components/link';
 import ChatImg from './components/img';
 import ChatText from './components/text';
+import ChatHtml from './components/html';
 import MessageItem, {MessageItemType} from './model/message-item';
 import {
   WS_MSG_DATA_TYPE,
@@ -53,6 +54,9 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 sources={sources}
               ></ChatText>
             );
+          // @ts-ignore
+          case 'html':
+            return <ChatHtml content={item.modal.answer ?? ''}></ChatHtml>;
           default:
             return null;
         }
