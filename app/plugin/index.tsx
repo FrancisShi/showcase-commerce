@@ -1,8 +1,7 @@
 import {useEffect, useRef} from 'react';
-// import App from './app';
-import App from '@mindverse/container';
+import App from './app';
+// import App from '@mindverse/container';
 import request from './request';
-
 
 let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {

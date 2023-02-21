@@ -7,7 +7,7 @@ import {
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
 } from '@mindverse/accessor-open/src/type';
-
+import {getColorBgDark, getColorBgLight} from '../app';
 export interface ChatListProps {
   id?: string;
   className?: string;
@@ -36,17 +36,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         return [];
       }
 
-      const receivedItem = (content: JSX.Element, index: number) => {
-        return (
-          <div
-            style={{display: 'flex', justifyContent: 'start', maxWidth: '66%'}}
-            key={index}
-          >
-            {content}
-          </div>
-        );
-      };
-
+      // 接受消息，具体内容
       const receiveItemDetail = (
         item: WS_MSG_MULTIPLE_DATA,
         sources?: string[],
@@ -88,7 +78,28 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           return item.multipleData.map((element) => {
             const result = receiveItemDetail(element, item.sources);
             if (result) {
-              return receivedItem(result, index);
+              return (
+                // 接受消息，wrapper
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'start',
+                    maxWidth: '90%',
+                    backgroundColor: getColorBgLight(),
+                    color: '#3D3D3D',
+                    marginBottom: '30px',
+                    whiteSpace: 'normal',
+                    wordBreak: 'break-all',
+                    boxSizing: 'border-box',
+                    borderRadius: '14px',
+                    padding: '16px',
+                    fontSize: '15px',
+                  }}
+                  key={index}
+                >
+                  {result}
+                </div>
+              );
             } else {
               return <></>;
             }
@@ -99,7 +110,19 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             // eslint-disable-next-line react/jsx-key
             <div className={`flex justify-end`}>
               <div
-                style={{display: 'flex', marginTop: '8px', maxWidth: '66%'}}
+                style={{
+                  display: 'flex',
+                  marginBottom: '30px',
+                  maxWidth: '90%',
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-all',
+                  boxSizing: 'border-box',
+                  borderRadius: '14px',
+                  padding: '16px',
+                  fontSize: '15px',
+                  backgroundColor: '#F6F6F6',
+                  color: '#3D3D3D',
+                }}
                 key={index}
               >
                 <ChatText content={item.data.content ?? ''}></ChatText>
@@ -115,10 +138,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
       return renderItems;
     }
 
-    const showStyle: CSSProperties = {
-      display: isLoading ? 'inline-block' : 'none',
-    };
-
     return (
       <div
         style={{
@@ -126,8 +145,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           paddingTop: '8px',
           overflow: 'auto',
           overflowX: 'hidden',
-          marginLeft: '24px',
-          marginRight: '24px',
+          marginLeft: '16px',
+          marginRight: '16px',
         }}
         className={`${className}`}
         id={id}
@@ -139,15 +158,16 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         <div
           style={{
             ...{
-              backgroundColor: 'white',
-              display: 'flex',
-              marginTop: '8px',
+              backgroundColor: '#F6F6F6',
+              marginBottom: '30px',
               justifyContent: 'start',
-              borderRadius: '8px',
-              height: '40px',
-              width: '88px',
+              height: '54px',
+              width: '120px',
+              borderRadius: '14px',
+              padding: '16px',
+              fontSize: '15px',
+              display: isLoading ? 'inline-block' : 'none',
             },
-            ...showStyle,
           }}
         >
           <img
@@ -158,7 +178,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
               width: '20px',
               height: '20px',
               marginLeft: '32px',
-              marginTop: '10px',
             }}
             alt=""
           />
