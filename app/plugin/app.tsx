@@ -11,6 +11,7 @@ import MessageItem, {
   MessageItemType,
   transformNewMsg,
 } from './chat-list/model/message-item';
+import Avatar, {TYPE_AVATAR} from './avatar';
 
 const DEFAUT_CONFIG = {
   AVATAR:
@@ -238,21 +239,9 @@ function App(props: {
       </div>
 
       {/* avatar */}
-      <img
-        style={{
-          position: 'absolute',
-          objectFit: 'cover',
-          left: '16px',
-          top: '-40px',
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          borderColor: colorBgDark,
-          backgroundColor: colorBgLight,
-          borderWidth: '3px',
-        }}
-        src={DEFAUT_CONFIG.AVATAR}
-        alt=""
+      <Avatar
+        type={TYPE_AVATAR.PICTURE}
+        data={{picture: DEFAUT_CONFIG.AVATAR}}
       />
 
       <div
