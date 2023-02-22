@@ -47,9 +47,17 @@ function App(props: {
   const [, updateState] = useState<any>();
 
   useEffect(() => {
-    const parent = document.getElementById('mvMindContainer')?.parentElement;
-    setWidth(parent?.clientWidth ?? 400);
-    setHeight(parent?.clientHeight ?? 800);
+    // 每次 resize 都会根据父类大小来定自身大小
+    const resize = () => {
+      const parent = document.getElementById('mvMindContainer')?.parentElement;
+      setWidth(parent?.clientWidth ?? 400);
+      setHeight(parent?.clientHeight ?? 800);
+    };
+    window.addEventListener('resize', resize);
+    resize();
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
   }, []);
 
   useEffect(() => {

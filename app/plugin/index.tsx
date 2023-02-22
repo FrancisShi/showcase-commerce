@@ -1,12 +1,31 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import App from './app';
 // import App from '@mindverse/container';
 import request from './request';
 
 let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const resize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', resize);
+    resize();
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
   return (
-    <div style={{width: '400px', height: '600px'}}>
+    <div
+      style={
+        isMobile
+          ? {width: '100vw', height: '80vh'}
+          : {width: '400px', height: '600px'}
+      }
+    >
       <App
         sessionCb={(_sessionId: string) => {
           sessionId = _sessionId;
