@@ -28,10 +28,6 @@ export default function Markdown(props: MarkdownInterface) {
   }, [content]);
 
   return (
-    <div
-      id={`mv_markdown`}
-      contentEditable="true"
-      dangerouslySetInnerHTML={{__html: markdown}}
-    ></div>
+    <div id={`mv_markdown`} dangerouslySetInnerHTML={{__html: markdown}}></div>
   );
 }
