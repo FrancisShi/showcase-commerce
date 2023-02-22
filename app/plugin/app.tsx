@@ -55,7 +55,7 @@ function App(props: {
   useEffect(() => {
     const fixedContainer = document.getElementById('mvMindContainer');
     const eventTouchmove = (e: TouchEvent) => {
-      // e.preventDefault();
+      e.preventDefault();
     };
     const mouseWheelHandler = (e: Event) => {
       e.preventDefault();
