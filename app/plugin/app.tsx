@@ -40,17 +40,33 @@ function App(props: {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
+  const sessionRef = useRef<Session>();
+  const [inputValue, setInputValue] = useState('');
+  const msgListRef = useRef<MessageItem[]>([]);
+  const [showListLoading, setShowListLoading] = useState(false);
+  const [, updateState] = useState<any>();
+
   useEffect(() => {
     const parent = document.getElementById('mvMindContainer')?.parentElement;
     setWidth(parent?.clientWidth ?? 400);
     setHeight(parent?.clientHeight ?? 800);
   }, []);
 
-  const sessionRef = useRef<Session>();
-  const [inputValue, setInputValue] = useState('');
-  const msgListRef = useRef<MessageItem[]>([]);
-  const [showListLoading, setShowListLoading] = useState(false);
-  const [, updateState] = useState<any>();
+  useEffect(() => {
+    const fixedContainer = document.getElementById('mvMindContainer');
+    const eventTouchmove = (e: TouchEvent) => {
+      // e.preventDefault();
+    };
+    const mouseWheelHandler = (e: Event) => {
+      e.preventDefault();
+    };
+    fixedContainer?.addEventListener('mousewheel', mouseWheelHandler, false);
+    fixedContainer?.addEventListener('touchmove', eventTouchmove, false);
+    return () => {
+      fixedContainer?.removeEventListener('mousewheel', mouseWheelHandler);
+      fixedContainer?.removeEventListener('touchmove', eventTouchmove);
+    };
+  }, []);
 
   useEffect(() => {
     // createLongLink
