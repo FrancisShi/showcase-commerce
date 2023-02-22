@@ -6,11 +6,13 @@ import request from './request';
 let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {
   return (
-    <App
-      sessionCb={(_sessionId: string) => {
-        sessionId = _sessionId;
-      }}
-    />
+    <div style={{width: '400px', height: '600px'}}>
+      <App
+        sessionCb={(_sessionId: string) => {
+          sessionId = _sessionId;
+        }}
+      />
+    </div>
   );
 }
 

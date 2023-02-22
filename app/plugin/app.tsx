@@ -38,11 +38,12 @@ function App(props: {
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
 
   const [width, setWidth] = useState(0);
-  const [height, setHiehgt] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setWidth(window.innerWidth);
-    setHiehgt(window.innerHeight * 0.68);
+    const parent = document.getElementById('mvMindContainer')?.parentElement;
+    setWidth(parent?.clientWidth ?? 400);
+    setHeight(parent?.clientHeight ?? 800);
   }, []);
 
   const sessionRef = useRef<Session>();
@@ -176,7 +177,6 @@ function App(props: {
   };
 
   const handleSendMsg = (value: string) => {
-    console.log('handleSendMsg');
     if (!value) return;
     sessionRef.current?.sendMsg('text', {content: value});
     setShowListLoading(true);
@@ -185,6 +185,7 @@ function App(props: {
 
   return (
     <div
+      id="mvMindContainer"
       style={{
         position: 'fixed',
         bottom: 0,
