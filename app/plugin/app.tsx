@@ -289,6 +289,7 @@ function App(props: {
         <div style={{display: 'flex', width: '100%', marginTop: '17px'}}>
           <input
             id="mv_container_input"
+            enterKeyHint="send"
             style={{
               paddingLeft: '22px',
               paddingRight: '22px',
