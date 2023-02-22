@@ -99,7 +99,7 @@ function App(props: {
           console.error('Session Error');
         });
       sessionRef.current?.openSession({
-        mindId: '76643513529405440',
+        mindId: '76712860721483776',
         mindType: WS_MIND_TYPE.original,
         retryCount: 0,
         callback: (res: any) => {
