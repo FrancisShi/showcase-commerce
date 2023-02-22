@@ -4,11 +4,17 @@
 import {useEffect, useRef, useState} from 'react';
 import App from './app';
 // import App from '@mindverse/container';
+import {isBrowser} from 'browser-or-node';
 import request from './request';
+
+const EVENT_MV_CONTAINER = {
+  REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
+};
 
 let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {
   const [isMobile, setIsMobile] = useState(false);
+  const [refUserId, setRefUserId] = useState('');
 
   useEffect(() => {
     const resize = () => {
@@ -21,6 +27,38 @@ export function Container({...props}: {[key: string]: any}) {
     };
   }, []);
 
+  useEffect(() => {
+    const ss = window.localStorage;
+    const userId = ss.getItem('mv_shopify_userId');
+    if (userId) {
+      setRefUserId(userId);
+    } else {
+      const fakeId = `anonymity_${new Date().getTime()}_${
+        Math.random() * 10000
+      }`;
+      ss.setItem('mv_shopify_userId', fakeId);
+      setRefUserId(fakeId);
+    }
+
+    // 接受消息 reopen session
+    const reopenSession = () => {
+      const userId = ss.getItem('mv_shopify_userId');
+      if (userId) {
+        setRefUserId('');
+        setTimeout(() => {
+          setRefUserId(userId);
+        }, 500);
+      }
+    };
+    window.addEventListener(EVENT_MV_CONTAINER.REOPEN_SESSION, reopenSession);
+    return () => {
+      window.removeEventListener(
+        EVENT_MV_CONTAINER.REOPEN_SESSION,
+        reopenSession,
+      );
+    };
+  }, []);
+
   return (
     <div
       style={
@@ -29,11 +67,14 @@ export function Container({...props}: {[key: string]: any}) {
           : {width: '400px', height: '600px'}
       }
     >
-      <App
-        sessionCb={(_sessionId: string) => {
-          sessionId = _sessionId;
-        }}
-      />
+      {refUserId && (
+        <App
+          sessionCb={(_sessionId: string) => {
+            sessionId = _sessionId;
+          }}
+          config={{refUserId, mindId: '76712860721483776'}}
+        />
+      )}
     </div>
   );
 }
@@ -87,5 +128,15 @@ export function injectHook(key: string, data: PRODUCT | USER) {
       .catch((res) => {
         console.error('/rest/demo/user/init 调用失败', res);
       });
+
+    // check user 是否更新
+    if (isBrowser) {
+      const ss = window.localStorage;
+      const userId = ss.getItem('mv_shopify_userId');
+      if (data.id && userId && data.id !== userId) {
+        ss.setItem('mv_shopify_userId', data.id);
+        window.dispatchEvent(new Event(EVENT_MV_CONTAINER.REOPEN_SESSION));
+      }
+    }
   }
 }
