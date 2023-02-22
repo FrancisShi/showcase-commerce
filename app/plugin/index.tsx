@@ -1,3 +1,6 @@
+/**
+ * 业务接入样例
+ */
 import {useEffect, useRef, useState} from 'react';
 import App from './app';
 // import App from '@mindverse/container';

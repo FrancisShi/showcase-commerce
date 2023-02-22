@@ -130,12 +130,14 @@ function Account({
   const firstName = customer.firstName ?? '';
   const lastName = customer.lastName ?? '';
   const phone = customer.phone ?? '';
+  const tags = customer.tags ?? '';
   const mvUser = {
     id,
     email,
     firstName,
     lastName,
     phone,
+    tags,
   };
   injectHook('user', mvUser);
 
@@ -228,6 +230,7 @@ const CUSTOMER_QUERY = `#graphql
       lastName
       phone
       email
+      tags
       defaultAddress {
         id
         formatted
