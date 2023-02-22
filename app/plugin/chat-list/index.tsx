@@ -56,7 +56,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             );
           // @ts-ignore
           case 'html':
-            return <ChatHtml content={item.modal.answer ?? ''}></ChatHtml>;
+            // @ts-ignore
+            return <ChatHtml content={item.modal.html ?? ''}></ChatHtml>;
           default:
             return null;
         }
