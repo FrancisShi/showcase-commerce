@@ -5,12 +5,12 @@ import {
   WS_MSG_TYPE,
 } from '@mindverse/accessor-open/src/type';
 import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
-import ChatList from './chat-list';
+import ChatList from './chat';
 import MessageItem, {
   isSameMessage,
   MessageItemType,
   transformNewMsg,
-} from './chat-list/model/message-item';
+} from './chat/model/message-item';
 import Avatar, {TYPE_AVATAR} from './avatar';
 
 const DEFAUT_CONFIG = {
