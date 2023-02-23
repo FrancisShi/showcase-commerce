@@ -88,10 +88,6 @@ function App(props: {
     const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
       document.body.style.overflow = '';
     };
-    const clickEvent = (e: MouseEvent) => {
-      e.stopPropagation();
-    };
-    // fixedContainer?.addEventListener('click', clickEvent);
     // pc
     fixedContainer?.addEventListener('mouseenter', eventAreaStart, false);
     fixedContainer?.addEventListener('mouseleave', eventAreaFinish, false);
@@ -100,7 +96,6 @@ function App(props: {
     fixedContainer?.addEventListener('touchend', eventAreaFinish, false);
     fixedContainer?.addEventListener('touchcancel', eventAreaFinish, false);
     return () => {
-      // fixedContainer?.removeEventListener('click', clickEvent);
       // pc
       fixedContainer?.removeEventListener('mouseenter', eventAreaStart);
       fixedContainer?.removeEventListener('mouseleave', eventAreaFinish);
@@ -405,6 +400,8 @@ function App(props: {
             borderColor: getColorBgDark(),
             backgroundColor: getColorBgLight(),
             borderWidth: '3px',
+            userSelect: 'none',
+            appearance: 'none',
           }}
           src={DEFAUT_CONFIG.AVATAR}
           alt=""
