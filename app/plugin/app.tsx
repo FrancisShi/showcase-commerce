@@ -400,8 +400,6 @@ function App(props: {
             borderColor: getColorBgDark(),
             backgroundColor: getColorBgLight(),
             borderWidth: '3px',
-            userSelect: 'none',
-            appearance: 'none',
           }}
           src={DEFAUT_CONFIG.AVATAR}
           alt=""
