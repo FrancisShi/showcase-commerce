@@ -87,6 +87,9 @@ export const flatMessages = (originSource: MessageItem[]) => {
             case WS_MSG_DATA_TYPE.link:
               content = singleData.modal.link;
               break;
+            case WS_MSG_DATA_TYPE.html:
+              content = singleData.modal.html;
+              break;
             default:
               break;
           }

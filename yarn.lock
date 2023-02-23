@@ -1521,10 +1521,10 @@
     blueimp-md5 "^2.19.0"
     uuid "^9.0.0"
 
-"@mindverse/accessor-open@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.0.tgz#f344a6391510572e07b8946eadcc1607f64feda9"
-  integrity sha512-n0AHaY1PSlSbghy8r8OjxS0tz9P2e3nX+R5wMtC53T0H63VvOFip6xN7NZSHMKxNNW74YxLEYiNVwf6APcmTzw==
+"@mindverse/accessor-open@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.3.tgz#18a014afb2588d44dd99d99acfaaf262c694528c"
+  integrity sha512-3tq6kKgcGrcX4imT6dn1YdhhvkscUa5XiaTmekk7n4uoGD/zMjny5sTrk6sv/qs2Ur4wFCCplf+3pNv4WpZjMQ==
   dependencies:
     axios "^0.27.2"
     blueimp-md5 "^2.19.0"
