@@ -136,7 +136,9 @@ function App(props: {
         mindType: WS_MIND_TYPE.original,
         retryCount: 0,
         callback: (res: any) => {
-          props?.sessionCb && props.sessionCb(res.data.sessionId.sessionId);
+          props?.sessionCb &&
+            res.data.sessionId?.sessionId &&
+            props.sessionCb(res.data.sessionId?.sessionId);
         },
       });
     };
