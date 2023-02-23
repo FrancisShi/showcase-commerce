@@ -1,5 +1,5 @@
 import React from 'react';
-import {getColorBgDark, getColorBgLight} from '../app';
+import {getColorBgDark, getColorBgLight} from '..';
 
 export interface PictureProps {
   picture: string;

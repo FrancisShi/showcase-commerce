@@ -18,7 +18,7 @@ import {
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
 } from '@mindverse/accessor-open/src/type';
-import {getColorBgDark, getColorBgLight} from '../app';
+import {getColorBgDark, getColorBgLight} from '..';
 export interface ChatListProps {
   id?: string;
   className?: string;
