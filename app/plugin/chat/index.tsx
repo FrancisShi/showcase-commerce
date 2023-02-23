@@ -67,10 +67,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             return <ChatImg imgUrl={content}></ChatImg>;
           case WS_MSG_DATA_TYPE.text:
             return <ChatText content={content} sources={sources}></ChatText>;
-          // @ts-ignore
-          case 'html':
-            // @ts-ignore
-            return <ChatHtml content={item.modal.html ?? ''}></ChatHtml>;
+          case WS_MSG_DATA_TYPE.html:
+            return <ChatHtml content={content}></ChatHtml>;
           default:
             return null;
         }

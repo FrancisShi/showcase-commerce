@@ -1,16 +1,11 @@
 import React from 'react';
 
-export interface MarkdownInterface {
+export interface HtmlInterface {
   content: string;
 }
 
-export default function Markdown(props: MarkdownInterface) {
+export default function Html(props: HtmlInterface) {
   const {content} = props;
 
-  return (
-    <div
-      contentEditable="true"
-      dangerouslySetInnerHTML={{__html: content}}
-    ></div>
-  );
+  return <div dangerouslySetInnerHTML={{__html: content}}></div>;
 }
