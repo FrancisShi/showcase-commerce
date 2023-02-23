@@ -76,7 +76,7 @@ export function Container({...props}: {[key: string]: any}) {
           }}
           config={{
             mindConfig: {
-              mindId: '76712860721483776',
+              mindId: '76643512329834496',
               mindType: WS_MIND_TYPE.original,
             },
             socketConfig: {
