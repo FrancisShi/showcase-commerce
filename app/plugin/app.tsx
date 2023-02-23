@@ -71,10 +71,10 @@ function App(props: {
   useEffect(() => {
     const fixedContainer = document.getElementById('mvMindContainer');
     const eventTouchmove = (e: TouchEvent) => {
-      e.preventDefault();
+      // e.preventDefault();
     };
     const mouseWheelHandler = (e: Event) => {
-      e.preventDefault();
+      // e.preventDefault();
     };
     fixedContainer?.addEventListener('mousewheel', mouseWheelHandler, false);
     fixedContainer?.addEventListener('touchmove', eventTouchmove, false);
