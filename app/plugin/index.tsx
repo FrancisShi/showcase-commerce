@@ -171,7 +171,11 @@ function App(props: {
 
   // 改变 expand 模式
   // 如果后面要加动画的话
-  useEffect(() => {}, [isExpand]);
+  useEffect(() => {
+    if (!isExpand) {
+      document.body.style.overflow = '';
+    }
+  }, [isExpand]);
 
   // 回车发送消息
   useEffect(() => {
