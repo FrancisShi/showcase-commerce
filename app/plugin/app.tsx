@@ -82,17 +82,32 @@ function App(props: {
   // 忽略背景滑动、点击
   useEffect(() => {
     const fixedContainer = document.getElementById('mvMindContainer');
-    const eventTouchmove = (e: TouchEvent) => {
-      // e.preventDefault();
+    const eventAreaStart = (e: TouchEvent | MouseEvent) => {
+      document.body.style.overflow = 'hidden';
     };
-    const mouseWheelHandler = (e: Event) => {
-      // e.preventDefault();
+    const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
+      document.body.style.overflow = '';
     };
-    fixedContainer?.addEventListener('mousewheel', mouseWheelHandler, false);
-    fixedContainer?.addEventListener('touchmove', eventTouchmove, false);
+    const clickEvent = (e: MouseEvent) => {
+      e.stopPropagation();
+    };
+    // fixedContainer?.addEventListener('click', clickEvent);
+    // pc
+    fixedContainer?.addEventListener('mouseenter', eventAreaStart, false);
+    fixedContainer?.addEventListener('mouseleave', eventAreaFinish, false);
+    // mobile
+    fixedContainer?.addEventListener('touchstart', eventAreaStart, false);
+    fixedContainer?.addEventListener('touchend', eventAreaFinish, false);
+    fixedContainer?.addEventListener('touchcancel', eventAreaFinish, false);
     return () => {
-      fixedContainer?.removeEventListener('mousewheel', mouseWheelHandler);
-      fixedContainer?.removeEventListener('touchmove', eventTouchmove);
+      // fixedContainer?.removeEventListener('click', clickEvent);
+      // pc
+      fixedContainer?.removeEventListener('mouseenter', eventAreaStart);
+      fixedContainer?.removeEventListener('mouseleave', eventAreaFinish);
+      // mobile
+      fixedContainer?.removeEventListener('touchstart', eventAreaStart);
+      fixedContainer?.removeEventListener('touchend', eventAreaFinish);
+      fixedContainer?.removeEventListener('touchcancel', eventAreaFinish);
     };
   }, []);
 
