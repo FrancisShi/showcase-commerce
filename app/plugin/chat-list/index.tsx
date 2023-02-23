@@ -1,9 +1,19 @@
-import React, {CSSProperties, forwardRef, useEffect} from 'react';
+import React, {
+  CSSProperties,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import ChatLink from './components/link';
 import ChatImg from './components/img';
 import ChatText from './components/text';
 import ChatHtml from './components/html';
-import MessageItem, {MessageItemType} from './model/message-item';
+import MessageItem, {
+  ChatListItem,
+  flatMessages,
+  MessageItemType,
+} from './model/message-item';
 import {
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
@@ -19,6 +29,8 @@ export interface ChatListProps {
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
     const {id = 'msgList', className, msgList, isLoading} = props;
+    const flatMessageList = useRef<ChatListItem[]>([]);
+    const [random, setRandom] = useState<number>();
 
     function scrollToBottom() {
       const itemList = document.getElementById(id);
@@ -29,31 +41,32 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
     }
 
     useEffect(() => {
-      scrollToBottom();
+      flatMessageList.current = flatMessages(msgList);
+      setRandom(Math.random());
     }, [msgList]);
 
+    useEffect(() => {
+      scrollToBottom();
+    }, [random]);
+
     function renderItemList() {
-      if (msgList.length == 0) {
+      if (flatMessageList.current.length == 0) {
         return [];
       }
 
       // 接受消息，具体内容
       const receiveItemDetail = (
-        item: WS_MSG_MULTIPLE_DATA,
+        type: WS_MSG_DATA_TYPE,
+        content: string,
         sources?: string[],
       ) => {
-        switch (item.singleDataType) {
+        switch (type) {
           case WS_MSG_DATA_TYPE.link:
-            return <ChatLink link={item.modal.link ?? ''} />;
+            return <ChatLink link={content} />;
           case WS_MSG_DATA_TYPE.image:
-            return <ChatImg imgUrl={item.modal.image ?? ''}></ChatImg>;
+            return <ChatImg imgUrl={content}></ChatImg>;
           case WS_MSG_DATA_TYPE.text:
-            return (
-              <ChatText
-                content={item.modal.answer ?? ''}
-                sources={sources}
-              ></ChatText>
-            );
+            return <ChatText content={content} sources={sources}></ChatText>;
           // @ts-ignore
           case 'html':
             // @ts-ignore
@@ -78,37 +91,39 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         );
       };
 
-      const renderItems = msgList.map((item, index) => {
+      const renderItems = flatMessageList.current.map((item, index) => {
         if (item.type === MessageItemType.RECEIVE) {
-          return item.multipleData.map((element) => {
-            const result = receiveItemDetail(element, item.sources);
-            if (result) {
-              return (
-                // 接受消息，wrapper
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    maxWidth: '90%',
-                    backgroundColor: getColorBgLight(),
-                    color: '#3D3D3D',
-                    marginBottom: '30px',
-                    whiteSpace: 'normal',
-                    wordBreak: 'break-all',
-                    boxSizing: 'border-box',
-                    borderRadius: '14px',
-                    padding: '16px',
-                    fontSize: '15px',
-                  }}
-                  key={index}
-                >
-                  {result}
-                </div>
-              );
-            } else {
-              return <></>;
-            }
-          });
+          const result = receiveItemDetail(
+            item.singleDataType,
+            item.content,
+            item.sources,
+          );
+          if (result) {
+            return (
+              // 接受消息，wrapper
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  maxWidth: '90%',
+                  backgroundColor: getColorBgLight(),
+                  color: '#3D3D3D',
+                  marginBottom: '30px',
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-all',
+                  boxSizing: 'border-box',
+                  borderRadius: '14px',
+                  padding: '16px',
+                  fontSize: '15px',
+                }}
+                key={index}
+              >
+                {result}
+              </div>
+            );
+          } else {
+            return <></>;
+          }
         } else if (item.type === MessageItemType.SEND) {
           // 发送消息
           return (
@@ -130,12 +145,12 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 }}
                 key={index}
               >
-                <ChatText content={item.data.content ?? ''}></ChatText>
+                <ChatText content={item.content ?? ''}></ChatText>
               </div>
             </div>
           );
         } else if (item.type === MessageItemType.SYSTEM) {
-          return divider(item.dividerContent ?? '', index);
+          return divider(item.content ?? '', index);
         } else {
           return null;
         }
