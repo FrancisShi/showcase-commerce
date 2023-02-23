@@ -35,7 +35,7 @@ import {flattenConnection} from '@shopify/hydrogen';
 import {getFeaturedData} from './featured-products';
 import {doLogout} from './account/__private/logout';
 import {usePrefixPathWithLocale} from '~/lib/utils';
-import {injectHook} from '~/plugin/entry';
+import {injectHook} from '~/plugin/demo/entry';
 
 // Combining json + Response + defer in a loader breaks the
 // types returned by useLoaderData. This is a temporary fix.

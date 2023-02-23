@@ -2,8 +2,8 @@
  * 业务接入样例
  */
 import {useEffect, useRef, useState} from 'react';
-import App from '.';
-// import App from '@mindverse/container';
+// import App from '.';
+import App from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
 import request from './request';
 
