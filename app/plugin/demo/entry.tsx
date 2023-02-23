@@ -2,10 +2,12 @@
  * 业务接入样例
  */
 import {useEffect, useRef, useState} from 'react';
-// import App from '.';
-import App from '@mindverse/container';
+import App from '../index';
+// import App from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
 import request from './request';
+import {Config} from '@mindverse/accessor-open/src/env';
+import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 
 const EVENT_MV_CONTAINER = {
   REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
@@ -72,7 +74,37 @@ export function Container({...props}: {[key: string]: any}) {
           sessionCb={(_sessionId: string) => {
             sessionId = _sessionId;
           }}
-          config={{refUserId, mindId: '76712860721483776'}}
+          config={{
+            mindConfig: {
+              mindId: '76712860721483776',
+              mindType: WS_MIND_TYPE.original,
+            },
+            socketConfig: {
+              apiVersion: '1.2.0',
+              platform: 'Saas',
+              appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
+              bizType: 'SAAS',
+              merchantId: 'c1e3x',
+              mAuthType: 'SAAS_KEY',
+
+              refUserId,
+
+              merchantBaseURL: 'https://test-accessor.mindverse.com',
+              merchantSocketPath: '/rest/demo/ws/create',
+              merchantSessionOpenPath: '/rest/demo/session/create',
+              merchantSessionClosePath: '/rest/demo/session/close',
+              merchantUserRegisterPath: '/rest/demo/user/register',
+              merchantSocketCheckPath: '/rest/demo/ws/get',
+              merchantSessionCheckPath: '/rest/demo/session/get',
+
+              headers: {},
+            },
+            userConfig: {
+              userName: 'shitou-demo', // document.getElementById("#nickname").value,
+              avatar:
+                'https://cdn.mindverse.com/img/zzzz202302211676948571901%E5%BF%83%E8%AF%86%E5%BC%95%E5%AF%BC%E5%91%98.png',
+            },
+          }}
         />
       )}
     </div>

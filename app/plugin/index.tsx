@@ -4,6 +4,7 @@ import {
   WS_MSG_DATA_TYPE,
   WS_MSG_TYPE,
 } from '@mindverse/accessor-open/src/type';
+import {Config} from '@mindverse/accessor-open/src/env';
 import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
 import ChatList from './chat';
 import MessageItem, {
@@ -14,8 +15,6 @@ import MessageItem, {
 import Avatar, {TYPE_AVATAR} from './avatar';
 
 const DEFAUT_CONFIG = {
-  AVATAR:
-    'https://cdn.mindverse.com/img/zzzz202302211676948571901%E5%BF%83%E8%AF%86%E5%BC%95%E5%AF%BC%E5%91%98.png',
   COLOR_BG_DARK: '#738981',
   COLOR_BG_LIGHT: '#D6F3E9',
 };
@@ -31,17 +30,29 @@ export const getColorBgLight = () => {
   return colorBgLight;
 };
 
+export interface MindConfig {
+  mindId: string;
+  mindType: WS_MIND_TYPE;
+}
+
+export interface UserConfig {
+  userName: string;
+  avatar: string;
+}
+
 function App(props: {
   sessionCb: (sessionId: string) => void;
   config: {
-    refUserId: string;
-    mindId: string;
+    mindConfig: MindConfig;
+    socketConfig: Config;
+    userConfig: UserConfig;
     bgDark?: string;
     bgLight?: string;
   };
 }) {
-  const refUserId = props.config.refUserId;
-  const mindId = props.config.mindId;
+  const mindConfig = props.config.mindConfig;
+  const socketConfig = props.config.socketConfig;
+  const userConfig = props.config.userConfig;
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
 
@@ -62,6 +73,7 @@ function App(props: {
     meta.content =
       'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no';
     document.getElementsByTagName('head')[0].appendChild(meta);
+    console.warn('Francis', socketConfig);
   }, []);
 
   // size 响应
@@ -109,31 +121,12 @@ function App(props: {
   // 初始化对话
   useEffect(() => {
     // createLongLink
-    setConfig({
-      apiVersion: '1.2.0',
-      platform: 'Saas',
-      appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
-      bizType: 'SAAS',
-      merchantId: 'c1e3x',
-      mAuthType: 'SAAS_KEY',
-
-      refUserId,
-
-      merchantBaseURL: 'https://test-accessor.mindverse.com',
-      merchantSocketPath: '/rest/demo/ws/create',
-      merchantSessionOpenPath: '/rest/demo/session/create',
-      merchantSessionClosePath: '/rest/demo/session/close',
-      merchantUserRegisterPath: '/rest/demo/user/register',
-      merchantSocketCheckPath: '/rest/demo/ws/get',
-      merchantSessionCheckPath: '/rest/demo/session/get',
-
-      headers: {},
-    });
+    setConfig(socketConfig);
 
     const openSession = () => {
       sessionRef.current?.openSession({
-        mindId,
-        mindType: WS_MIND_TYPE.original,
+        mindId: mindConfig.mindId,
+        mindType: mindConfig.mindType,
         retryCount: 0,
         callback: (res: any) => {
           props?.sessionCb &&
@@ -143,10 +136,7 @@ function App(props: {
       });
     };
 
-    userRegister(
-      'shitou-demo', // document.getElementById("#nickname").value,
-      DEFAUT_CONFIG.AVATAR,
-    ).then((res) => {
+    userRegister(userConfig.userName, userConfig.avatar).then((res) => {
       sessionRef.current = new Session()
         .setOnMsgUpdateListener((msgList) => {
           console.warn('更新msgList', msgList);
@@ -313,7 +303,7 @@ function App(props: {
         {/* avatar */}
         <Avatar
           type={TYPE_AVATAR.PICTURE}
-          data={{picture: DEFAUT_CONFIG.AVATAR}}
+          data={{picture: userConfig.avatar}}
         />
 
         <div
@@ -407,7 +397,7 @@ function App(props: {
             backgroundColor: getColorBgLight(),
             borderWidth: '3px',
           }}
-          src={DEFAUT_CONFIG.AVATAR}
+          src={userConfig.avatar}
           alt=""
         />
       </div>
