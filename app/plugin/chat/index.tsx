@@ -19,16 +19,16 @@ import {
   WS_MSG_MULTIPLE_DATA,
 } from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
+
 export interface ChatListProps {
   id?: string;
-  className?: string;
   msgList: MessageItem[];
   isLoading: boolean;
 }
 
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
-    const {id = 'msgList', className, msgList, isLoading} = props;
+    const {id = 'msgList', msgList, isLoading} = props;
     const flatMessageList = useRef<ChatListItem[]>([]);
     const [random, setRandom] = useState<number>();
 
@@ -167,12 +167,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         style={{
           height: '100%',
           paddingTop: '8px',
-          overflow: 'auto',
-          overflowX: 'hidden',
+          overflow: 'scroll',
           marginLeft: '16px',
           marginRight: '16px',
         }}
-        className={`${className}`}
         id={id}
         ref={ref}
       >
