@@ -106,7 +106,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                   maxWidth: '90%',
                   backgroundColor: getColorBgLight(),
                   color: '#3D3D3D',
-                  marginBottom: '20px',
+                  marginBottom:
+                    index === flatMessageList.current.length - 1 && !isLoading
+                      ? '70px'
+                      : '20px',
                   whiteSpace: 'normal',
                   wordBreak: 'break-word',
                   boxSizing: 'border-box',
@@ -130,7 +133,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
               <div
                 style={{
                   display: 'flex',
-                  marginBottom: '20px',
+                  marginBottom:
+                    index === flatMessageList.current.length - 1 && !isLoading
+                      ? '70px'
+                      : '20px',
                   maxWidth: '90%',
                   whiteSpace: 'normal',
                   wordBreak: 'break-word',
@@ -177,10 +183,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           style={{
             ...{
               backgroundColor: '#F6F6F6',
-              marginBottom: '20px',
+              marginBottom: '70px',
               justifyContent: 'start',
-              height: '54px',
-              width: '120px',
+              height: '44px',
+              width: '110px',
               borderRadius: '14px',
               padding: '12px',
               fontSize: '15px',
