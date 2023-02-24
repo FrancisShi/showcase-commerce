@@ -2,12 +2,13 @@
  * 业务接入样例
  */
 import {useEffect, useRef, useState} from 'react';
-// import App from '../index';
-import App from '@mindverse/container';
+import App from '../index';
+// import App from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
 import request from './request';
 import {Config} from '@mindverse/accessor-open/src/env';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
+import {useNavigate} from '@remix-run/react';
 
 const EVENT_MV_CONTAINER = {
   REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
@@ -17,6 +18,22 @@ let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {
   const [isMobile, setIsMobile] = useState(false);
   const [refUserId, setRefUserId] = useState('');
+  const navigate = useNavigate();
+  useEffect(() => {
+    window.addEventListener('mv_client_container_router', (e) => {
+      // @ts-ignore
+      const router = e.detail;
+      if (router) {
+        const arr = router.split('/');
+        if (arr && arr.length > 1) {
+          const path1 = arr[arr.length - 2];
+          const path2 = arr[arr.length - 1];
+          console.warn('router', `/${path1}/${path2}`);
+          navigate(`/${path1}/${path2}`);
+        }
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const resize = () => {

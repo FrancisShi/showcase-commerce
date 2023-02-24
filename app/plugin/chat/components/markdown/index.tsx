@@ -7,14 +7,18 @@ const temp = `<div style="position: relative; width: 100%; height: 100px; border
   src="https://cdn.shopify.com/s/files/1/0724/4188/9082/products/screenshot-20230222-170516.png?v=1677056793"
   alt=""
 />
-  <a href="https://showcase-commerce-049eb715bd4aa0080860.o2.myshopify.dev/products/vevelstad-bed-frame-white-180x200-cm">
+  <div onclick="(function(){
+    var e = new Event('mv_client_container_router');
+    e.detail='https://showcase-commerce-049eb715bd4aa0080860.o2.myshopify.dev/products/vevelstad-bed-frame-white-180x200-cm';
+    window.dispatchEvent(e);
+  })();">
     <div style="position: absolute;line-height:20px; height:40px; overflow:hidden; top:14px; left: 110px; font-size: 12px; color: #3D3D3D;">
       VEVELSTAD Bed frame, white, 180x200 cm131231231231312hellohellohellohellohello
     </div>
-  </a>
-<div style="position: absolute; bottom:17px; left: 110px; font-size: 16px; font-weight: bold; color: #3D3D3D;">
-  1833.00
-</div>
+  </div>
+  <div style="position: absolute; bottom:17px; left: 110px; font-size: 16px; font-weight: bold; color: #3D3D3D;">
+    1833.00
+  </div>
 </div>`;
 
 export interface MarkdownInterface {
