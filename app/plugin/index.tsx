@@ -310,7 +310,8 @@ function App(props: {
           style={{
             width: '100%',
             height: '100%',
-            paddingBottom: '64px',
+            paddingBottom: '70px',
+            paddingTop: '24px',
           }}
         >
           <ChatList
@@ -345,7 +346,7 @@ function App(props: {
             right: 0,
             paddingLeft: '17px',
             paddingRight: '17px',
-            height: '64px',
+            height: '70px',
             backgroundColor: '#343434',
             display: 'flex',
             flexDirection: 'column',

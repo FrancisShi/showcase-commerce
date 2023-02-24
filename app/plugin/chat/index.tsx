@@ -106,12 +106,12 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                   maxWidth: '90%',
                   backgroundColor: getColorBgLight(),
                   color: '#3D3D3D',
-                  marginBottom: '30px',
+                  marginBottom: '20px',
                   whiteSpace: 'normal',
                   wordBreak: 'break-all',
                   boxSizing: 'border-box',
                   borderRadius: '14px',
-                  padding: '16px',
+                  padding: '12px',
                   fontSize: '15px',
                 }}
                 key={index}
@@ -130,13 +130,13 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
               <div
                 style={{
                   display: 'flex',
-                  marginBottom: '30px',
+                  marginBottom: '20px',
                   maxWidth: '90%',
                   whiteSpace: 'normal',
                   wordBreak: 'break-all',
                   boxSizing: 'border-box',
                   borderRadius: '14px',
-                  padding: '16px',
+                  padding: '12px',
                   fontSize: '15px',
                   backgroundColor: '#F6F6F6',
                   color: '#3D3D3D',
@@ -177,12 +177,12 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           style={{
             ...{
               backgroundColor: '#F6F6F6',
-              marginBottom: '30px',
+              marginBottom: '20px',
               justifyContent: 'start',
               height: '54px',
               width: '120px',
               borderRadius: '14px',
-              padding: '16px',
+              padding: '12px',
               fontSize: '15px',
               display: isLoading ? 'inline-block' : 'none',
             },
