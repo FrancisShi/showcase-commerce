@@ -386,10 +386,10 @@ function App(props: {
       <div
         style={{
           position: 'fixed',
-          bottom: `20px`,
-          right: `20px`,
-          width: `${80}px`,
-          height: `${80}px`,
+          bottom: `0px`,
+          right: `17px`,
+          width: `${100}px`,
+          height: `${140}px`,
           zIndex: 50,
           visibility: isExpand ? 'hidden' : 'visible',
         }}
@@ -401,12 +401,8 @@ function App(props: {
           style={{
             position: 'absolute',
             objectFit: 'cover',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            borderColor: getColorBgDark(),
-            backgroundColor: getColorBgLight(),
-            borderWidth: '3px',
+            width: '100px',
+            height: '140px',
           }}
           src={userConfig.avatar}
           alt=""
