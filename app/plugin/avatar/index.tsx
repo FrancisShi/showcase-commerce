@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {CSSProperties} from 'react';
 import Picture from './picture';
 
 export interface ChatImgProps {
@@ -17,13 +17,14 @@ interface AvatarProps {
   data: {
     picture: string;
   };
+  style: CSSProperties;
 }
 
 export default function Avatar(props: AvatarProps) {
-  const {type, data} = props;
+  const {type, data, style} = props;
 
   if (type === TYPE_AVATAR.PICTURE) {
-    return <Picture picture={data.picture}></Picture>;
+    return <Picture style={style} picture={data.picture}></Picture>;
   } else {
     return null;
   }
