@@ -1,22 +1,22 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   WS_MIND_TYPE,
   WS_MSG_DATA_TYPE,
   WS_MSG_TYPE,
-} from '@mindverse/accessor-open/src/type';
-import {Config} from '@mindverse/accessor-open/src/env';
-import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
-import ChatList from './chat';
+} from "@mindverse/accessor-open/src/type";
+import { Config } from "@mindverse/accessor-open/src/env";
+import { Session, setConfig, userRegister } from "@mindverse/accessor-open";
+import ChatList from "./chat";
 import MessageItem, {
   isSameMessage,
   MessageItemType,
   transformNewMsg,
-} from './chat/model/message-item';
-import Avatar, {TYPE_AVATAR} from './avatar';
+} from "./chat/model/message-item";
+import Avatar, { TYPE_AVATAR } from "./avatar";
 
 const DEFAUT_CONFIG = {
-  COLOR_BG_DARK: 'rgba(115, 129, 137, 0.5)',
-  COLOR_BG_LIGHT: '#DEEFF9',
+  COLOR_BG_DARK: "rgba(115, 129, 137, 0.5)",
+  COLOR_BG_LIGHT: "#DEEFF9",
 };
 
 let colorBgDark: string = DEFAUT_CONFIG.COLOR_BG_DARK;
@@ -51,6 +51,10 @@ function App(props: {
   };
 }) {
   const mindConfig = props.config.mindConfig;
+  if (!mindConfig.mindId) {
+    return null;
+  }
+
   const socketConfig = props.config.socketConfig;
   const userConfig = props.config.userConfig;
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
@@ -60,7 +64,7 @@ function App(props: {
   const [height, setHeight] = useState(0);
 
   const sessionRef = useRef<Session>();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const msgListRef = useRef<MessageItem[]>([]);
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
@@ -68,57 +72,60 @@ function App(props: {
 
   // input 不改变网页大小
   useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.name = 'viewport';
+    const meta = document.createElement("meta");
+    meta.name = "viewport";
     meta.content =
-      'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no';
-    document.getElementsByTagName('head')[0].appendChild(meta);
+      "width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no";
+    document.getElementsByTagName("head")[0].appendChild(meta);
   }, []);
 
   // size 响应
   useEffect(() => {
     // 每次 resize 都会根据父类大小来定自身大小
     const resize = () => {
-      const parent = document.getElementById('mvMindContainer')?.parentElement;
+      const parent = document.getElementById("mvMindContainer")?.parentElement;
       setWidth(parent?.clientWidth ?? 400);
       setHeight(parent?.clientHeight ?? 800);
     };
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
   // 忽略背景滑动、点击
   useEffect(() => {
-    const fixedContainer = document.getElementById('mvMindContainer');
+    const fixedContainer = document.getElementById("mvMindContainer");
     const eventAreaStart = (e: TouchEvent | MouseEvent) => {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     };
     const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
     // pc
-    fixedContainer?.addEventListener('mouseenter', eventAreaStart, false);
-    fixedContainer?.addEventListener('mouseleave', eventAreaFinish, false);
+    fixedContainer?.addEventListener("mouseenter", eventAreaStart, false);
+    fixedContainer?.addEventListener("mouseleave", eventAreaFinish, false);
     // mobile
-    fixedContainer?.addEventListener('touchstart', eventAreaStart, false);
-    fixedContainer?.addEventListener('touchend', eventAreaFinish, false);
-    fixedContainer?.addEventListener('touchcancel', eventAreaFinish, false);
+    fixedContainer?.addEventListener("touchstart", eventAreaStart, false);
+    fixedContainer?.addEventListener("touchend", eventAreaFinish, false);
+    fixedContainer?.addEventListener("touchcancel", eventAreaFinish, false);
     return () => {
       // pc
-      fixedContainer?.removeEventListener('mouseenter', eventAreaStart);
-      fixedContainer?.removeEventListener('mouseleave', eventAreaFinish);
+      fixedContainer?.removeEventListener("mouseenter", eventAreaStart);
+      fixedContainer?.removeEventListener("mouseleave", eventAreaFinish);
       // mobile
-      fixedContainer?.removeEventListener('touchstart', eventAreaStart);
-      fixedContainer?.removeEventListener('touchend', eventAreaFinish);
-      fixedContainer?.removeEventListener('touchcancel', eventAreaFinish);
+      fixedContainer?.removeEventListener("touchstart", eventAreaStart);
+      fixedContainer?.removeEventListener("touchend", eventAreaFinish);
+      fixedContainer?.removeEventListener("touchcancel", eventAreaFinish);
     };
   }, []);
 
   // 初始化对话
   useEffect(() => {
+    sessionRef.current?.closeSession();
+    msgListRef.current = [];
+
     // createLongLink
     setConfig(socketConfig);
 
@@ -136,9 +143,9 @@ function App(props: {
     };
 
     userRegister(userConfig.userName, userConfig.avatar).then((res) => {
-      sessionRef.current = new Session()
+      sessionRef.current = new Session(666)
         .setOnMsgUpdateListener((msgList) => {
-          console.warn('更新msgList', msgList);
+          console.warn("更新msgList", msgList);
           if (msgList) {
             const remoteLastMsg = msgList[msgList.length - 1];
             const newMsg = transformNewMsg(remoteLastMsg);
@@ -154,7 +161,7 @@ function App(props: {
           }
         })
         .setOnSessionInvalidListener(() => {
-          console.error('Session Error');
+          console.error("Session Error");
         });
       openSession();
     });
@@ -164,22 +171,22 @@ function App(props: {
   // 如果后面要加动画的话
   useEffect(() => {
     if (!isExpand) {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
   }, [isExpand]);
 
   // 回车发送消息
   useEffect(() => {
-    const input = document.getElementById('mv_container_input');
+    const input = document.getElementById("mv_container_input");
     const pressEvent = (event: KeyboardEvent) => {
-      if (event.key == 'Enter') {
+      if (event.key == "Enter") {
         event.preventDefault();
         handleSendMsg(inputValue);
       }
     };
-    input?.addEventListener('keypress', pressEvent);
+    input?.addEventListener("keypress", pressEvent);
     return () => {
-      input?.removeEventListener('keypress', pressEvent);
+      input?.removeEventListener("keypress", pressEvent);
     };
   }, [inputValue]);
 
@@ -237,9 +244,9 @@ function App(props: {
 
   const handleSendMsg = (value: string) => {
     if (!value) return;
-    sessionRef.current?.sendMsg('text', {content: value});
+    sessionRef.current?.sendMsg("text", { content: value });
     setShowListLoading(true);
-    setInputValue('');
+    setInputValue("");
   };
 
   return (
@@ -247,37 +254,37 @@ function App(props: {
       <div
         id="mvMindContainer"
         style={{
-          position: 'fixed',
+          position: "fixed",
           bottom: 0,
           right: 0,
           width: `${width}px`,
           height: `${height}px`,
           backgroundColor: colorBgDark,
-          borderRadius: '4px',
+          borderRadius: "4px",
           zIndex: 50,
-          visibility: !isExpand ? 'hidden' : 'visible',
+          visibility: !isExpand ? "hidden" : "visible",
         }}
       >
         {/* close */}
         <div
           style={{
-            position: 'absolute',
-            right: '16px',
-            top: '-12px',
-            width: '24px',
-            height: '24px',
-            borderRadius: '50%',
-            background: '#EAEAEA',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            position: "absolute",
+            right: "16px",
+            top: "-12px",
+            width: "24px",
+            height: "24px",
+            borderRadius: "50%",
+            background: "#EAEAEA",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
           onClick={() => {
             setIsExpand(!isExpand);
           }}
         >
           <img
-            style={{width: '10px', height: '10px'}}
+            style={{ width: "10px", height: "10px" }}
             src="https://cdn.mindverse.com/img/zzzz202302231677132286094Vector.png"
             alt="close"
           />
@@ -286,15 +293,15 @@ function App(props: {
         {/* avatar */}
         <Avatar
           type={TYPE_AVATAR.PICTURE}
-          data={{picture: userConfig.avatar}}
+          data={{ picture: userConfig.avatar }}
         />
 
         <div
           style={{
-            width: '100%',
-            height: '100%',
-            paddingBottom: '90px',
-            paddingTop: '60px',
+            width: "100%",
+            height: "100%",
+            paddingBottom: "90px",
+            paddingTop: "60px",
           }}
         >
           <ChatList
@@ -307,36 +314,36 @@ function App(props: {
         {/* 底部输入框 */}
         <div
           style={{
-            position: 'absolute',
-            bottom: '0px',
+            position: "absolute",
+            bottom: "0px",
             left: 0,
             right: 0,
-            paddingLeft: '17px',
-            paddingRight: '17px',
-            height: '64px',
-            backgroundColor: '#000000',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
+            paddingLeft: "17px",
+            paddingRight: "17px",
+            height: "64px",
+            backgroundColor: "#000000",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <div style={{display: 'flex', width: '100%', marginTop: '17px'}}>
+          <div style={{ display: "flex", width: "100%", marginTop: "17px" }}>
             <input
               id="mv_container_input"
               enterKeyHint="send"
               style={{
-                paddingLeft: '22px',
-                paddingRight: '22px',
-                width: '100%',
-                height: '30px',
-                color: 'black',
-                outline: 'none',
-                fontSize: '12px',
-                borderRadius: '15px',
-                borderColor: '#000000',
-                borderWidth: '1px',
+                paddingLeft: "22px",
+                paddingRight: "22px",
+                width: "100%",
+                height: "30px",
+                color: "black",
+                outline: "none",
+                fontSize: "12px",
+                borderRadius: "15px",
+                borderColor: "#000000",
+                borderWidth: "1px",
               }}
-              placeholder={'Message'}
+              placeholder={"Message"}
               value={inputValue}
               onChange={(e: any) => setInputValue(e.target.value)}
             />
@@ -346,13 +353,13 @@ function App(props: {
 
       <div
         style={{
-          position: 'fixed',
+          position: "fixed",
           bottom: `20px`,
           right: `20px`,
           width: `${80}px`,
           height: `${80}px`,
           zIndex: 50,
-          visibility: isExpand ? 'hidden' : 'visible',
+          visibility: isExpand ? "hidden" : "visible",
         }}
         onClick={() => {
           setIsExpand(!isExpand);
@@ -360,14 +367,14 @@ function App(props: {
       >
         <img
           style={{
-            position: 'absolute',
-            objectFit: 'cover',
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
+            position: "absolute",
+            objectFit: "cover",
+            width: "80px",
+            height: "80px",
+            borderRadius: "50%",
             borderColor: getColorBgDark(),
             backgroundColor: getColorBgLight(),
-            borderWidth: '3px',
+            borderWidth: "3px",
           }}
           src={userConfig.avatar}
           alt=""
