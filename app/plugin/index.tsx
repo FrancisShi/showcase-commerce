@@ -61,7 +61,7 @@ function App(props: {
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
 
   const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const heightRef = useRef<number>(0);
 
   const sessionRef = useRef<Session>();
   const [inputValue, setInputValue] = useState('');
@@ -84,8 +84,8 @@ function App(props: {
     // 每次 resize 都会根据父类大小来定自身大小
     const resize = () => {
       const parent = document.getElementById('mvMindContainer')?.parentElement;
+      heightRef.current = parent?.clientHeight ?? 800;
       setWidth(parent?.clientWidth ?? 400);
-      setHeight(parent?.clientHeight ?? 800);
     };
     window.addEventListener('resize', resize);
     resize();
@@ -196,7 +196,16 @@ function App(props: {
     } else if (item.type === MessageItemType.SEND) {
       msgListRef.current = [...msgListRef.current, item];
     }
+    checkHeight();
   }
+
+  // scroll 需要给定高度
+  const checkHeight = () => {
+    const container = document.getElementById('mvMindContainer');
+    if (container && container?.clientHeight === heightRef.current) {
+      container.style.height = `${heightRef.current}px`;
+    }
+  };
 
   const appendReceivedMsg = (item: MessageItem) => {
     msgListRef.current = [...msgListRef.current, item];
@@ -258,7 +267,8 @@ function App(props: {
           bottom: 0,
           right: 0,
           width: `${width}px`,
-          height: `${height}px`,
+          minHeight: `${heightRef.current / 2}px`,
+          maxHeight: `${heightRef.current}px`,
           backgroundColor: colorBgDark,
           backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
