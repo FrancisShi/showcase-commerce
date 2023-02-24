@@ -277,6 +277,7 @@ function App(props: {
             width: '54px',
             borderRadius: '100px 100px 0 0',
             backgroundColor: getColorBgDark(),
+            cursor: 'pointer',
           }}
           onClick={() => {
             setIsExpand(!isExpand);
@@ -393,6 +394,7 @@ function App(props: {
           height: `${140}px`,
           zIndex: 50,
           visibility: isExpand ? 'hidden' : 'visible',
+          cursor: 'pointer',
         }}
         onClick={() => {
           setIsExpand(!isExpand);
