@@ -309,8 +309,7 @@ function App(props: {
           style={{
             width: '100%',
             height: '100%',
-            paddingBottom: '90px',
-            paddingTop: '60px',
+            paddingBottom: '64px',
           }}
         >
           <ChatList
