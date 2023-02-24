@@ -260,6 +260,7 @@ function App(props: {
           width: `${width}px`,
           height: `${height}px`,
           backgroundColor: colorBgDark,
+          backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
           zIndex: 50,
           visibility: !isExpand ? 'hidden' : 'visible',
