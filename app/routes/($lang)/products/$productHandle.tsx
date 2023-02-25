@@ -1,4 +1,4 @@
-import {type ReactNode, useRef, Suspense, useMemo} from 'react';
+import {type ReactNode, useRef, Suspense, useMemo, useEffect} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
@@ -127,24 +127,28 @@ export default function Product() {
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
-  const productUrl = `/products/${product.handle}`;
-  const productTitle = product.title;
+  useEffect(() => {
+    if (product) {
+      const productUrl = `/products/${product.handle}`;
+      const productTitle = product.title;
 
-  const firstVariant = product.variants.nodes[0];
-  const selectedVariant = product.selectedVariant ?? firstVariant;
+      const firstVariant = product.variants.nodes[0];
+      const selectedVariant = product.selectedVariant ?? firstVariant;
 
-  const productPrice = selectedVariant?.price?.amount;
-  const productDescription = product.description;
-  const productPic = product.media.nodes[0].previewImage?.url ?? '';
+      const productPrice = selectedVariant?.price?.amount;
+      const productDescription = product.description;
+      const productPic = product.media.nodes[0].previewImage?.url ?? '';
 
-  const mvProduct = {
-    productUrl,
-    productTitle,
-    productPrice,
-    productDescription,
-    productPic,
-  };
-  injectHook('product', mvProduct);
+      const mvProduct = {
+        productUrl,
+        productTitle,
+        productPrice,
+        productDescription,
+        productPic,
+      };
+      injectHook('product', mvProduct);
+    }
+  }, [product]);
 
   return (
     <>
