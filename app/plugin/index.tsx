@@ -307,7 +307,7 @@ function App(props: {
             <img
               style={{
                 position: 'absolute',
-                width: '44px',
+                width: '38px',
                 height: '20px',
                 top: '12px',
                 objectFit: 'cover',
