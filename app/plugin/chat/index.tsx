@@ -182,13 +182,14 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             ...{
               backgroundColor: '#F6F6F6',
               marginBottom: '70px',
-              justifyContent: 'start',
               height: '44px',
               width: '110px',
               borderRadius: '14px',
               padding: '12px',
               fontSize: '15px',
-              display: isLoading ? 'inline-block' : 'none',
+              display: isLoading ? 'flex' : 'none',
+              alignItems: 'center',
+              justifyContent: 'center',
             },
           }}
         >
@@ -199,7 +200,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             style={{
               width: '20px',
               height: '20px',
-              marginLeft: '32px',
             }}
             alt=""
           />
