@@ -48,6 +48,7 @@ function App(props: {
     userConfig: UserConfig;
     bgDark?: string;
     bgLight?: string;
+    dynamicHeight?: boolean;
   };
 }) {
   const mindConfig = props.config.mindConfig;
@@ -59,6 +60,7 @@ function App(props: {
   const userConfig = props.config.userConfig;
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
+  const dynamicHeight = props.config?.dynamicHeight ?? false;
 
   const [width, setWidth] = useState(0);
   const heightRef = useRef<number>(0);
@@ -269,6 +271,7 @@ function App(props: {
           width: `${width}px`,
           minHeight: `${heightRef.current / 2}px`,
           maxHeight: `${heightRef.current}px`,
+          height: dynamicHeight ? 'auto' : `${heightRef.current}px`,
           backgroundColor: colorBgDark,
           backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
