@@ -70,7 +70,7 @@ function App(props: {
   const msgListRef = useRef<MessageItem[]>([]);
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
-  const [isExpand, setIsExpand] = useState(true);
+  const [isExpand, setIsExpand] = useState(false);
 
   // input 不改变网页大小
   useEffect(() => {
@@ -175,6 +175,9 @@ function App(props: {
     if (!isExpand) {
       document.body.style.overflow = '';
     }
+    const e = new Event('MV_CONTAINER_EVENT_IS_EXPAND');
+    e.detail = isExpand;
+    window.dispatchEvent(e);
   }, [isExpand]);
 
   // 回车发送消息
