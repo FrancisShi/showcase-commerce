@@ -176,6 +176,7 @@ function App(props: {
       document.body.style.overflow = '';
     }
     const e = new Event('MV_CONTAINER_EVENT_IS_EXPAND');
+    // @ts-ignore
     e.detail = isExpand;
     window.dispatchEvent(e);
   }, [isExpand]);
