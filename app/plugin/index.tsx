@@ -63,6 +63,7 @@ function App(props: {
   const dynamicHeight = props.config?.dynamicHeight ?? false;
 
   const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
   const heightRef = useRef<number>(0);
 
   const sessionRef = useRef<Session>();
@@ -88,6 +89,7 @@ function App(props: {
       const parent = document.getElementById('mvMindContainer')?.parentElement;
       heightRef.current = parent?.clientHeight ?? 800;
       setWidth(parent?.clientWidth ?? 400);
+      setHeight(parent?.clientHeight ?? 800);
       console.log("resize method called", parent, parent?.clientWidth, parent?.clientHeight)
     };
     window.addEventListener('resize', resize);
@@ -275,9 +277,9 @@ function App(props: {
           bottom: 0,
           right: 0,
           width: `${width}px`,
-          minHeight: `${heightRef.current / 2}px`,
-          maxHeight: `${heightRef.current}px`,
-          height: dynamicHeight ? 'auto' : `${heightRef.current}px`,
+          minHeight: `${height / 2}px`,
+          maxHeight: `${height}px`,
+          height: dynamicHeight ? 'auto' : `${height}px`,
           backgroundColor: colorBgDark,
           backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
@@ -331,7 +333,7 @@ function App(props: {
           style={{
             width: '100%',
             height: '100%',
-            maxHeight: `${heightRef.current - 94}px`,
+            maxHeight: `${height - 94}px`,
             marginBottom: '70px',
             marginTop: '24px',
           }}
