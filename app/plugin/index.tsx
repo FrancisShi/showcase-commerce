@@ -88,8 +88,13 @@ function App(props: {
       const parent = document.getElementById('mvMindContainer')?.parentElement;
       heightRef.current = parent?.clientHeight ?? 800;
       setWidth(parent?.clientWidth ?? 400);
+      console.log("resize method called", parent, parent?.clientWidth, parent?.clientHeight)
     };
     window.addEventListener('resize', resize);
+
+    window.addEventListener('message', (e)=>{
+      console.log("iFrame receive message~", e)
+    });
     resize();
     return () => {
       window.removeEventListener('resize', resize);
@@ -175,10 +180,7 @@ function App(props: {
     if (!isExpand) {
       document.body.style.overflow = '';
     }
-    const e = new Event('MV_CONTAINER_EVENT_IS_EXPAND');
-    // @ts-ignore
-    e.detail = isExpand;
-    window.dispatchEvent(e);
+    window.parent.postMessage(`MV_CONTAINER_EVENT_IS_EXPAND.${isExpand}`, "*")
   }, [isExpand]);
 
   // 回车发送消息
