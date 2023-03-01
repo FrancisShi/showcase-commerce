@@ -15,7 +15,7 @@ export default function Loading({style}: {style: CSSProperties}) {
     addAnimation(`
     @keyframes circle{
       0%{
-          top:25px;
+          top:28px;
           height:5px;
           border-radius: 50px 50px 25px 25px;
           transform: scaleX(1.5);
@@ -30,6 +30,22 @@ export default function Loading({style}: {style: CSSProperties}) {
       }
   }
   `);
+
+    addAnimation(`
+      @keyframes shadow{
+        0%{
+            transform: scaleX(1.5);
+        }
+        40%{
+            transform: scaleX(1);
+            opacity: .7;
+        }
+        100%{
+            transform: scaleX(.2);
+            opacity: .4;
+        }
+    }
+`);
   }, []);
   return (
     <div
@@ -54,6 +70,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           borderRadius: '50%',
           backgroundColor: '#fff',
           left: '20%',
+          zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
         }}
@@ -66,6 +83,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           borderRadius: '50%',
           backgroundColor: '#fff',
           left: '45%',
+          zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
           animationDelay: '.2s',
@@ -79,8 +97,60 @@ export default function Loading({style}: {style: CSSProperties}) {
           borderRadius: '50%',
           backgroundColor: '#fff',
           left: '75%',
+          zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
+          animationDelay: '.3s',
+        }}
+      />
+
+      {/* shadow */}
+      <div
+        style={{
+          width: '6px',
+          height: '3px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(0,0,0,.5)',
+          position: 'absolute',
+          top: '31px',
+          transformOrigin: '50%',
+          zIndex: 1,
+          left: '21%',
+          filter: `blur(1px)`,
+          animation: `shadow .5s alternate infinite ease`,
+        }}
+      />
+
+      <div
+        style={{
+          width: '6px',
+          height: '3px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(0,0,0,.5)',
+          position: 'absolute',
+          top: '31px',
+          transformOrigin: '50%',
+          zIndex: 1,
+          left: '47%',
+          filter: `blur(1px)`,
+          animation: `shadow .5s alternate infinite ease`,
+          animationDelay: '.2s',
+        }}
+      />
+
+      <div
+        style={{
+          width: '6px',
+          height: '3px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(0,0,0,.5)',
+          position: 'absolute',
+          top: '31px',
+          transformOrigin: '50%',
+          zIndex: 1,
+          left: '77%',
+          filter: `blur(1px)`,
+          animation: `shadow .5s alternate infinite ease`,
           animationDelay: '.3s',
         }}
       />
