@@ -97,7 +97,7 @@ export function Container({...props}: {[key: string]: any}) {
               mindType: WS_MIND_TYPE.original,
             },
             socketConfig: {
-              apiVersion: '1.2.0',
+              apiVersion: '1.3.0',
               platform: 'Saas',
               appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
               bizType: 'SAAS',
