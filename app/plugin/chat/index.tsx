@@ -10,6 +10,7 @@ import ChatImg from './components/img';
 import ChatText from './components/text';
 import ChatHtml from './components/html';
 import ChatTemplate from './components/template';
+import Loading from './components/loading';
 import MessageItem, {
   ChatListItem,
   flatMessages,
@@ -187,33 +188,12 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         {renderItemList()}
 
         {/* loading */}
-        <div
+        <Loading
           style={{
-            ...{
-              backgroundColor: '#F6F6F6',
-              marginBottom: '70px',
-              height: '44px',
-              width: '110px',
-              borderRadius: '14px',
-              padding: '12px',
-              fontSize: '15px',
-              display: isLoading ? 'flex' : 'none',
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
+            backgroundColor: getColorBgLight(),
+            display: isLoading ? 'flex' : 'none',
           }}
-        >
-          <img
-            src={
-              'https://cdn.mindverse.com/files/zzzz202302161676550136968loading-loading-forever.gif'
-            }
-            style={{
-              width: '20px',
-              height: '20px',
-            }}
-            alt=""
-          />
-        </div>
+        />
       </div>
     );
   },
