@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, CSSProperties} from 'react';
 import {
   WS_MIND_TYPE,
   WS_MSG_DATA_TYPE,
@@ -49,6 +49,8 @@ function App(props: {
     bgDark?: string;
     bgLight?: string;
     dynamicHeight?: boolean;
+    openStyle?: CSSProperties;
+    closeStyle?: CSSProperties;
   };
 }) {
   const mindConfig = props.config.mindConfig;
@@ -61,6 +63,8 @@ function App(props: {
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
   const dynamicHeight = props.config?.dynamicHeight ?? false;
+  const openStyle = props.config?.openStyle ?? {};
+  const closeStyle = props.config?.closeStyle ?? {};
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -285,6 +289,7 @@ function App(props: {
           borderRadius: '4px',
           zIndex: 50,
           visibility: !isExpand ? 'hidden' : 'visible',
+          ...openStyle
         }}
       >
         {/* 返回框 */}
@@ -417,6 +422,7 @@ function App(props: {
           zIndex: 50,
           visibility: isExpand ? 'hidden' : 'visible',
           cursor: 'pointer',
+          ...closeStyle
         }}
         onClick={() => {
           setIsExpand(!isExpand);
