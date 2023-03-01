@@ -4,6 +4,7 @@ import {
   WS_MSG_CLIENT_TYPE,
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
+  WS_MSG_MULTIPLE_TEMPLATE,
 } from '@mindverse/accessor-open/src/type';
 
 export enum MessageItemType {
@@ -63,6 +64,7 @@ export interface ChatListItem {
   type: MessageItemType; // 消息类型是接受还是发送
   singleDataType: WS_MSG_DATA_TYPE; // 单条消息的类型
   content: string;
+  template?: WS_MSG_MULTIPLE_TEMPLATE | undefined;
   sources: string[];
 }
 
@@ -77,6 +79,7 @@ export const flatMessages = (originSource: MessageItem[]) => {
       case MessageItemType.RECEIVE:
         msgItem.multipleData.forEach((singleData) => {
           let content: string | undefined;
+          let template: WS_MSG_MULTIPLE_TEMPLATE | undefined;
           switch (singleData.singleDataType) {
             case WS_MSG_DATA_TYPE.text:
               content = singleData.modal.answer;
@@ -90,17 +93,24 @@ export const flatMessages = (originSource: MessageItem[]) => {
             case WS_MSG_DATA_TYPE.html:
               content = singleData.modal.html;
               break;
+            case WS_MSG_DATA_TYPE.template:
+              template = singleData.modal.template;
+              break;
             default:
               break;
           }
 
-          if ((content?.length ?? 0) === 0) {
+          if (
+            content === undefined ||
+            (typeof content === 'string' && content.length === 0)
+          ) {
             return;
           }
           const newItem: ChatListItem = {
             type: msgItem.type,
             singleDataType: singleData.singleDataType,
             content: content ?? '',
+            template: template ?? undefined,
             sources: msgItem.sources ?? [],
           };
 

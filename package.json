@@ -15,7 +15,7 @@
   "prettier": "@shopify/prettier-config",
   "dependencies": {
     "@headlessui/react": "^1.7.2",
-    "@mindverse/accessor-open": "^0.5.4",
+    "@mindverse/accessor-open": "^0.5.5",
     "@mindverse/container": "^1.1.15",
     "@remix-run/react": "1.12.0",
     "@shopify/cli": "3.29.0",

@@ -1522,10 +1522,19 @@
     blueimp-md5 "^2.19.0"
     uuid "^9.0.0"
 
-"@mindverse/container@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.1.13.tgz#d4189369ee40314af2c3cb3505ac55041623dbde"
-  integrity sha512-ODgZTZDOL7HdMgJ1TZSeoxx71TGzfr1wvf2xKz145BypnVwvCueKfX7oTIGAeqlanvc57tu2duSaJU4MNotfGg==
+"@mindverse/accessor-open@^0.5.5":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.5.tgz#7242b9b42479a9b2f14028e7a5b7d98d17c52d46"
+  integrity sha512-WNUElXUKBs2sL3HWWxFh7hQ+MdTM1gGq2G6V72+2EVjUGNxsXcVQyqpHGnNetK+P24Pzd6osQ1LD4jYIpM3ZTw==
+  dependencies:
+    axios "^0.27.2"
+    blueimp-md5 "^2.19.0"
+    uuid "^9.0.0"
+
+"@mindverse/container@^1.1.15":
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.1.15.tgz#7c4ed0c12bb0cf1c416036f0577297c712788761"
+  integrity sha512-QtAj2F4/HaAtL7a/EPwQ5QR6mtQ52oZOgGgEds3gfaIUX/goWKjRrf4t26SNpmFQQzI2wAZJhmTbuq8Yw1r9Gw==
   dependencies:
     "@mindverse/accessor-open" "^0.5.4"
     showdown "^2.1.0"

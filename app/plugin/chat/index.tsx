@@ -9,6 +9,7 @@ import ChatLink from './components/link';
 import ChatImg from './components/img';
 import ChatText from './components/text';
 import ChatHtml from './components/html';
+import ChatTemplate from './components/template';
 import MessageItem, {
   ChatListItem,
   flatMessages,
@@ -17,6 +18,7 @@ import MessageItem, {
 import {
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
+  WS_MSG_MULTIPLE_TEMPLATE,
 } from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
 
@@ -58,6 +60,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
       const receiveItemDetail = (
         type: WS_MSG_DATA_TYPE,
         content: string,
+        template: WS_MSG_MULTIPLE_TEMPLATE | undefined,
         sources?: string[],
       ) => {
         switch (type) {
@@ -69,6 +72,12 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             return <ChatText content={content} sources={sources}></ChatText>;
           case WS_MSG_DATA_TYPE.html:
             return <ChatHtml content={content}></ChatHtml>;
+          case WS_MSG_DATA_TYPE.template:
+            if (template) {
+              return <ChatTemplate template={template}></ChatTemplate>;
+            } else {
+              return null;
+            }
           default:
             return null;
         }
@@ -94,6 +103,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           const result = receiveItemDetail(
             item.singleDataType,
             item.content,
+            item.template,
             item.sources,
           );
           if (result) {
