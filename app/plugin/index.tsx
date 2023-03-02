@@ -13,6 +13,7 @@ import MessageItem, {
   transformNewMsg,
 } from './chat/model/message-item';
 import Avatar, {TYPE_AVATAR} from './avatar';
+import ShortChat from './chat/shortchat';
 
 export const EVENT = {
   EVENT_ROUTER: 'mv_client_container_router',
@@ -93,6 +94,17 @@ function App(props: {
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
   const [isExpand, setIsExpand] = useState(false);
+
+  const shortMsgRef = useRef<boolean>(true);
+
+  useEffect(() => {
+    if (shortMsgRef.current && msgListRef.current.length > 0) {
+      setTimeout(() => {
+        shortMsgRef.current = false;
+        updateState({});
+      }, 5000);
+    }
+  }, [msgListRef.current]);
 
   // input 不改变网页大小
   useEffect(() => {
@@ -368,6 +380,7 @@ function App(props: {
           </div>
         </div>
 
+        {/* 聊天框 */}
         <div
           style={{
             width: '100%',
@@ -450,8 +463,8 @@ function App(props: {
         style={{
           position: 'fixed',
           bottom: `0px`,
-          right: `17px`,
-          width: `${100}px`,
+          right: `0px`,
+          width: `${width}px`,
           height: `${140}px`,
           zIndex: 50,
           visibility: isExpand ? 'hidden' : 'visible',
@@ -460,18 +473,34 @@ function App(props: {
         }}
         onClick={() => {
           setIsExpand(!isExpand);
+          shortMsgRef.current = false;
         }}
       >
         <img
           style={{
             position: 'absolute',
             objectFit: 'cover',
+            left: '17px',
             width: '100px',
             height: '140px',
           }}
           src={userConfig.avatar}
           alt=""
         />
+
+        {/* 简短消息 */}
+        {shortMsgRef.current && msgListRef.current.length > 0 && (
+          <ShortChat
+            msgItem={msgListRef.current[msgListRef.current.length - 1]}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '127px',
+              backgroundColor: getColorBgLight(),
+              marginRight: '20px',
+            }}
+          />
+        )}
       </div>
     </>
   );
