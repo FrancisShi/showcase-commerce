@@ -4,7 +4,6 @@ import {
   WS_MSG_CLIENT_TYPE,
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
-  WS_MSG_MULTIPLE_TEMPLATE,
 } from '@mindverse/accessor-open/src/type';
 
 export enum MessageItemType {
@@ -64,22 +63,19 @@ export interface ChatListItem {
   type: MessageItemType; // 消息类型是接受还是发送
   singleDataType: WS_MSG_DATA_TYPE; // 单条消息的类型
   content: string;
-  template?: WS_MSG_MULTIPLE_TEMPLATE | undefined;
   sources: string[];
 }
 
 export const flatMessages = (originSource: MessageItem[]) => {
-  const msgList: ChatListItem[] = [];
+  const msgList: ChatListItem[][] = [];
 
-  const msgCache: Record<string, ChatListItem> = {};
+  const msgCache: Record<string, ChatListItem[]> = {};
 
-  // 解析结构内容
   originSource.forEach((msgItem) => {
     switch (msgItem.type) {
       case MessageItemType.RECEIVE:
         msgItem.multipleData.forEach((singleData) => {
           let content: string | undefined;
-          let template: WS_MSG_MULTIPLE_TEMPLATE | undefined;
           switch (singleData.singleDataType) {
             case WS_MSG_DATA_TYPE.text:
               content = singleData.modal.answer;
@@ -94,7 +90,7 @@ export const flatMessages = (originSource: MessageItem[]) => {
               content = singleData.modal.html;
               break;
             case WS_MSG_DATA_TYPE.template:
-              template = singleData.modal.template;
+              content = singleData.modal.template;
               break;
             default:
               break;
@@ -110,53 +106,77 @@ export const flatMessages = (originSource: MessageItem[]) => {
             type: msgItem.type,
             singleDataType: singleData.singleDataType,
             content: content ?? '',
-            template: template ?? undefined,
             sources: msgItem.sources ?? [],
           };
 
           if (msgItem.messageId && msgItem.messageId.length > 0) {
             if (
               msgCache[msgItem.messageId] &&
-              msgCache[msgItem.messageId].singleDataType ===
-                WS_MSG_DATA_TYPE.text
+              msgCache[msgItem.messageId].length > 0
             ) {
-              msgCache[msgItem.messageId].content =
-                msgCache[msgItem.messageId].content + newItem.content;
-              msgCache[msgItem.messageId].sources = Array.from(
-                new Set([
-                  ...msgCache[msgItem.messageId].sources,
-                  ...newItem.sources,
-                ]),
-              );
-            } else {
-              if (newItem.singleDataType === WS_MSG_DATA_TYPE.text) {
-                msgCache[msgItem.messageId] = newItem;
+              // 已有同一个 messageId
+              if (
+                msgCache[msgItem.messageId][
+                  msgCache[msgItem.messageId].length - 1
+                ].singleDataType === WS_MSG_DATA_TYPE.text &&
+                newItem.singleDataType === WS_MSG_DATA_TYPE.text
+              ) {
+                // 最近的一条消息和新来的消息都是 text
+                msgCache[msgItem.messageId][
+                  msgCache[msgItem.messageId].length - 1
+                ].content =
+                  msgCache[msgItem.messageId][
+                    msgCache[msgItem.messageId].length - 1
+                  ].content + newItem.content;
+                msgCache[msgItem.messageId][
+                  msgCache[msgItem.messageId].length - 1
+                ].sources = Array.from(
+                  new Set([
+                    ...msgCache[msgItem.messageId][
+                      msgCache[msgItem.messageId].length - 1
+                    ].sources,
+                    ...newItem.sources,
+                  ]),
+                );
+              } else {
+                // 最近的一条消息和新来的消息不都是 text
+                msgCache[msgItem.messageId].push(newItem);
               }
-              msgList.push(newItem);
+            } else {
+              // 没有缓存过的 messageId
+              if (newItem.singleDataType === WS_MSG_DATA_TYPE.text) {
+                msgCache[msgItem.messageId] = [newItem];
+              }
+              // 新增引用
+              msgList.push(msgCache[msgItem.messageId]);
             }
           } else {
-            msgList.push(newItem);
+            // 没有 messageId，非正常消息？
+            msgList.push([newItem]);
           }
         });
         break;
       case MessageItemType.SEND:
-        msgList.push({
-          type: msgItem.type,
-          singleDataType: WS_MSG_DATA_TYPE.text,
-          content: msgItem.data.content,
-          sources: [],
-        });
+        msgList.push([
+          {
+            type: msgItem.type,
+            singleDataType: WS_MSG_DATA_TYPE.text,
+            content: msgItem.data.content,
+            sources: [],
+          },
+        ]);
         break;
       case MessageItemType.SYSTEM:
-        msgList.push({
-          type: msgItem.type,
-          singleDataType: WS_MSG_DATA_TYPE.text,
-          content: msgItem.dividerContent ?? '',
-          sources: [],
-        });
+        msgList.push([
+          {
+            type: msgItem.type,
+            singleDataType: WS_MSG_DATA_TYPE.text,
+            content: msgItem.dividerContent ?? '',
+            sources: [],
+          },
+        ]);
         break;
     }
-    return msgList;
   });
 
   return msgList;

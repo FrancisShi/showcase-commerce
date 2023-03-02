@@ -16,11 +16,7 @@ import MessageItem, {
   flatMessages,
   MessageItemType,
 } from './model/message-item';
-import {
-  WS_MSG_DATA_TYPE,
-  WS_MSG_MULTIPLE_DATA,
-  WS_MSG_MULTIPLE_TEMPLATE,
-} from '@mindverse/accessor-open/src/type';
+import {WS_MSG_DATA_TYPE} from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
 
 export interface ChatListProps {
@@ -32,7 +28,7 @@ export interface ChatListProps {
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
     const {id = 'msgList', msgList, isLoading} = props;
-    const flatMessageList = useRef<ChatListItem[]>([]);
+    const flatMessageList = useRef<ChatListItem[][]>([]);
     const [random, setRandom] = useState<number>();
 
     function scrollToBottom() {
@@ -61,7 +57,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
       const receiveItemDetail = (
         type: WS_MSG_DATA_TYPE,
         content: string,
-        template: WS_MSG_MULTIPLE_TEMPLATE | undefined,
         sources?: string[],
       ) => {
         switch (type) {
@@ -74,11 +69,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           case WS_MSG_DATA_TYPE.html:
             return <ChatHtml content={content}></ChatHtml>;
           case WS_MSG_DATA_TYPE.template:
-            if (template) {
-              return <ChatTemplate template={template}></ChatTemplate>;
-            } else {
-              return null;
-            }
+            return <ChatTemplate content={content}></ChatTemplate>;
           default:
             return null;
         }
@@ -99,78 +90,108 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         );
       };
 
-      const renderItems = flatMessageList.current.map((item, index) => {
-        if (item.type === MessageItemType.RECEIVE) {
-          const result = receiveItemDetail(
-            item.singleDataType,
-            item.content,
-            item.template,
-            item.sources,
-          );
-          if (result) {
-            return (
-              // 接受消息，wrapper
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'start',
-                  maxWidth: '90%',
-                  backgroundColor: getColorBgLight(),
-                  color: '#3D3D3D',
-                  marginBottom:
-                    index === flatMessageList.current.length - 1 && !isLoading
-                      ? '70px'
-                      : '20px',
-                  whiteSpace: 'normal',
-                  wordBreak: 'break-word',
-                  boxSizing: 'border-box',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '15px',
-                }}
-                key={index}
-              >
-                {result}
-              </div>
+      const receiveWrapView = (
+        result: (JSX.Element | null)[],
+        index: number,
+      ) => {
+        return (
+          // 接受消息，wrapper
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'start',
+              maxWidth: '90%',
+              backgroundColor: getColorBgLight(),
+              color: '#3D3D3D',
+              marginBottom:
+                index === flatMessageList.current.length - 1 && !isLoading
+                  ? '70px'
+                  : '20px',
+              whiteSpace: 'normal',
+              wordBreak: 'break-word',
+              boxSizing: 'border-box',
+              borderRadius: '14px',
+              padding: '12px',
+              fontSize: '15px',
+            }}
+            key={index}
+          >
+            {result}
+          </div>
+        );
+      };
+
+      console.log('Francis flatMessageList', flatMessageList);
+      return flatMessageList.current.map((item, index) => {
+        if (!item) {
+          return null;
+        } else if (item.length > 1) {
+          // 多个不同类型的消息同一个 messageId
+          // 一定是 receive 的
+          const itemsView = item.map((singleItem) => {
+            return receiveItemDetail(
+              singleItem.singleDataType,
+              singleItem.content,
+              singleItem.sources,
             );
+          });
+          return receiveWrapView(itemsView, index);
+        } else if (item.length === 1) {
+          const singleItem = item[0];
+          if (singleItem) {
+            if (singleItem.type === MessageItemType.RECEIVE) {
+              const result = receiveItemDetail(
+                singleItem.singleDataType,
+                singleItem.content,
+                singleItem.sources,
+              );
+              if (result) {
+                return receiveWrapView([result], index);
+              } else {
+                return <></>;
+              }
+            } else if (singleItem.type === MessageItemType.SEND) {
+              // 发送消息
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <div style={{display: 'flex', justifyContent: 'end'}}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      marginBottom:
+                        index === flatMessageList.current.length - 1 &&
+                        !isLoading
+                          ? '70px'
+                          : '20px',
+                      maxWidth: '90%',
+                      whiteSpace: 'normal',
+                      wordBreak: 'break-word',
+                      boxSizing: 'border-box',
+                      borderRadius: '14px',
+                      padding: '12px',
+                      fontSize: '15px',
+                      backgroundColor: '#F6F6F6',
+                      color: '#3D3D3D',
+                    }}
+                    key={index}
+                  >
+                    <ChatText content={singleItem.content ?? ''}></ChatText>
+                  </div>
+                </div>
+              );
+            } else if (singleItem.type === MessageItemType.SYSTEM) {
+              return divider(singleItem.content ?? '', index);
+            } else {
+              return null;
+            }
           } else {
-            return <></>;
+            return null;
           }
-        } else if (item.type === MessageItemType.SEND) {
-          // 发送消息
-          return (
-            // eslint-disable-next-line react/jsx-key
-            <div style={{display: 'flex', justifyContent: 'end'}}>
-              <div
-                style={{
-                  display: 'flex',
-                  marginBottom:
-                    index === flatMessageList.current.length - 1 && !isLoading
-                      ? '70px'
-                      : '20px',
-                  maxWidth: '90%',
-                  whiteSpace: 'normal',
-                  wordBreak: 'break-word',
-                  boxSizing: 'border-box',
-                  borderRadius: '14px',
-                  padding: '12px',
-                  fontSize: '15px',
-                  backgroundColor: '#F6F6F6',
-                  color: '#3D3D3D',
-                }}
-                key={index}
-              >
-                <ChatText content={item.content ?? ''}></ChatText>
-              </div>
-            </div>
-          );
-        } else if (item.type === MessageItemType.SYSTEM) {
-          return divider(item.content ?? '', index);
         } else {
           return null;
         }
       });
-      return renderItems;
     }
 
     return (

@@ -2,11 +2,11 @@ import React from 'react';
 import {WS_MSG_MULTIPLE_TEMPLATE} from '@mindverse/accessor-open/src/type';
 
 export interface TemplateInterface {
-  template: WS_MSG_MULTIPLE_TEMPLATE;
+  content: string;
 }
 
 export default function Template(props: TemplateInterface) {
-  const {template} = props;
+  const {content} = props;
 
   const clickTemplate = (link: string) => {
     const e = new Event('mv_client_container_router');
@@ -17,11 +17,18 @@ export default function Template(props: TemplateInterface) {
     // 增加 script 接入的形式，通过 a 链接跳转
   };
 
+  const template = JSON.parse(content) as WS_MSG_MULTIPLE_TEMPLATE;
+  if (!template) {
+    return null;
+  }
+
   if (template.templateName === 'shopifyCard') {
     const data = template.params;
 
     return (
-      <div style={{marginBottom: '10px'}}>
+      <div
+        style={{marginBottom: '10px', marginTop: '10px', position: 'relative'}}
+      >
         <div
           onClick={() => clickTemplate(data.link)}
           style={{
@@ -57,6 +64,7 @@ export default function Template(props: TemplateInterface) {
             left: '110px',
             fontSize: '12px',
             color: '#3D3D3D',
+            wordBreak: 'break-all',
           }}
         >
           {data.title}
