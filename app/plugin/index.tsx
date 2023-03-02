@@ -226,12 +226,19 @@ function App(props: {
     const closeAvatar = () => {
       setIsExpand(false);
     };
+    const eventRouter = () => {
+      // 商品卡跳转了，展示新的短消息
+      shortMsgRef.current = true;
+    };
     window.addEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
     window.addEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+
+    window.addEventListener(EVENT.EVENT_ROUTER, eventRouter);
 
     return () => {
       window.removeEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
       window.removeEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+      window.removeEventListener(EVENT.EVENT_ROUTER, eventRouter);
     };
   }, [isExpand]);
 
