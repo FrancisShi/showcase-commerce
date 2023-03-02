@@ -2,7 +2,7 @@
  * 业务接入样例
  */
 import {useEffect, useRef, useState} from 'react';
-import App from '../index';
+import App, {DevelopType, EVENT} from '../index';
 // import App from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
 import request from './request';
@@ -20,7 +20,7 @@ export function Container({...props}: {[key: string]: any}) {
   const [refUserId, setRefUserId] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
-    window.addEventListener('mv_client_container_router', (e) => {
+    window.addEventListener(EVENT.EVENT_ROUTER, (e) => {
       // @ts-ignore
       const router = e.detail;
       if (router) {
@@ -122,6 +122,7 @@ export function Container({...props}: {[key: string]: any}) {
                 'https://cdn.mindverse.com/img/zzzz202302211676948571901%E5%BF%83%E8%AF%86%E5%BC%95%E5%AF%BC%E5%91%98.png',
             },
             dynamicHeight: true,
+            developType: DevelopType.NPM,
           }}
         />
       )}

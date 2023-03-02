@@ -16,6 +16,8 @@ import Avatar, {TYPE_AVATAR} from './avatar';
 
 export const EVENT = {
   EVENT_ROUTER: 'mv_client_container_router',
+  EVENT_AVATAR_OPEN: 'MV_CONTAINER_EVENT_IS_EXPAND.true',
+  EVENT_AVATAR_CLOSE: 'MV_CONTAINER_EVENT_IS_EXPAND.false',
 };
 export interface MindConfig {
   mindId: string;
@@ -200,7 +202,25 @@ function App(props: {
     if (!isExpand) {
       document.body.style.overflow = '';
     }
-    window.parent.postMessage(`MV_CONTAINER_EVENT_IS_EXPAND.${isExpand}`, '*');
+    if (isExpand) {
+      window.parent.postMessage(EVENT.EVENT_AVATAR_OPEN, '*');
+    } else {
+      window.parent.postMessage(EVENT.EVENT_AVATAR_CLOSE, '*');
+    }
+
+    const openAvatar = () => {
+      setIsExpand(true);
+    };
+    const closeAvatar = () => {
+      setIsExpand(false);
+    };
+    window.addEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
+    window.addEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+
+    return () => {
+      window.removeEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
+      window.removeEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+    };
   }, [isExpand]);
 
   // 回车发送消息

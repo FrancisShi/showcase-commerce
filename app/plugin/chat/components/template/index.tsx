@@ -24,6 +24,10 @@ export default function Template(props: TemplateInterface) {
       // @ts-ignore
       e.detail = link;
       window.dispatchEvent(e);
+
+      // 关闭 avatar
+      const event = new Event(EVENT.EVENT_AVATAR_CLOSE);
+      window.dispatchEvent(event);
     }
   };
 
