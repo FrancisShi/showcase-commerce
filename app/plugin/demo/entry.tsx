@@ -3,7 +3,7 @@
  */
 import {useEffect, useRef, useState} from 'react';
 import App, {DevelopType, EVENT} from '../index';
-// import App from '@mindverse/container';
+// import App, {DevelopType, EVENT} from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
 import request from './request';
 import {Config} from '@mindverse/accessor-open/src/env';

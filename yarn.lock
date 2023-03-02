@@ -1513,15 +1513,6 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@mindverse/accessor-open@^0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.4.tgz#9b0b11c61612d5eb09e320a03b4195868fc29621"
-  integrity sha512-PEoIIYYfm8QPyYbF7VkbMLU9TrL9VnSrGObMdjvcs7OnyLNitGBfZbnazepoOZTpHYpY5ubWXtSjkOrbR8Epag==
-  dependencies:
-    axios "^0.27.2"
-    blueimp-md5 "^2.19.0"
-    uuid "^9.0.0"
-
 "@mindverse/accessor-open@^0.5.6":
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.6.tgz#5271ca2dafee177a696ff629f29d1a4339fb3e9f"
@@ -1531,12 +1522,12 @@
     blueimp-md5 "^2.19.0"
     uuid "^9.0.0"
 
-"@mindverse/container@^1.1.15":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.1.15.tgz#7c4ed0c12bb0cf1c416036f0577297c712788761"
-  integrity sha512-QtAj2F4/HaAtL7a/EPwQ5QR6mtQ52oZOgGgEds3gfaIUX/goWKjRrf4t26SNpmFQQzI2wAZJhmTbuq8Yw1r9Gw==
+"@mindverse/container@^1.1.16":
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.1.16.tgz#1f3b4ae2c42b16cf9d058a09b7faafd716133575"
+  integrity sha512-TXDTrpKTntqbP0Li1Watq6uhoUIRzPUhB+6bgbmcBEeFbZrh5/fssi/yJRuEh8yblDkApcXauQGHGCPoi7Rzug==
   dependencies:
-    "@mindverse/accessor-open" "^0.5.4"
+    "@mindverse/accessor-open" "^0.5.6"
     showdown "^2.1.0"
 
 "@miniflare/cache@^2.10.0":
