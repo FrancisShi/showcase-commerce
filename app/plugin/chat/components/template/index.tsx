@@ -1,6 +1,14 @@
 import React from 'react';
-import {WS_MSG_MULTIPLE_TEMPLATE} from '@mindverse/accessor-open/src/type';
-
+import {DevelopType, EVENT, getDevelopType} from '~/plugin';
+interface WS_MSG_MULTIPLE_TEMPLATE {
+  templateName: string;
+  params: {
+    price: string;
+    link: string;
+    pic: string;
+    title: string;
+  };
+}
 export interface TemplateInterface {
   content: string;
 }
@@ -9,12 +17,14 @@ export default function Template(props: TemplateInterface) {
   const {content} = props;
 
   const clickTemplate = (link: string) => {
-    const e = new Event('mv_client_container_router');
-    // @ts-ignore
-    e.detail = link;
-    window.dispatchEvent(e);
-    // todo
-    // 增加 script 接入的形式，通过 a 链接跳转
+    if (getDevelopType() === DevelopType.SCRIPT) {
+      window.open(link, '_blank');
+    } else if (getDevelopType() === DevelopType.NPM) {
+      const e = new Event(EVENT.EVENT_ROUTER);
+      // @ts-ignore
+      e.detail = link;
+      window.dispatchEvent(e);
+    }
   };
 
   const template = JSON.parse(content) as WS_MSG_MULTIPLE_TEMPLATE;
@@ -27,7 +37,15 @@ export default function Template(props: TemplateInterface) {
 
     return (
       <div
-        style={{marginBottom: '10px', marginTop: '10px', position: 'relative'}}
+        onClick={() => {
+          clickTemplate(data.link);
+        }}
+        style={{
+          marginBottom: '10px',
+          marginTop: '10px',
+          position: 'relative',
+          cursor: 'pointer',
+        }}
       >
         <div
           onClick={() => clickTemplate(data.link)}
@@ -65,6 +83,7 @@ export default function Template(props: TemplateInterface) {
             fontSize: '12px',
             color: '#3D3D3D',
             wordBreak: 'break-all',
+            marginRight: '10px',
           }}
         >
           {data.title}

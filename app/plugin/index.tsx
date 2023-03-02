@@ -14,22 +14,9 @@ import MessageItem, {
 } from './chat/model/message-item';
 import Avatar, {TYPE_AVATAR} from './avatar';
 
-const DEFAUT_CONFIG = {
-  COLOR_BG_DARK: 'rgba(115, 129, 137, 0.5)',
-  COLOR_BG_LIGHT: '#DEEFF9',
+export const EVENT = {
+  EVENT_ROUTER: 'mv_client_container_router',
 };
-
-let colorBgDark: string = DEFAUT_CONFIG.COLOR_BG_DARK;
-let colorBgLight: string = DEFAUT_CONFIG.COLOR_BG_LIGHT;
-
-export const getColorBgDark = () => {
-  return colorBgDark;
-};
-
-export const getColorBgLight = () => {
-  return colorBgLight;
-};
-
 export interface MindConfig {
   mindId: string;
   mindType: WS_MIND_TYPE;
@@ -39,6 +26,32 @@ export interface UserConfig {
   userName: string;
   avatar: string;
 }
+
+export enum DevelopType {
+  SCRIPT,
+  NPM,
+}
+
+const DEFAUT_CONFIG = {
+  COLOR_BG_DARK: 'rgba(115, 129, 137, 0.5)',
+  COLOR_BG_LIGHT: '#DEEFF9',
+};
+
+let colorBgDark: string = DEFAUT_CONFIG.COLOR_BG_DARK;
+let colorBgLight: string = DEFAUT_CONFIG.COLOR_BG_LIGHT;
+let developType: DevelopType = DevelopType.SCRIPT;
+
+export const getColorBgDark = () => {
+  return colorBgDark;
+};
+
+export const getColorBgLight = () => {
+  return colorBgLight;
+};
+
+export const getDevelopType = () => {
+  return developType;
+};
 
 function App(props: {
   sessionCb: (sessionId: string) => void;
@@ -51,6 +64,7 @@ function App(props: {
     dynamicHeight?: boolean;
     openStyle?: CSSProperties;
     closeStyle?: CSSProperties;
+    developType?: DevelopType;
   };
 }) {
   const mindConfig = props.config.mindConfig;
@@ -65,6 +79,7 @@ function App(props: {
   const dynamicHeight = props.config?.dynamicHeight ?? false;
   const openStyle = props.config?.openStyle ?? {};
   const closeStyle = props.config?.closeStyle ?? {};
+  developType = props.config?.developType ?? DevelopType.SCRIPT;
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -94,12 +109,11 @@ function App(props: {
       heightRef.current = parent?.clientHeight ?? 800;
       setWidth(parent?.clientWidth ?? 400);
       setHeight(parent?.clientHeight ?? 800);
-      console.log("resize method called", parent, parent?.clientWidth, parent?.clientHeight)
     };
     window.addEventListener('resize', resize);
 
-    window.addEventListener('message', (e)=>{
-      console.log("iFrame receive message~", e)
+    window.addEventListener('message', (e) => {
+      console.log('iFrame receive message~', e);
     });
     resize();
     return () => {
@@ -186,7 +200,7 @@ function App(props: {
     if (!isExpand) {
       document.body.style.overflow = '';
     }
-    window.parent.postMessage(`MV_CONTAINER_EVENT_IS_EXPAND.${isExpand}`, "*")
+    window.parent.postMessage(`MV_CONTAINER_EVENT_IS_EXPAND.${isExpand}`, '*');
   }, [isExpand]);
 
   // 回车发送消息
@@ -289,7 +303,7 @@ function App(props: {
           borderRadius: '4px',
           zIndex: 50,
           visibility: !isExpand ? 'hidden' : 'visible',
-          ...openStyle
+          ...openStyle,
         }}
       >
         {/* 返回框 */}
@@ -422,7 +436,7 @@ function App(props: {
           zIndex: 50,
           visibility: isExpand ? 'hidden' : 'visible',
           cursor: 'pointer',
-          ...closeStyle
+          ...closeStyle,
         }}
         onClick={() => {
           setIsExpand(!isExpand);
