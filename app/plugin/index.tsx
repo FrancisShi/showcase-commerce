@@ -608,7 +608,7 @@ function App(props: {
                 height: '26px',
               }}
               src={
-                'https://cdn.mindverse.com/img/zzzz202303031677832261028%E7%BB%84%2017.png'
+                'https://cdn.mindverse.com/img/zzzz202303031677834741508%E5%87%8F%E5%8E%BB%E9%A1%B6%E5%B1%82%201.png'
               }
               alt=""
             />
