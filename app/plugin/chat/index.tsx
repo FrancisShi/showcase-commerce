@@ -25,23 +25,55 @@ export interface ChatListProps {
   isLoading: boolean;
 }
 
+function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
+  const easeInOutQuad = function (t: number, b: number, c: number, d: number) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  };
+
+  const start = element.scrollTop;
+  const change = to - start;
+  let currentTime = 0;
+  const increment = 20;
+
+  const animateScroll = function () {
+    currentTime += increment;
+    const val = easeInOutQuad(currentTime, start, change, duration);
+    element.scrollTop = val;
+    if (currentTime < duration) {
+      setTimeout(animateScroll, increment);
+    }
+  };
+  animateScroll();
+}
+
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
     const {id = 'msgList', msgList, isLoading} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
     const [random, setRandom] = useState<number>();
 
+    const lastMessageId = useRef<string | undefined>('');
+
     function scrollToBottom() {
       const itemList = document.getElementById(id);
       if (itemList) {
-        itemList.scrollTop = itemList.scrollHeight;
+        scrollTo(itemList, itemList.scrollHeight - itemList.clientHeight, 300);
       }
       [];
     }
 
     useEffect(() => {
       flatMessageList.current = flatMessages(msgList);
-      setRandom(Math.random());
+      if (msgList[msgList.length - 1]) {
+        if (lastMessageId.current !== msgList[msgList.length - 1].messageId) {
+          // 来新消息了
+          setRandom(Math.random());
+          lastMessageId.current = msgList[msgList.length - 1].messageId;
+        }
+      }
     }, [msgList]);
 
     useEffect(() => {
