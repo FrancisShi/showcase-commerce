@@ -11,6 +11,7 @@ import MessageItem, {
 } from './chat/model/message-item';
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
+import {browserType} from './utils/utils';
 
 export const EVENT = {
   EVENT_ROUTER: 'mv_client_container_router',
@@ -97,6 +98,8 @@ function App(props: {
 
   const showUnreadMsgRef = useRef<boolean>(false);
   const mainContentIndexRef = useRef<number>(0);
+
+  const isMobile = browserType() === 'mob';
 
   useEffect(() => {
     if (
@@ -302,6 +305,67 @@ function App(props: {
       input?.removeEventListener('keypress', pressEvent);
     };
   }, [inputValue]);
+
+  // 长按录音
+  useEffect(() => {
+    let isRecording = false;
+    let recordStartTime: number;
+    let mediaRecorder: MediaRecorder;
+    let chunks: Blob[] = [];
+
+    const recorderImg = document.getElementById('voiceRecorder');
+    const eventAreaStart = (e: TouchEvent | MouseEvent) => {
+      if (navigator.mediaDevices.getUserMedia) {
+        const constraints = {audio: true};
+        navigator.mediaDevices.getUserMedia(constraints).then(
+          (stream) => {
+            console.log('授权成功！');
+            isRecording = true;
+            recordStartTime = new Date().getTime();
+
+            mediaRecorder = new MediaRecorder(stream);
+            chunks = [];
+            mediaRecorder.ondataavailable = function (e: BlobEvent) {
+              chunks.push(e.data);
+            };
+            mediaRecorder.start();
+          },
+          () => {
+            console.error('授权失败！');
+          },
+        );
+      } else {
+        alert('浏览器不支持 getUserMedia');
+      }
+    };
+    const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
+      isRecording = false;
+      if (
+        chunks.length > 0 &&
+        mediaRecorder &&
+        recordStartTime &&
+        new Date().getTime() - recordStartTime > 500
+      ) {
+        console.log('recorderImg,Recording~Success');
+
+        mediaRecorder.stop();
+        const blob = new Blob(chunks, {type: 'audio/ogg; codecs=opus'});
+        chunks = [];
+        const audioURL = URL.createObjectURL(blob);
+        alert(`record success: ${audioURL}`);
+      }
+    };
+    // mobile
+    recorderImg?.addEventListener('touchstart', eventAreaStart, false);
+    recorderImg?.addEventListener('touchend', eventAreaFinish, false);
+    recorderImg?.addEventListener('touchcancel', eventAreaFinish, false);
+    return () => {
+      // mobile
+      recorderImg?.removeEventListener('touchstart', eventAreaStart);
+      recorderImg?.removeEventListener('touchend', eventAreaFinish);
+      recorderImg?.removeEventListener('touchcancel', eventAreaFinish);
+    };
+  }, []);
 
   function appendMsg(item: MessageItem) {
     if (item.type === MessageItemType.RECEIVE) {
@@ -543,11 +607,21 @@ function App(props: {
                 borderRadius: '15px',
                 borderColor: '#000000',
                 borderWidth: '1px',
+                marginRight: isMobile ? '25px' : '0px',
               }}
               placeholder={'Message'}
               value={inputValue}
               onChange={(e: any) => setInputValue(e.target.value)}
             />
+
+            {isMobile && (
+              <img
+                id="voiceRecorder"
+                style={{width: '30px', height: '30px', cursor: 'pointer'}}
+                src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
+                alt=""
+              />
+            )}
           </div>
         </div>
       </div>
