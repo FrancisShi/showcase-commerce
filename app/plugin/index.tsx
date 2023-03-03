@@ -93,11 +93,12 @@ function App(props: {
   const msgListRef = useRef<MessageItem[]>([]);
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
-  const [isExpand, setIsExpand] = useState(false);
+  const isExpandRef = useRef<boolean>(false);
 
   const switchShortMsgRef = useRef<boolean>(true);
   const switchReceiveShortMsgRef = useRef<boolean>(true);
-  const [shortMsgState, setShortMsgState] = useState(false);
+
+  const showUnreadMsgRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (
@@ -115,6 +116,16 @@ function App(props: {
           updateState({});
         });
       }, 5000);
+    }
+    if (
+      !isExpandRef.current &&
+      !switchShortMsgRef.current &&
+      !showUnreadMsgRef.current
+    ) {
+      // 新消息过来，对话框折叠状态，短消息没打开，未读gif未显示
+      // 没有未读消息
+      showUnreadMsgRef.current = true;
+      updateState({});
     }
     // 有新消息检查 shortMsg
   }, [msgListRef.current]);
@@ -243,20 +254,25 @@ function App(props: {
   // 改变 expand 模式
   // 如果后面要加动画的话
   useEffect(() => {
-    if (!isExpand) {
+    showUnreadMsgRef.current = false;
+    updateState({});
+
+    if (!isExpandRef.current) {
       document.body.style.overflow = '';
     }
-    if (isExpand) {
+    if (isExpandRef.current) {
       window.parent.postMessage(EVENT.EVENT_AVATAR_OPEN, '*');
     } else {
       window.parent.postMessage(EVENT.EVENT_AVATAR_CLOSE, '*');
     }
 
     const openAvatar = () => {
-      setIsExpand(true);
+      isExpandRef.current = true;
+      updateState({});
     };
     const closeAvatar = () => {
-      setIsExpand(false);
+      isExpandRef.current = false;
+      updateState({});
     };
     const eventRouter = () => {
       // 商品卡跳转了，展示新的短消息
@@ -272,7 +288,7 @@ function App(props: {
       window.removeEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
       window.removeEventListener(EVENT.EVENT_ROUTER, eventRouter);
     };
-  }, [isExpand]);
+  }, [isExpandRef.current]);
 
   // 回车发送消息
   useEffect(() => {
@@ -374,7 +390,7 @@ function App(props: {
           backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
           zIndex: 50,
-          visibility: !isExpand ? 'hidden' : 'visible',
+          visibility: !isExpandRef.current ? 'hidden' : 'visible',
           ...openStyle,
         }}
       >
@@ -392,7 +408,8 @@ function App(props: {
             cursor: 'pointer',
           }}
           onClick={() => {
-            setIsExpand(!isExpand);
+            isExpandRef.current = !isExpandRef.current;
+            updateState({});
           }}
         >
           <div
@@ -508,13 +525,14 @@ function App(props: {
           width: `${width}px`,
           height: `${140}px`,
           zIndex: 50,
-          visibility: isExpand ? 'hidden' : 'visible',
+          visibility: isExpandRef.current ? 'hidden' : 'visible',
           cursor: 'pointer',
           ...closeStyle,
         }}
         onClick={() => {
-          setIsExpand(!isExpand);
+          isExpandRef.current = !isExpandRef.current;
           switchShortMsgRef.current = false;
+          updateState({});
         }}
       >
         <img
@@ -530,18 +548,21 @@ function App(props: {
         />
 
         {/* 未读消息 */}
-        {/* <img
-          style={{
-            objectFit: 'cover',
-            width: '27px',
-            height: '20px',
-            position: 'absolute',
-            top: '50px',
-            left: '110px',
-          }}
-          src="https://cdn.mindverse.com/files/zzzz20230303167782988674220230303-155035.gif"
-          alt=""
-        /> */}
+        {showUnreadMsgRef.current && (
+          <img
+            style={{
+              objectFit: 'cover',
+              width: '27px',
+              height: '20px',
+              position: 'absolute',
+              top: '50px',
+              left: '110px',
+            }}
+            src="https://cdn.mindverse.com/files/zzzz20230303167782988674220230303-155035.gif"
+            alt=""
+          />
+        )}
+
         {/* 简短消息 */}
         {switchShortMsgRef.current && msgListRef.current.length > 0 && (
           <ShortChat
