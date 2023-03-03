@@ -7,6 +7,7 @@ import {
 import {Config} from '@mindverse/accessor-open/src/env';
 import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
 import ChatList from './chat';
+import UserEdit from './user';
 import MessageItem, {
   isSameMessage,
   MessageItemType,
@@ -99,6 +100,8 @@ function App(props: {
   const switchReceiveShortMsgRef = useRef<boolean>(true);
 
   const showUnreadMsgRef = useRef<boolean>(false);
+  const showUserSettingRef = useRef<boolean>(false);
+  const showUserSettingIconRef = useRef<boolean>(true);
 
   useEffect(() => {
     if (
@@ -580,6 +583,112 @@ function App(props: {
               marginBottom: '20px',
             }}
           />
+        )}
+
+        {/* 用户信息入口 */}
+        {showUserSettingIconRef.current && (
+          <div
+            onClick={(e) => {
+              showUserSettingRef.current = true;
+              showUserSettingIconRef.current = false;
+              switchShortMsgRef.current = false;
+              updateState({});
+              e.stopPropagation();
+            }}
+            style={{
+              position: 'absolute',
+              objectFit: 'cover',
+              left: '17px',
+              top: '50px',
+            }}
+          >
+            <img
+              style={{
+                width: '26px',
+                height: '26px',
+              }}
+              src={
+                'https://cdn.mindverse.com/img/zzzz202303031677832261028%E7%BB%84%2017.png'
+              }
+              alt=""
+            />
+          </div>
+        )}
+
+        {/* 用户信息编辑框 */}
+        {showUserSettingRef.current && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              width: `${width}px`,
+              minHeight: `${height / 2}px`,
+              maxHeight: `${height}px`,
+              height: dynamicHeight ? 'auto' : `${height}px`,
+              backgroundColor: colorBgDark,
+              backdropFilter: 'blur(1.8px)',
+              borderRadius: '4px',
+            }}
+          >
+            {/* 返回框 */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-27px',
+                left: '50%',
+                transform: 'translate(-50%, 0%)',
+                height: '27px',
+                width: '54px',
+                borderRadius: '100px 100px 0 0',
+                backgroundColor: getColorBgDark(),
+                cursor: 'pointer',
+              }}
+              onClick={(e) => {
+                showUserSettingRef.current = false;
+                showUserSettingIconRef.current = true;
+                isExpandRef.current = false;
+                updateState({});
+                e.stopPropagation();
+              }}
+            >
+              <div
+                style={{
+                  height: '38px',
+                  width: '38px',
+                  borderRadius: '50%',
+                  marginLeft: '8px',
+                  marginTop: '8px',
+                  backgroundColor: 'rgba(52, 52, 52, 0.8)',
+                  position: 'relative',
+                }}
+              >
+                <img
+                  style={{
+                    position: 'absolute',
+                    width: '38px',
+                    height: '20px',
+                    top: '12px',
+                    objectFit: 'cover',
+                  }}
+                  src="https://cdn.mindverse.com/img/zzzz202302241677219088692%E7%BB%84%2014.png"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                maxHeight: `${height - 94}px`,
+                marginBottom: '70px',
+                marginTop: '24px',
+              }}
+            >
+              <UserEdit />
+            </div>
+          </div>
         )}
       </div>
     </>
