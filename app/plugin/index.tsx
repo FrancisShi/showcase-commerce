@@ -329,6 +329,7 @@ function App(props: {
               chunks.push(e.data);
             };
             mediaRecorder.start(500);
+            navigator.vibrate(200);
           },
           () => {
             console.error('授权失败！');
