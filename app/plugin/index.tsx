@@ -350,8 +350,15 @@ function App(props: {
         mediaRecorder.stop();
         const blob = new Blob(chunks, {type: 'audio/ogg; codecs=opus'});
         chunks = [];
-        const audioURL = URL.createObjectURL(blob);
-        alert(`record success: ${audioURL}`);
+        // const audioURL = URL.createObjectURL(blob);
+        // alert(`record success: ${audioURL}`);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function () {
+          const base64data = reader.result;
+          console.log(base64data);
+          alert(`record success: ${base64data}`);
+        };
       }
     };
     // mobile
