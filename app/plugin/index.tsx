@@ -109,11 +109,11 @@ function App(props: {
       switchReceiveShortMsgRef.current = false;
       showShortAnim();
       setTimeout(() => {
-        // hideShortAnim(() => {
-        //   // 关闭开关
-        //   switchShortMsgRef.current = false;
-        //   updateState({});
-        // });
+        hideShortAnim(() => {
+          // 关闭开关
+          switchShortMsgRef.current = false;
+          updateState({});
+        });
       }, 5000);
     }
     // 有新消息检查 shortMsg
@@ -529,6 +529,19 @@ function App(props: {
           alt=""
         />
 
+        {/* 未读消息 */}
+        {/* <img
+          style={{
+            objectFit: 'cover',
+            width: '27px',
+            height: '20px',
+            position: 'absolute',
+            top: '50px',
+            left: '110px',
+          }}
+          src="https://cdn.mindverse.com/files/zzzz20230303167782988674220230303-155035.gif"
+          alt=""
+        /> */}
         {/* 简短消息 */}
         {switchShortMsgRef.current && msgListRef.current.length > 0 && (
           <ShortChat
