@@ -615,12 +615,22 @@ function App(props: {
             />
 
             {isMobile && (
-              <img
+              <div
                 id="voiceRecorder"
-                style={{width: '30px', height: '30px', cursor: 'pointer'}}
-                src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
-                alt=""
-              />
+                style={{width: '40px', height: '30px', backgroundColor: 'red'}}
+              >
+                <img
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    objectFit: 'cover',
+                    cursor: 'pointer',
+                    pointerEvents: 'none',
+                  }}
+                  src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
+                  alt=""
+                />
+              </div>
             )}
           </div>
         </div>
