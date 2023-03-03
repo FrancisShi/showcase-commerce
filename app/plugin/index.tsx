@@ -615,10 +615,7 @@ function App(props: {
             />
 
             {isMobile && (
-              <div
-                id="voiceRecorder"
-                style={{width: '40px', height: '30px', backgroundColor: 'red'}}
-              >
+              <div id="voiceRecorder" style={{width: '40px', height: '30px'}}>
                 <img
                   style={{
                     width: '30px',
