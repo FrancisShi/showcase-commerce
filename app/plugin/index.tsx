@@ -328,7 +328,7 @@ function App(props: {
             mediaRecorder.ondataavailable = function (e: BlobEvent) {
               chunks.push(e.data);
             };
-            mediaRecorder.start();
+            mediaRecorder.start(500);
           },
           () => {
             console.error('授权失败！');
@@ -347,7 +347,6 @@ function App(props: {
         new Date().getTime() - recordStartTime > 500
       ) {
         console.log('recorderImg,Recording~Success');
-
         mediaRecorder.stop();
         const blob = new Blob(chunks, {type: 'audio/ogg; codecs=opus'});
         chunks = [];
