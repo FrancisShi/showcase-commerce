@@ -154,7 +154,6 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         );
       };
 
-      console.log('Francis flatMessageList', flatMessageList);
       return flatMessageList.current.map((item, index) => {
         if (!item) {
           return null;

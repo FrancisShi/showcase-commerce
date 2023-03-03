@@ -327,6 +327,7 @@ function App(props: {
 
   return (
     <>
+      {/* 展开状态 */}
       <div
         id="mvMindContainer"
         style={{
@@ -466,6 +467,7 @@ function App(props: {
         </div>
       </div>
 
+      {/* 收缩状态 */}
       <div
         style={{
           position: 'fixed',
