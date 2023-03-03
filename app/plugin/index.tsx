@@ -95,16 +95,48 @@ function App(props: {
   const [, updateState] = useState<any>();
   const [isExpand, setIsExpand] = useState(false);
 
-  const shortMsgRef = useRef<boolean>(true);
+  const switchShortMsgRef = useRef<boolean>(true);
+  const switchReceiveShortMsgRef = useRef<boolean>(true);
+  const [shortMsgState, setShortMsgState] = useState(false);
 
   useEffect(() => {
-    if (shortMsgRef.current && msgListRef.current.length > 0) {
+    if (
+      switchShortMsgRef.current &&
+      switchReceiveShortMsgRef.current &&
+      msgListRef.current.length > 0
+    ) {
+      // 不再接收
+      switchReceiveShortMsgRef.current = false;
+      showShortAnim();
       setTimeout(() => {
-        shortMsgRef.current = false;
-        updateState({});
+        hideShortAnim(() => {
+          // 关闭开关
+          switchShortMsgRef.current = false;
+          updateState({});
+        });
       }, 5000);
     }
+    // 有新消息检查 shortMsg
   }, [msgListRef.current]);
+
+  const showShortAnim = () => {
+    const shortChat = document.getElementById('shortChat');
+    if (shortChat) {
+      shortChat.animate([{opacity: 0}, {opacity: 1}], {
+        duration: 500,
+      });
+    }
+  };
+
+  const hideShortAnim = (cb: () => void) => {
+    const shortChat = document.getElementById('shortChat');
+    if (shortChat) {
+      shortChat.animate([{opacity: 1}, {opacity: 0}], {
+        duration: 500,
+      });
+      setTimeout(cb, 500);
+    }
+  };
 
   // input 不改变网页大小
   useEffect(() => {
@@ -228,7 +260,7 @@ function App(props: {
     };
     const eventRouter = () => {
       // 商品卡跳转了，展示新的短消息
-      shortMsgRef.current = true;
+      switchShortMsgRef.current = true;
     };
     window.addEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
     window.addEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
@@ -482,7 +514,7 @@ function App(props: {
         }}
         onClick={() => {
           setIsExpand(!isExpand);
-          shortMsgRef.current = false;
+          switchShortMsgRef.current = false;
         }}
       >
         <img
@@ -498,9 +530,10 @@ function App(props: {
         />
 
         {/* 简短消息 */}
-        {shortMsgRef.current && msgListRef.current.length > 0 && (
+        {switchShortMsgRef.current && msgListRef.current.length > 0 && (
           <ShortChat
-            msgItem={msgListRef.current[msgListRef.current.length - 1]}
+            id="shortChat"
+            msgList={msgListRef.current}
             style={{
               position: 'absolute',
               top: 0,
