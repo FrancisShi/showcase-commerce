@@ -41,7 +41,6 @@ function ShortChat(props: {
       style={{
         color: '#3D3D3D',
         marginBottom: '20px',
-        whiteSpace: 'normal',
         wordBreak: 'break-word',
         boxSizing: 'border-box',
         borderRadius: '14px',
@@ -51,8 +50,13 @@ function ShortChat(props: {
         lineHeight: '24px',
         top: '30px',
         textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
         wordWrap: 'break-word',
         overflow: 'hidden',
+        display: '-webkit-box',
+        //@ts-ignore
+        webkitLineClamp: '3',
+        webkitBoxOrient: 'vertical',
         ...style,
       }}
     >
