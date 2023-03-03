@@ -1,5 +1,5 @@
 import {WS_MSG_DATA_TYPE} from '@mindverse/accessor-open/src/type';
-import React, {CSSProperties, useMemo} from 'react';
+import React, {CSSProperties, useEffect, useMemo, useState} from 'react';
 import MessageItem from '../model/message-item';
 
 function ShortChat(props: {
@@ -8,6 +8,8 @@ function ShortChat(props: {
   style: CSSProperties;
 }) {
   const {id, msgList, style} = props;
+
+  const [showMoreIcon, setShowMoreIcon] = useState(false);
 
   const content = useMemo(() => {
     let content: string | undefined = '';
@@ -35,33 +37,58 @@ function ShortChat(props: {
     return null;
   }
 
+  useEffect(() => {
+    const shortMsgContentTxt = document.getElementById('shortMsgContentTxt');
+    if (shortMsgContentTxt) {
+      if (shortMsgContentTxt.clientHeight > 48) {
+        setShowMoreIcon(true);
+      }
+    }
+  }, [content]);
+
   return (
-    <text
+    <div
       id={id}
       style={{
-        color: '#3D3D3D',
-        marginBottom: '20px',
-        wordBreak: 'break-word',
-        boxSizing: 'border-box',
-        borderRadius: '14px',
-        padding: '12px',
-        fontSize: '15px',
-        maxHeight: '90px',
-        lineHeight: '24px',
-        top: '30px',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'normal',
-        wordWrap: 'break-word',
-        overflow: 'hidden',
-        display: '-webkit-box',
-        //@ts-ignore
-        webkitLineClamp: '3',
-        webkitBoxOrient: 'vertical',
         ...style,
       }}
     >
-      {content}
-    </text>
+      <div
+        id="shortMsgContentTxt"
+        style={{
+          color: '#3D3D3D',
+          wordBreak: 'break-word',
+          boxSizing: 'border-box',
+          fontSize: '15px',
+          lineHeight: '24px',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'normal',
+          wordWrap: 'break-word',
+          overflow: 'hidden',
+          display: '-webkit-box',
+          //@ts-ignore
+          webkitLineClamp: '3',
+          webkitBoxOrient: 'vertical',
+        }}
+      >
+        {content}
+      </div>
+
+      {showMoreIcon && (
+        <img
+          style={{
+            objectFit: 'cover',
+            width: '7px',
+            height: '7px',
+            position: 'absolute',
+            right: '10px',
+            bottom: '12px',
+          }}
+          src="https://cdn.mindverse.com/img/zzzz202303031677828575742%E5%A4%9A%E8%BE%B9%E5%BD%A2%201.png"
+          alt=""
+        />
+      )}
+    </div>
   );
 }
 

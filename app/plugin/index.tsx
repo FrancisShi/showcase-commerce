@@ -109,11 +109,11 @@ function App(props: {
       switchReceiveShortMsgRef.current = false;
       showShortAnim();
       setTimeout(() => {
-        hideShortAnim(() => {
-          // 关闭开关
-          switchShortMsgRef.current = false;
-          updateState({});
-        });
+        // hideShortAnim(() => {
+        //   // 关闭开关
+        //   switchShortMsgRef.current = false;
+        //   updateState({});
+        // });
       }, 5000);
     }
     // 有新消息检查 shortMsg
@@ -540,6 +540,10 @@ function App(props: {
               left: '127px',
               backgroundColor: getColorBgLight(),
               marginRight: '20px',
+              maxHeight: '90px',
+              borderRadius: '14px',
+              padding: '12px',
+              marginBottom: '20px',
             }}
           />
         )}
