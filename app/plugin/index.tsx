@@ -1,9 +1,5 @@
 import React, {useEffect, useRef, useState, CSSProperties} from 'react';
-import {
-  WS_MIND_TYPE,
-  WS_MSG_DATA_TYPE,
-  WS_MSG_TYPE,
-} from '@mindverse/accessor-open/src/type';
+import {WS_MIND_TYPE, WS_MSG_TYPE} from '@mindverse/accessor-open/src/type';
 import {Config} from '@mindverse/accessor-open/src/env';
 import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
 import ChatList from './chat';
@@ -100,8 +96,7 @@ function App(props: {
   const switchReceiveShortMsgRef = useRef<boolean>(true);
 
   const showUnreadMsgRef = useRef<boolean>(false);
-  const showUserSettingRef = useRef<boolean>(false);
-  const showUserSettingIconRef = useRef<boolean>(true);
+  const mainContentIndexRef = useRef<number>(0);
 
   useEffect(() => {
     if (
@@ -450,11 +445,16 @@ function App(props: {
             marginTop: '24px',
           }}
         >
-          <ChatList
-            id="assistantChatList"
-            msgList={msgListRef.current}
-            isLoading={showListLoading}
-          />
+          {mainContentIndexRef.current === 0 && (
+            <ChatList
+              id="assistantChatList"
+              msgList={msgListRef.current}
+              isLoading={showListLoading}
+            />
+          )}
+
+          {/* 用户信息编辑框 */}
+          {mainContentIndexRef.current === 1 && <UserEdit />}
         </div>
 
         {/* avatar */}
@@ -471,6 +471,39 @@ function App(props: {
             type={TYPE_AVATAR.PICTURE}
             data={{picture: userConfig.avatar}}
           />
+
+          {/* 用户信息入口 */}
+          <div
+            onClick={(e) => {
+              if (mainContentIndexRef.current === 1) {
+                mainContentIndexRef.current = 0;
+              } else if (mainContentIndexRef.current === 0) {
+                mainContentIndexRef.current = 1;
+              }
+              updateState({});
+              e.stopPropagation();
+            }}
+            style={{
+              position: 'absolute',
+              objectFit: 'cover',
+              left: '17px',
+              bottom: '80px',
+              zIndex: 100,
+            }}
+          >
+            <img
+              style={{
+                width: '22px',
+                height: '22px',
+              }}
+              src={
+                mainContentIndexRef.current === 0
+                  ? 'https://cdn.mindverse.com/img/zzzz202303031677844963805%E7%BB%84%2043.png'
+                  : 'https://cdn.mindverse.com/img/zzzz202303031677845661804%E7%BB%84%2044.png'
+              }
+              alt=""
+            />
+          </div>
         </div>
 
         {/* 底部输入框 */}
@@ -583,115 +616,6 @@ function App(props: {
               marginBottom: '20px',
             }}
           />
-        )}
-
-        {/* 用户信息入口 */}
-        {showUserSettingIconRef.current && (
-          <div
-            onClick={(e) => {
-              showUserSettingRef.current = true;
-              showUserSettingIconRef.current = false;
-              switchShortMsgRef.current = false;
-              updateState({});
-              e.stopPropagation();
-            }}
-            style={{
-              position: 'absolute',
-              objectFit: 'cover',
-              left: '17px',
-              top: '40px',
-            }}
-          >
-            <img
-              style={{
-                width: '22px',
-                height: '22px',
-              }}
-              src={
-                'https://cdn.mindverse.com/img/zzzz202303031677834741508%E5%87%8F%E5%8E%BB%E9%A1%B6%E5%B1%82%201.png'
-              }
-              alt=""
-            />
-          </div>
-        )}
-
-        {/* 用户信息编辑框 */}
-        {showUserSettingRef.current && (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              width: `${width}px`,
-              minHeight: `${height / 2}px`,
-              maxHeight: `${height}px`,
-              height: dynamicHeight ? 'auto' : `${height}px`,
-              backgroundColor: colorBgDark,
-              backdropFilter: 'blur(1.8px)',
-              borderRadius: '4px',
-            }}
-          >
-            {/* 返回框 */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-27px',
-                left: '50%',
-                transform: 'translate(-50%, 0%)',
-                height: '27px',
-                width: '54px',
-                borderRadius: '100px 100px 0 0',
-                backgroundColor: getColorBgDark(),
-                cursor: 'pointer',
-              }}
-              onClick={(e) => {
-                showUserSettingRef.current = false;
-                showUserSettingIconRef.current = true;
-                isExpandRef.current = false;
-                updateState({});
-                e.stopPropagation();
-              }}
-            >
-              <div
-                style={{
-                  height: '38px',
-                  width: '38px',
-                  borderRadius: '50%',
-                  marginLeft: '8px',
-                  marginTop: '8px',
-                  backgroundColor: 'rgba(52, 52, 52, 0.8)',
-                  position: 'relative',
-                }}
-              >
-                <img
-                  style={{
-                    position: 'absolute',
-                    width: '38px',
-                    height: '20px',
-                    top: '12px',
-                    objectFit: 'cover',
-                  }}
-                  src="https://cdn.mindverse.com/img/zzzz202302241677219088692%E7%BB%84%2014.png"
-                  alt=""
-                />
-              </div>
-            </div>
-
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                maxHeight: `${height - 94}px`,
-                marginBottom: '70px',
-                marginTop: '24px',
-              }}
-            >
-              <UserEdit />
-            </div>
-          </div>
         )}
       </div>
     </>
