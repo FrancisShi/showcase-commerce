@@ -599,13 +599,13 @@ function App(props: {
               position: 'absolute',
               objectFit: 'cover',
               left: '17px',
-              top: '50px',
+              top: '40px',
             }}
           >
             <img
               style={{
-                width: '26px',
-                height: '26px',
+                width: '22px',
+                height: '22px',
               }}
               src={
                 'https://cdn.mindverse.com/img/zzzz202303031677834741508%E5%87%8F%E5%8E%BB%E9%A1%B6%E5%B1%82%201.png'
@@ -618,6 +618,9 @@ function App(props: {
         {/* 用户信息编辑框 */}
         {showUserSettingRef.current && (
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             style={{
               position: 'absolute',
               bottom: 0,
