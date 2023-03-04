@@ -330,6 +330,8 @@ function App(props: {
             mediaRecorder = new MediaRecorder(stream);
             chunks = [];
             mediaRecorder.ondataavailable = function (e: BlobEvent) {
+              if (typeof e.data === 'undefined') return;
+              if (e.data.size === 0) return;
               chunks.push(e.data);
             };
             mediaRecorder.start(500);
@@ -352,17 +354,22 @@ function App(props: {
         new Date().getTime() - recordStartTime > 500
       ) {
         mediaRecorder.stop();
-        const blob = new Blob(chunks, {type: 'audio/ogg; codecs=opus'});
+        const blob = new Blob(chunks, {type: 'audio/ogg'});
         chunks = [];
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = function () {
           const base64data = reader.result;
-          console.log(base64data);
-          if (base64data) {
-            speech2Text({base64Text: String(base64data)}).then((res) => {
-              alert(`speech2text success: ${res}`);
-            });
+          if (
+            typeof base64data === 'string' &&
+            base64data.indexOf('data:audio/ogg;base64,') === 0
+          ) {
+            const result = base64data.split('data:audio/ogg;base64,')[1];
+            if (result) {
+              speech2Text({base64Text: result}).then((res) => {
+                alert(`speech2text success: ${res}`);
+              });
+            }
           }
         };
       }
