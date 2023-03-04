@@ -1,16 +1,19 @@
 import request from './request';
 
-export const userInit = (user: {
-  name: string;
-  gender: string;
-  profession: string;
-  age: string;
-  description: string;
-}) => {
+export const userInit = (
+  refUserId: string,
+  user: {
+    name: string;
+    gender: string;
+    profession: string;
+    age: string;
+    description: string;
+  },
+) => {
   return request({
     url: '/rest/general/user/init',
     method: 'post',
-    data: user,
+    data: {...user, refUserId},
   }).catch((res) => {
     console.error('/rest/demo/user/init 调用失败', res);
   });

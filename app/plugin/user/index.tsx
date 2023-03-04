@@ -47,7 +47,11 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
     }, []);
 
     const onSave = () => {
-      userInit(userDataState);
+      userInit(refUserId, userDataState).then((res) => {
+        if (res?.data?.code === 0) {
+          alert('Saved');
+        }
+      });
     };
 
     const userItemView = (
