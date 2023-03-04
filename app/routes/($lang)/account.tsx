@@ -35,7 +35,6 @@ import {flattenConnection} from '@shopify/hydrogen';
 import {getFeaturedData} from './featured-products';
 import {doLogout} from './account/__private/logout';
 import {usePrefixPathWithLocale} from '~/lib/utils';
-import {injectHook} from '~/plugin/demo/entry';
 
 // Combining json + Response + defer in a loader breaks the
 // types returned by useLoaderData. This is a temporary fix.
@@ -125,21 +124,6 @@ function Account({
   addresses,
   featuredData,
 }: Account) {
-  const id = customer.id;
-  const email = customer.email ?? '';
-  const firstName = customer.firstName ?? '';
-  const lastName = customer.lastName ?? '';
-  const phone = customer.phone ?? '';
-  const tags = customer.tags ?? '';
-  const mvUser = {
-    id,
-    email,
-    firstName,
-    lastName,
-    phone,
-    tags,
-  };
-  injectHook('user', mvUser);
 
   return (
     <>
