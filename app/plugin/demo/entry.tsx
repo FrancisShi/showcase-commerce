@@ -158,7 +158,7 @@ export function injectHook(key: string, data: PRODUCT | USER) {
       data.sessionId = sessionId;
       data.pageType = 'PRODUCT';
       request({
-        url: '/rest/demo/push/page',
+        url: '/rest/general/session/env/page/push',
         method: 'post',
         data,
       })
