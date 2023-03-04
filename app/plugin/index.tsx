@@ -12,6 +12,7 @@ import MessageItem, {
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
 import {browserType} from './utils/utils';
+import {speech2Text} from './utils/api';
 
 export const EVENT = {
   EVENT_ROUTER: 'mv_client_container_router',
@@ -350,18 +351,19 @@ function App(props: {
         recordStartTime &&
         new Date().getTime() - recordStartTime > 500
       ) {
-        console.log('recorderImg,Recording~Success');
         mediaRecorder.stop();
         const blob = new Blob(chunks, {type: 'audio/ogg; codecs=opus'});
         chunks = [];
-        // const audioURL = URL.createObjectURL(blob);
-        // alert(`record success: ${audioURL}`);
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = function () {
           const base64data = reader.result;
           console.log(base64data);
-          alert(`record success: ${base64data}`);
+          if (base64data) {
+            speech2Text({base64Text: String(base64data)}).then((res) => {
+              alert(`speech2text success: ${res}`);
+            });
+          }
         };
       }
     };

@@ -41,3 +41,17 @@ export const userGet = (params: {refUserId: string}) => {
       console.error('/rest/general/user/ref/user/info/query', res);
     });
 };
+
+export const speech2Text = (data: {base64Text: string}) => {
+  return request({
+    url: '/rest/general/voice/speech/2/text',
+    method: 'post',
+    data,
+  })
+    .then((res) => {
+      return res.data.data;
+    })
+    .catch((res) => {
+      console.error('/rest/general/voice/speech/2/text', res);
+    });
+};
