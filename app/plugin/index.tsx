@@ -366,8 +366,8 @@ function App(props: {
           ) {
             const result = base64data.split('data:audio/ogg;base64,')[1];
             if (result) {
-              speech2Text({base64Text: result}).then((res) => {
-                alert(`speech2text success: ${res}`);
+              speech2Text({voiceBase64: result}).then((res) => {
+                alert(`speech2text: ${res}`);
               });
             }
           }

@@ -42,7 +42,7 @@ export const userGet = (params: {refUserId: string}) => {
     });
 };
 
-export const speech2Text = (data: {base64Text: string}) => {
+export const speech2Text = (data: {voiceBase64: string}) => {
   return request({
     url: '/rest/general/voice/speech/2/text',
     method: 'post',
