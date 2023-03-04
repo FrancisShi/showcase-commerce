@@ -348,7 +348,11 @@ function App(props: {
           const result = base64data.split('data:audio/wav;base64,')[1];
           if (result) {
             speech2Text({voiceBase64: result}).then((res) => {
-              alert(`speech2text: ${res}`);
+              if (res && typeof res === 'string' && res.length > 0) {
+                handleSendMsg(res);
+              } else {
+                alert(`语音转换失败`);
+              }
             });
           }
         }
