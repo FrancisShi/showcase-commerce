@@ -65,6 +65,7 @@ function App(props: {
     bgDark?: string;
     bgLight?: string;
     dynamicHeight?: boolean;
+    initialExpand?: boolean;
     openStyle?: CSSProperties;
     closeStyle?: CSSProperties;
     developType?: DevelopType;
@@ -80,6 +81,7 @@ function App(props: {
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
   const dynamicHeight = props.config?.dynamicHeight ?? false;
+  const initialExpand = props.config?.initialExpand ?? false;
   const openStyle = props.config?.openStyle ?? {};
   const closeStyle = props.config?.closeStyle ?? {};
   developType = props.config?.developType ?? DevelopType.SCRIPT;
@@ -93,7 +95,7 @@ function App(props: {
   const msgListRef = useRef<MessageItem[]>([]);
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
-  const isExpandRef = useRef<boolean>(false);
+  const isExpandRef = useRef<boolean>(initialExpand);
 
   const switchShortMsgRef = useRef<boolean>(true);
   const switchReceiveShortMsgRef = useRef<boolean>(true);
