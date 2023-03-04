@@ -5,7 +5,7 @@ import {useEffect, useRef, useState} from 'react';
 import App, {DevelopType, EVENT} from '../index';
 // import App, {DevelopType, EVENT} from '@mindverse/container';
 import {isBrowser} from 'browser-or-node';
-import request from './request';
+import request from '../utils/request';
 import {Config} from '@mindverse/accessor-open/src/env';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 import {useNavigate} from '@remix-run/react';
@@ -168,29 +168,6 @@ export function injectHook(key: string, data: PRODUCT | USER) {
         .catch((res) => {
           console.error('/rest/demo/push/page 调用失败', res);
         });
-    }
-  } else if (key === 'user' && data) {
-    data = data as USER;
-    request({
-      url: '/rest/demo/init/user',
-      method: 'post',
-      data,
-    })
-      .then((res) => {
-        console.log('user', res);
-      })
-      .catch((res) => {
-        console.error('/rest/demo/user/init 调用失败', res);
-      });
-
-    // check user 是否更新
-    if (isBrowser) {
-      const ss = window.localStorage;
-      const userId = ss.getItem('mv_shopify_userId');
-      if (data.id && userId && data.id !== userId) {
-        ss.setItem('mv_shopify_userId', data.id);
-        window.dispatchEvent(new Event(EVENT_MV_CONTAINER.REOPEN_SESSION));
-      }
     }
   }
 }

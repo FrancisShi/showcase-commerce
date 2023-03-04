@@ -5,28 +5,49 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import {userGet, userInit} from '../utils/api';
 
-export interface UserInputProps {}
+export interface UserInputProps {
+  refUserId: string;
+}
 
 export default forwardRef<HTMLDivElement, UserInputProps>(
   (props: UserInputProps, ref) => {
+    const {refUserId} = props;
     const userItemProp = ['Name', 'Gender', 'Profession', 'Age', 'Description'];
 
     const userData = {
-      name: 'MyName',
-      gender: 'Male',
-      profession: 'Coder',
-      age: '18',
-      description:
-        'AI-powered digital minds with independent personalities, memory, and knowledge. Beings that learn and grow from interactions. Represented by realistic bodies',
+      name: '',
+      gender: '',
+      profession: '',
+      age: '',
+      description: '',
     };
 
-    const [userDataState, setUserDataState] = useState(userData);
+    const [userDataState, setUserDataState] = useState<{
+      name: string;
+      gender: string;
+      profession: string;
+      age: string;
+      description: string;
+    }>(userData);
 
-    // const curUserDataRef = useRef(userDataState);
+    useEffect(() => {
+      userGet({refUserId}).then((user) => {
+        if (user) {
+          setUserDataState({
+            name: user.name ?? '',
+            gender: user.gender ?? '',
+            profession: user.profession ?? '',
+            age: user.age ?? '',
+            description: user.description ?? '',
+          });
+        }
+      });
+    }, []);
 
     const onSave = () => {
-      alert('save');
+      userInit(userDataState);
     };
 
     const userItemView = (
@@ -69,7 +90,6 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
         } else if (index === 4) {
           userDataState.description = e.target.value;
         }
-        console.log(index, userDataState);
         setUserDataState({...userDataState});
       };
 

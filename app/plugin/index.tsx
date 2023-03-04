@@ -99,6 +99,8 @@ function App(props: {
   const showUnreadMsgRef = useRef<boolean>(false);
   const mainContentIndexRef = useRef<number>(0);
 
+  const [sessionOpened, setSessionOpened] = useState<boolean>(false);
+
   const isMobile = browserType() === 'mob';
 
   useEffect(() => {
@@ -220,6 +222,7 @@ function App(props: {
         mindType: mindConfig.mindType,
         retryCount: 0,
         callback: (res: any) => {
+          setSessionOpened(true);
           props?.sessionCb &&
             res.data.sessionId?.sessionId &&
             props.sessionCb(res.data.sessionId?.sessionId);
@@ -525,7 +528,9 @@ function App(props: {
           )}
 
           {/* 用户信息编辑框 */}
-          {mainContentIndexRef.current === 1 && <UserEdit />}
+          {mainContentIndexRef.current === 1 && (
+            <UserEdit refUserId={socketConfig.refUserId} />
+          )}
         </div>
 
         {/* avatar */}
@@ -544,37 +549,39 @@ function App(props: {
           />
 
           {/* 用户信息入口 */}
-          <div
-            onClick={(e) => {
-              if (mainContentIndexRef.current === 1) {
-                mainContentIndexRef.current = 0;
-              } else if (mainContentIndexRef.current === 0) {
-                mainContentIndexRef.current = 1;
-              }
-              updateState({});
-              e.stopPropagation();
-            }}
-            style={{
-              position: 'absolute',
-              objectFit: 'cover',
-              left: '17px',
-              bottom: '80px',
-              zIndex: 100,
-            }}
-          >
-            <img
-              style={{
-                width: '22px',
-                height: '22px',
+          {sessionOpened && (
+            <div
+              onClick={(e) => {
+                if (mainContentIndexRef.current === 1) {
+                  mainContentIndexRef.current = 0;
+                } else if (mainContentIndexRef.current === 0) {
+                  mainContentIndexRef.current = 1;
+                }
+                updateState({});
+                e.stopPropagation();
               }}
-              src={
-                mainContentIndexRef.current === 0
-                  ? 'https://cdn.mindverse.com/img/zzzz202303031677844963805%E7%BB%84%2043.png'
-                  : 'https://cdn.mindverse.com/img/zzzz202303031677845661804%E7%BB%84%2044.png'
-              }
-              alt=""
-            />
-          </div>
+              style={{
+                position: 'absolute',
+                objectFit: 'cover',
+                left: '17px',
+                bottom: '80px',
+                zIndex: 100,
+              }}
+            >
+              <img
+                style={{
+                  width: '22px',
+                  height: '22px',
+                }}
+                src={
+                  mainContentIndexRef.current === 0
+                    ? 'https://cdn.mindverse.com/img/zzzz202303031677844963805%E7%BB%84%2043.png'
+                    : 'https://cdn.mindverse.com/img/zzzz202303031677845661804%E7%BB%84%2044.png'
+                }
+                alt=""
+              />
+            </div>
+          )}
         </div>
 
         {/* 底部输入框 */}

@@ -4,17 +4,17 @@
 import axios from 'axios';
 import fetchAdapter from '@vespaiach/axios-fetch-adapter';
 
-const BASE_URL = 'https://test-accessor.mindverse.com';
+const BASE_URL = 'https://gateway-test.mindverse.com/chat/';
 const service = axios.create({
   baseURL: BASE_URL,
   timeout: 10 * 1000,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
-    bizType: 'SAAS',
+    bizType: '',
     appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
-    platform: 'Saas',
+    platform: 'web',
     merchantId: 'c1e3x',
-    'M-AuthType': 'SAAS_KEY',
+    'M-AuthType': 'STATION_KEY',
   },
   adapter: fetchAdapter,
 });
