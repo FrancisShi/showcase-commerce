@@ -340,7 +340,6 @@ function App(props: {
       reader.readAsDataURL(wavBlob);
       reader.onloadend = function () {
         const base64data = reader.result;
-        console.log(base64data);
         if (
           typeof base64data === 'string' &&
           base64data.indexOf('data:audio/wav;base64,') === 0

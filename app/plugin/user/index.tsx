@@ -86,7 +86,9 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
         } else if (index === 2) {
           userDataState.profession = e.target.value;
         } else if (index === 3) {
-          userDataState.age = e.target.value;
+          if (!isNaN(e.target.value) && e.target.value.length <= 2) {
+            userDataState.age = e.target.value;
+          }
         } else if (index === 4) {
           userDataState.description = e.target.value;
         }
@@ -134,9 +136,12 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
                 color: '#000000',
                 outline: 'none',
                 fontSize: '14px',
+                border: 'none',
               }}
               value={value}
-              onChange={onChange}
+              onChange={(e) => {
+                onChange(e);
+              }}
             />
           );
         }
