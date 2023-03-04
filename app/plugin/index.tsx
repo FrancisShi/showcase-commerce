@@ -9,6 +9,7 @@ import MessageItem, {
   MessageItemType,
   transformNewMsg,
 } from './chat/model/message-item';
+import Recorder from 'js-audio-recorder';
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
 import {browserType} from './utils/utils';
@@ -312,67 +313,46 @@ function App(props: {
 
   // 长按录音
   useEffect(() => {
-    let isRecording = false;
-    let recordStartTime: number;
-    let mediaRecorder: MediaRecorder;
-    let chunks: Blob[] = [];
+    let recorder: Recorder;
 
     const recorderImg = document.getElementById('voiceRecorder');
     const eventAreaStart = (e: TouchEvent | MouseEvent) => {
-      if (navigator.mediaDevices.getUserMedia) {
-        const constraints = {audio: true};
-        navigator.mediaDevices.getUserMedia(constraints).then(
-          (stream) => {
-            console.log('授权成功！');
-            isRecording = true;
-            recordStartTime = new Date().getTime();
-
-            mediaRecorder = new MediaRecorder(stream);
-            chunks = [];
-            mediaRecorder.ondataavailable = function (e: BlobEvent) {
-              if (typeof e.data === 'undefined') return;
-              if (e.data.size === 0) return;
-              chunks.push(e.data);
-            };
-            mediaRecorder.start(500);
-            navigator.vibrate(200);
-          },
-          () => {
-            console.error('授权失败！');
-          },
-        );
-      } else {
-        alert('浏览器不支持 getUserMedia');
-      }
+      recorder = new Recorder({
+        sampleBits: 16, // 采样位数，支持 8 或 16，默认是16
+        sampleRate: 16000, // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
+        numChannels: 1,
+      });
+      recorder.start().then(
+        () => {
+          // 开始录音
+          console.log('开始录音了=========');
+        },
+        (error) => {
+          // 出错了
+          console.log(error);
+        },
+      );
     };
     const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
-      isRecording = false;
-      if (
-        chunks.length > 0 &&
-        mediaRecorder &&
-        recordStartTime &&
-        new Date().getTime() - recordStartTime > 500
-      ) {
-        mediaRecorder.stop();
-        const blob = new Blob(chunks, {type: 'audio/ogg'});
-        chunks = [];
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-          const base64data = reader.result;
-          if (
-            typeof base64data === 'string' &&
-            base64data.indexOf('data:audio/ogg;base64,') === 0
-          ) {
-            const result = base64data.split('data:audio/ogg;base64,')[1];
-            if (result) {
-              speech2Text({voiceBase64: result}).then((res) => {
-                alert(`speech2text: ${res}`);
-              });
-            }
+      recorder.stop();
+      const wavBlob = recorder.getWAVBlob();
+      const reader = new FileReader();
+      reader.readAsDataURL(wavBlob);
+      reader.onloadend = function () {
+        const base64data = reader.result;
+        console.log(base64data);
+        if (
+          typeof base64data === 'string' &&
+          base64data.indexOf('data:audio/wav;base64,') === 0
+        ) {
+          const result = base64data.split('data:audio/wav;base64,')[1];
+          if (result) {
+            speech2Text({voiceBase64: result}).then((res) => {
+              alert(`speech2text: ${res}`);
+            });
           }
-        };
-      }
+        }
+      };
     };
     // mobile
     recorderImg?.addEventListener('touchstart', eventAreaStart, false);
