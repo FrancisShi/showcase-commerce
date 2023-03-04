@@ -350,7 +350,7 @@ function App(props: {
               if (res && typeof res === 'string' && res.length > 0) {
                 handleSendMsg(res);
               } else {
-                alert(`语音转换失败`);
+                alert(`No recognizable speech detected, please try again."`);
               }
             });
           }
