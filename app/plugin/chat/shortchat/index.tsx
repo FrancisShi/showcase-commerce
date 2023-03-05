@@ -33,10 +33,6 @@ function ShortChat(props: {
     return content;
   }, [msgList]);
 
-  if (!content) {
-    return null;
-  }
-
   useEffect(() => {
     const shortMsgContentTxt = document.getElementById('shortMsgContentTxt');
     if (shortMsgContentTxt) {
@@ -46,50 +42,54 @@ function ShortChat(props: {
     }
   }, [content]);
 
-  return (
-    <div
-      id={id}
-      style={{
-        ...style,
-      }}
-    >
+  if (!content) {
+    return <></>;
+  } else {
+    return (
       <div
-        id="shortMsgContentTxt"
+        id={id}
         style={{
-          color: '#3D3D3D',
-          wordBreak: 'break-word',
-          boxSizing: 'border-box',
-          fontSize: '15px',
-          lineHeight: '24px',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'normal',
-          wordWrap: 'break-word',
-          overflow: 'hidden',
-          display: '-webkit-box',
-          //@ts-ignore
-          webkitLineClamp: '3',
-          webkitBoxOrient: 'vertical',
+          ...style,
         }}
       >
-        {content}
-      </div>
-
-      {showMoreIcon && (
-        <img
+        <div
+          id="shortMsgContentTxt"
           style={{
-            objectFit: 'cover',
-            width: '7px',
-            height: '7px',
-            position: 'absolute',
-            right: '10px',
-            bottom: '12px',
+            color: '#3D3D3D',
+            wordBreak: 'break-word',
+            boxSizing: 'border-box',
+            fontSize: '15px',
+            lineHeight: '24px',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'normal',
+            wordWrap: 'break-word',
+            overflow: 'hidden',
+            display: '-webkit-box',
+            //@ts-ignore
+            webkitLineClamp: '3',
+            webkitBoxOrient: 'vertical',
           }}
-          src="https://cdn.mindverse.com/img/zzzz202303031677828575742%E5%A4%9A%E8%BE%B9%E5%BD%A2%201.png"
-          alt=""
-        />
-      )}
-    </div>
-  );
+        >
+          {content}
+        </div>
+
+        {showMoreIcon && (
+          <img
+            style={{
+              objectFit: 'cover',
+              width: '7px',
+              height: '7px',
+              position: 'absolute',
+              right: '10px',
+              bottom: '12px',
+            }}
+            src="https://cdn.mindverse.com/img/zzzz202303031677828575742%E5%A4%9A%E8%BE%B9%E5%BD%A2%201.png"
+            alt=""
+          />
+        )}
+      </div>
+    );
+  }
 }
 
 export default ShortChat;
