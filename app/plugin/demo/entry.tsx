@@ -108,7 +108,7 @@ export function Container({...props}: {[key: string]: any}) {
 
                 refUserId,
 
-                merchantBaseURL: 'https://gateway-test.mindverse.com/chat',
+                merchantBaseURL: 'https://gateway-pre.mindverse.com/chat',
                 merchantSocketPath: '/rest/general/ws/create',
                 merchantSessionOpenPath: '/rest/general/session/create',
                 merchantSessionClosePath: '/rest/general/session/close',
