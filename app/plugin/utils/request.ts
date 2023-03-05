@@ -11,9 +11,9 @@ const service = axios.create({
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
     bizType: '',
-    appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
+    appId: 'os_54b9f83c-58e2-4e32-8cc8-b1dcb872c0aa',
     platform: 'web',
-    merchantId: 'c1e3x',
+    merchantId: 'c1dyf',
     'M-AuthType': 'STATION_KEY',
   },
   adapter: fetchAdapter,

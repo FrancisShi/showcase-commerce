@@ -95,15 +95,15 @@ export function Container({...props}: {[key: string]: any}) {
             }}
             config={{
               mindConfig: {
-                mindId: '76643513529405440',
+                mindId: '81870359162392576',
                 mindType: WS_MIND_TYPE.original,
               },
               socketConfig: {
                 apiVersion: '1.3.0',
                 platform: 'web',
-                appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a',
+                appId: 'os_54b9f83c-58e2-4e32-8cc8-b1dcb872c0aa',
                 bizType: '',
-                merchantId: 'c1e3x',
+                merchantId: 'c1dyf',
                 mAuthType: 'STATION_KEY',
 
                 refUserId,

@@ -5,6 +5,5 @@ node_modules
 /public/build
 /.mf
 .env
-/app/styles/app.css
 .vscode
 .DS_Store
