@@ -121,10 +121,10 @@ shop-pay-button {
     }
     @apply prose mx-auto mb-12 grid justify-center font-serif text-primary;
     p,
-    ul,
+    /* ul,
     li {
       @apply mb-4 text-lg;
-    }
+    } */
     img {
       @apply md:-mx-8 lg:-mx-16;
 
