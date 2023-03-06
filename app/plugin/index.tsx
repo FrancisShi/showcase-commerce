@@ -106,7 +106,6 @@ function App(props: {
   const switchShortMsgRef = useRef<boolean>(true);
   const switchReceiveShortMsgRef = useRef<boolean>(true);
 
-  const showUnreadMsgRef = useRef<boolean>(false);
   const mainContentIndexRef = useRef<number>(0);
 
   const [sessionOpened, setSessionOpened] = useState<boolean>(false);
@@ -129,16 +128,6 @@ function App(props: {
           updateState({});
         });
       }, 5000);
-    }
-    if (
-      !isExpandRef.current &&
-      !switchShortMsgRef.current &&
-      !showUnreadMsgRef.current
-    ) {
-      // 新消息过来，对话框折叠状态，短消息没打开，未读gif未显示
-      // 没有未读消息
-      showUnreadMsgRef.current = true;
-      updateState({});
     }
     // 有新消息检查 shortMsg
   }, [msgListRef.current]);
@@ -269,9 +258,6 @@ function App(props: {
   // 改变 expand 模式
   // 如果后面要加动画的话
   useEffect(() => {
-    showUnreadMsgRef.current = false;
-    updateState({});
-
     if (!isExpandRef.current) {
       document.body.style.overflow = '';
     }
@@ -678,22 +664,6 @@ function App(props: {
           src={userConfig.avatar}
           alt=""
         />
-
-        {/* 未读消息 */}
-        {showUnreadMsgRef.current && (
-          <img
-            style={{
-              objectFit: 'cover',
-              width: '27px',
-              height: '20px',
-              position: 'absolute',
-              top: '50px',
-              left: '110px',
-            }}
-            src="https://cdn.mindverse.com/files/zzzz20230303167782988674220230303-155035.gif"
-            alt=""
-          />
-        )}
 
         {/* 简短消息 */}
         {switchShortMsgRef.current && msgListRef.current.length > 0 && (
