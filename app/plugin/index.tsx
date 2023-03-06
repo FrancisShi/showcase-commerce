@@ -216,6 +216,7 @@ function App(props: {
   useEffect(() => {
     sessionRef.current?.closeSession();
     msgListRef.current = [];
+    updateState({});
 
     // createLongLink
     setConfig(socketConfig);
