@@ -44,6 +44,8 @@ let colorBgDark: string = DEFAUT_CONFIG.COLOR_BG_DARK;
 let colorBgLight: string = DEFAUT_CONFIG.COLOR_BG_LIGHT;
 let developType: DevelopType = DevelopType.SCRIPT;
 
+let socketConfig: Config;
+
 export const getColorBgDark = () => {
   return colorBgDark;
 };
@@ -54,6 +56,10 @@ export const getColorBgLight = () => {
 
 export const getDevelopType = () => {
   return developType;
+};
+
+export const getSocketConfig = () => {
+  return socketConfig;
 };
 
 function App(props: {
@@ -76,7 +82,7 @@ function App(props: {
     return null;
   }
 
-  const socketConfig = props.config.socketConfig;
+  socketConfig = props.config.socketConfig;
   const userConfig = props.config.userConfig;
   colorBgDark = props.config?.bgDark ?? DEFAUT_CONFIG.COLOR_BG_DARK;
   colorBgLight = props.config?.bgLight ?? DEFAUT_CONFIG.COLOR_BG_LIGHT;
