@@ -115,17 +115,16 @@ function App(props: {
 
   // 短消息检查
   useEffect(() => {
-    if (isExpandRef.current) {
-      setShowShowMsgState(false);
-    } else if (
+    if (
       msgListRef.current.length > 0 &&
       msgListRef.current[msgListRef.current.length - 1].type ===
         MessageItemType.RECEIVE
     ) {
-      if (
-        !isExpandRef.current &&
+      if (isExpandRef.current) {
+        setShowShowMsgState(false);
+      } else if (
         msgLastReceiveIdRef.current !==
-          msgListRef.current[msgListRef.current.length - 1].messageId
+        msgListRef.current[msgListRef.current.length - 1].messageId
       ) {
         setShowShowMsgState(true);
         showShortAnim();
