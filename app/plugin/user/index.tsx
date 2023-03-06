@@ -9,11 +9,12 @@ import {userGet, userInit} from '../utils/api';
 
 export interface UserInputProps {
   refUserId: string;
+  style: CSSProperties;
 }
 
 export default forwardRef<HTMLDivElement, UserInputProps>(
   (props: UserInputProps, ref) => {
-    const {refUserId} = props;
+    const {refUserId, style} = props;
     const userItemProp = ['Name', 'Gender', 'Profession', 'Age', 'Description'];
 
     const userData = {
@@ -214,6 +215,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
           overflow: 'scroll',
           marginLeft: '16px',
           marginRight: '16px',
+          ...style,
         }}
         ref={ref}
       >

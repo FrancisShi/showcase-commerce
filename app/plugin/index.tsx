@@ -506,18 +506,22 @@ function App(props: {
             marginTop: '24px',
           }}
         >
-          {mainContentIndexRef.current === 0 && (
-            <ChatList
-              id="assistantChatList"
-              msgList={msgListRef.current}
-              isLoading={showListLoading}
-            />
-          )}
+          <ChatList
+            id="assistantChatList"
+            msgList={msgListRef.current}
+            isLoading={showListLoading}
+            style={{
+              display: mainContentIndexRef.current === 0 ? 'block' : 'none',
+            }}
+          />
 
           {/* 用户信息编辑框 */}
-          {mainContentIndexRef.current === 1 && (
-            <UserEdit refUserId={socketConfig.refUserId} />
-          )}
+          <UserEdit
+            refUserId={socketConfig.refUserId}
+            style={{
+              display: mainContentIndexRef.current === 1 ? 'block' : 'none',
+            }}
+          />
         </div>
 
         {/* avatar */}

@@ -23,6 +23,7 @@ export interface ChatListProps {
   id?: string;
   msgList: MessageItem[];
   isLoading: boolean;
+  style: CSSProperties;
 }
 
 function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
@@ -51,7 +52,7 @@ function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
 
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
-    const {id = 'msgList', msgList, isLoading} = props;
+    const {id = 'msgList', msgList, isLoading, style} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
     const [random, setRandom] = useState<number>();
 
@@ -233,6 +234,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           overflow: 'scroll',
           marginLeft: '16px',
           marginRight: '16px',
+          ...style,
         }}
         id={id}
         ref={ref}
