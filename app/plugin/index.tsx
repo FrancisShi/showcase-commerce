@@ -169,6 +169,15 @@ function App(props: {
 
   // size 响应
   useEffect(() => {
+    const mindContainer = document.getElementById('mvMindContainer');
+    if (mindContainer) {
+      setTimeout(() => {
+        mindContainer.style.backdropFilter = 'blur(1.8px)';
+        // @ts-ignore 兼容 Safari
+        mindContainer.style.webkitBackdropFilter = 'blur(1.8px)';
+      }, 0);
+    }
+
     // 每次 resize 都会根据父类大小来定自身大小
     const resize = () => {
       const parent = document.getElementById('mvMindContainer')?.parentElement;
@@ -445,7 +454,6 @@ function App(props: {
           maxHeight: `${height}px`,
           height: dynamicHeight ? 'auto' : `${height}px`,
           backgroundColor: colorBgDark,
-          backdropFilter: 'blur(1.8px)',
           borderRadius: '4px',
           zIndex: 50,
           visibility: !isExpandRef.current ? 'hidden' : 'visible',
