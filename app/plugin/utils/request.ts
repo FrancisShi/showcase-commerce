@@ -5,7 +5,6 @@ import axios from 'axios';
 import fetchAdapter from '@vespaiach/axios-fetch-adapter';
 import {getSocketConfig} from '..';
 
-const BASE_URL = 'https://gateway-pre.mindverse.com/chat/';
 const service = axios.create({
   timeout: 10 * 1000,
   headers: {
