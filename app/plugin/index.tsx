@@ -104,7 +104,7 @@ function App(props: {
   const isExpandRef = useRef<boolean>(initialExpand);
 
   // 短消息功能
-  const shortMsgLastIdRef = useRef<string | undefined>('');
+  const msgLastReceiveIdRef = useRef<string | undefined>('');
   const [showShowMsgState, setShowShowMsgState] = useState(false);
 
   const mainContentIndexRef = useRef<number>(0);
@@ -113,25 +113,29 @@ function App(props: {
 
   const isMobile = browserType() === 'mob';
 
+  // 短消息检查
   useEffect(() => {
     if (
       msgListRef.current.length > 0 &&
-      !isExpandRef.current &&
-      shortMsgLastIdRef.current !==
-        msgListRef.current[msgListRef.current.length - 1].messageId
+      msgListRef.current[msgListRef.current.length - 1].type ===
+        MessageItemType.RECEIVE
     ) {
-      shortMsgLastIdRef.current =
+      if (
+        !isExpandRef.current &&
+        msgLastReceiveIdRef.current !==
+          msgListRef.current[msgListRef.current.length - 1].messageId
+      ) {
+        setShowShowMsgState(true);
+        showShortAnim();
+        setTimeout(() => {
+          hideShortAnim(() => {
+            setShowShowMsgState(false);
+          });
+        }, 5000);
+      }
+      msgLastReceiveIdRef.current =
         msgListRef.current[msgListRef.current.length - 1].messageId;
-      // 不再接收
-      setShowShowMsgState(true);
-      showShortAnim();
-      setTimeout(() => {
-        hideShortAnim(() => {
-          setShowShowMsgState(false);
-        });
-      }, 5000);
     }
-    // 有新消息检查 shortMsg
   }, [msgListRef.current]);
 
   const showShortAnim = () => {
