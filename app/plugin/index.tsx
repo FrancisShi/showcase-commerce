@@ -330,9 +330,11 @@ function App(props: {
         () => {
           setIsRecording(true);
           // 开始录音
+          alert('test1');
           console.log('开始录音了=========');
         },
         (error) => {
+          alert('test2');
           setIsRecording(false);
           // 出错了
           console.log(error);
