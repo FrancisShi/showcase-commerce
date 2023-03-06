@@ -112,6 +112,7 @@ function App(props: {
   const [sessionOpened, setSessionOpened] = useState<boolean>(false);
 
   const isMobile = browserType() === 'mob';
+  const [isRecording, setIsRecording] = useState<boolean>(false);
 
   // 短消息检查
   useEffect(() => {
@@ -327,16 +328,19 @@ function App(props: {
       });
       recorder.start().then(
         () => {
+          setIsRecording(true);
           // 开始录音
           console.log('开始录音了=========');
         },
         (error) => {
+          setIsRecording(false);
           // 出错了
           console.log(error);
         },
       );
     };
     const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
+      setIsRecording(false);
       recorder.stop();
       const wavBlob = recorder.getWAVBlob();
       const reader = new FileReader();
@@ -628,19 +632,51 @@ function App(props: {
             {isMobile && (
               <div
                 id="voiceRecorder"
-                style={{width: '40px', height: '30px', marginTop: '5px'}}
+                style={{width: '40px', height: '40px', position: 'relative'}}
               >
-                <img
-                  style={{
-                    width: '30px',
-                    height: '30px',
-                    objectFit: 'cover',
-                    cursor: 'pointer',
-                    pointerEvents: 'none',
-                  }}
-                  src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
-                  alt=""
-                />
+                {!isRecording && (
+                  <img
+                    style={{
+                      width: '30px',
+                      height: '30px',
+                      objectFit: 'cover',
+                      cursor: 'pointer',
+                      pointerEvents: 'none',
+                      marginTop: '5px',
+                    }}
+                    src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
+                    alt=""
+                  />
+                )}
+
+                {isRecording && (
+                  <div
+                    style={{
+                      width: '90px',
+                      height: '90px',
+                      backgroundColor: '#1B1B1B',
+                      borderRadius: '50%',
+                      position: 'absolute',
+                      right: '-10px',
+                      top: '-50px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: '24px',
+                        height: '41px',
+                        objectFit: 'cover',
+                        cursor: 'pointer',
+                        pointerEvents: 'none',
+                      }}
+                      src="https://cdn.mindverse.com/img/zzzz202303061678103877011%E7%BB%84%206.png"
+                      alt=""
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>
