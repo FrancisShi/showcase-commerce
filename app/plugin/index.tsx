@@ -115,7 +115,9 @@ function App(props: {
 
   // 短消息检查
   useEffect(() => {
-    if (
+    if (isExpandRef.current) {
+      setShowShowMsgState(false);
+    } else if (
       msgListRef.current.length > 0 &&
       msgListRef.current[msgListRef.current.length - 1].type ===
         MessageItemType.RECEIVE
@@ -136,7 +138,7 @@ function App(props: {
       msgLastReceiveIdRef.current =
         msgListRef.current[msgListRef.current.length - 1].messageId;
     }
-  }, [msgListRef.current]);
+  }, [msgListRef.current, isExpandRef.current]);
 
   const showShortAnim = () => {
     const shortChat = document.getElementById('shortChat');
