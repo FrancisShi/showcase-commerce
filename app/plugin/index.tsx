@@ -346,6 +346,19 @@ function App(props: {
               setIsRecording(true);
               // 开始录音
               console.log('开始录音了=========');
+              navigator.vibrate =
+                navigator.vibrate ||
+                // @ts-ignore
+                navigator.webkitVibrate ||
+                // @ts-ignore
+                navigator.mozVibrate ||
+                // @ts-ignore
+                navigator.msVibrate;
+              // @ts-ignore
+              if (navigator.vibrate) {
+                navigator.vibrate(200);
+                console.log('支持设备震动！');
+              }
             },
             (error) => {
               setIsRecording(false);
