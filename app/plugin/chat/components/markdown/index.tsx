@@ -44,6 +44,19 @@ export default function Markdown(props: MarkdownInterface) {
           }
         }
       }
+
+      const ulList = document.getElementsByTagName('ul');
+      if (ulList && ulList.length > 0) {
+        for (let i = 0; i < ulList.length; i++) {
+          const ele = ulList[i];
+          if (ele.parentElement?.id === 'mv_markdown') {
+            ele.style.listStyleType = 'disc';
+            ele.style.paddingLeft = '16px';
+            ele.style.marginTop = '16px';
+            ele.style.marginBottom = '16px';
+          }
+        }
+      }
     }, 0);
   }, [content]);
 
