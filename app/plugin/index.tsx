@@ -116,7 +116,7 @@ function App(props: {
   useEffect(() => {
     if (
       msgListRef.current.length > 0 &&
-      isExpandRef.current &&
+      !isExpandRef.current &&
       shortMsgLastIdRef.current !==
         msgListRef.current[msgListRef.current.length - 1].messageId
     ) {
