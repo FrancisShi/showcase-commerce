@@ -21,7 +21,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           transform: scaleX(1.5);
       }
       40%{
-          height:10px;
+          height:6px;
           border-radius: 50%;
           transform: scaleX(1);
       }
@@ -64,12 +64,12 @@ export default function Loading({style}: {style: CSSProperties}) {
     >
       <div
         style={{
-          width: '8px',
-          height: '8px',
+          width: '6px',
+          height: '6px',
           position: 'absolute',
           borderRadius: '50%',
           backgroundColor: '#fff',
-          left: '20%',
+          left: '30%',
           zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
@@ -77,12 +77,12 @@ export default function Loading({style}: {style: CSSProperties}) {
       />
       <div
         style={{
-          width: '8px',
-          height: '8px',
+          width: '6px',
+          height: '6px',
           position: 'absolute',
           borderRadius: '50%',
           backgroundColor: '#fff',
-          left: '45%',
+          left: '50%',
           zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
@@ -91,12 +91,12 @@ export default function Loading({style}: {style: CSSProperties}) {
       />
       <div
         style={{
-          width: '8px',
-          height: '8px',
+          width: '6px',
+          height: '6px',
           position: 'absolute',
           borderRadius: '50%',
           backgroundColor: '#fff',
-          left: '75%',
+          left: '70%',
           zIndex: 5,
           transformOrigin: '50%',
           animation: 'circle .5s alternate infinite ease',
@@ -115,7 +115,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           top: '31px',
           transformOrigin: '50%',
           zIndex: 1,
-          left: '21%',
+          left: '30%',
           filter: `blur(1px)`,
           animation: `shadow .5s alternate infinite ease`,
         }}
@@ -131,7 +131,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           top: '31px',
           transformOrigin: '50%',
           zIndex: 1,
-          left: '47%',
+          left: '50%',
           filter: `blur(1px)`,
           animation: `shadow .5s alternate infinite ease`,
           animationDelay: '.2s',
@@ -148,7 +148,7 @@ export default function Loading({style}: {style: CSSProperties}) {
           top: '31px',
           transformOrigin: '50%',
           zIndex: 1,
-          left: '77%',
+          left: '70%',
           filter: `blur(1px)`,
           animation: `shadow .5s alternate infinite ease`,
           animationDelay: '.3s',

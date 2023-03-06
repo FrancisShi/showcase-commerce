@@ -527,8 +527,8 @@ function App(props: {
               position: 'absolute',
               bottom: '0px',
               left: '17px',
-              width: '100px',
-              height: '140px',
+              width: '86px',
+              height: '120px',
               zIndex: 50,
             }}
             type={TYPE_AVATAR.PICTURE}
@@ -550,8 +550,8 @@ function App(props: {
               style={{
                 position: 'absolute',
                 objectFit: 'cover',
-                left: '17px',
-                bottom: '80px',
+                left: '14px',
+                bottom: '90px',
                 zIndex: 100,
               }}
             >
@@ -590,8 +590,9 @@ function App(props: {
             style={{
               display: 'flex',
               flex: 1,
-              marginLeft: '117px',
-              marginTop: '17px',
+              marginLeft: '60px',
+              marginTop: '15px',
+              zIndex: 50,
             }}
           >
             <input
@@ -601,14 +602,12 @@ function App(props: {
                 paddingLeft: '22px',
                 paddingRight: '22px',
                 width: '100%',
-                height: '30px',
+                height: '40px',
                 color: 'black',
                 outline: 'none',
                 fontSize: '12px',
-                borderRadius: '15px',
-                borderColor: '#000000',
-                borderWidth: '1px',
-                marginRight: isMobile ? '25px' : '0px',
+                borderRadius: '20px',
+                marginRight: isMobile ? '15px' : '0px',
               }}
               placeholder={'Message'}
               value={inputValue}
@@ -616,7 +615,10 @@ function App(props: {
             />
 
             {isMobile && (
-              <div id="voiceRecorder" style={{width: '40px', height: '30px'}}>
+              <div
+                id="voiceRecorder"
+                style={{width: '40px', height: '30px', marginTop: '5px'}}
+              >
                 <img
                   style={{
                     width: '30px',
@@ -641,7 +643,7 @@ function App(props: {
           bottom: `0px`,
           right: `0px`,
           width: `${width}px`,
-          height: `${140}px`,
+          height: `${120}px`,
           zIndex: 50,
           visibility: isExpandRef.current ? 'hidden' : 'visible',
           cursor: 'pointer',
@@ -658,8 +660,8 @@ function App(props: {
             position: 'absolute',
             objectFit: 'cover',
             left: '17px',
-            width: '100px',
-            height: '140px',
+            width: '86px',
+            height: '120px',
           }}
           src={userConfig.avatar}
           alt=""
