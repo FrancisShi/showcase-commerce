@@ -209,13 +209,8 @@ function App(props: {
 
   // 初始化对话
   useEffect(() => {
-    sessionRef.current?.closeSession();
-    msgListRef.current = [];
-    updateState({});
-
     // createLongLink
     setConfig(socketConfig);
-
     const openSession = () => {
       sessionRef.current?.openSession({
         mindId: mindConfig.mindId,
@@ -253,6 +248,11 @@ function App(props: {
         });
       openSession();
     });
+    return () => {
+      sessionRef.current?.closeSession();
+      msgListRef.current = [];
+      updateState({});
+    };
   }, [mindConfig.mindId]);
 
   // 改变 expand 模式
