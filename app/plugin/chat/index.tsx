@@ -112,14 +112,31 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         return (
           <div
             key={index}
-            // eslint-disable-next-line react/no-children-prop
-            children={content}
             style={{
-              backgroundColor: 'white',
-              fontSize: '14px',
-              paddingRight: '24px',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              marginBottom: '20px',
             }}
-          />
+          >
+            <div
+              style={{height: '1px', backgroundColor: '#F6F6F6', flex: 1}}
+            ></div>
+            <div
+              style={{
+                fontSize: '14px',
+                marginLeft: '24px',
+                marginRight: '24px',
+              }}
+            >
+              {content}
+            </div>
+            <div
+              style={{height: '1px', backgroundColor: '#F6F6F6', flex: 1}}
+            ></div>
+          </div>
         );
       };
 

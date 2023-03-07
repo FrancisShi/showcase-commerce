@@ -261,7 +261,13 @@ function App(props: {
           }
         })
         .setOnSessionInvalidListener(() => {
-          console.error('Session Error');
+          appendMsg({
+            type: MessageItemType.SYSTEM,
+            dividerContent: 'Session Ended',
+            multipleData: [],
+            data: {content: ''},
+            seqId: '',
+          });
         });
       openSession();
     });
@@ -412,6 +418,8 @@ function App(props: {
     if (item.type === MessageItemType.RECEIVE) {
       appendReceivedMsg(item);
     } else if (item.type === MessageItemType.SEND) {
+      msgListRef.current = [...msgListRef.current, item];
+    } else if (item.type === MessageItemType.SYSTEM) {
       msgListRef.current = [...msgListRef.current, item];
     }
     checkHeight();
