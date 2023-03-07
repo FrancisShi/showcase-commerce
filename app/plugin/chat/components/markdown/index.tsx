@@ -63,7 +63,7 @@ export default function Markdown(props: MarkdownInterface) {
   return (
     <div
       id={`mv_markdown`}
-      style={{width: '100%'}}
+      style={{width: '100%', overflowX: 'hidden'}}
       dangerouslySetInnerHTML={{__html: markdown}}
     ></div>
   );
