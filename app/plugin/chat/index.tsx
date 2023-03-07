@@ -5,10 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import ChatLink from './components/link';
-import ChatImg from './components/img';
 import ChatText from './components/text';
-import ChatHtml from './components/html';
 import ChatTemplate from './components/template';
 import Loading from './components/loading';
 import MessageItem, {
@@ -93,14 +90,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         sources?: string[],
       ) => {
         switch (type) {
-          case WS_MSG_DATA_TYPE.link:
-            return <ChatLink link={content} />;
-          case WS_MSG_DATA_TYPE.image:
-            return <ChatImg imgUrl={content}></ChatImg>;
           case WS_MSG_DATA_TYPE.text:
             return <ChatText content={content} sources={sources}></ChatText>;
-          case WS_MSG_DATA_TYPE.html:
-            return <ChatHtml content={content}></ChatHtml>;
           case WS_MSG_DATA_TYPE.template:
             return <ChatTemplate content={content}></ChatTemplate>;
           default:
