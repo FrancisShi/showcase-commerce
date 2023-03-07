@@ -60,7 +60,6 @@ export const speech2Text = (data: {voiceBase64: string}) => {
 };
 
 export const conversationAttitude = (data: {
-  sessionId: string;
   msgId: string;
   attitude: number; //1赞成2反对0无观点
 }) => {

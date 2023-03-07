@@ -20,7 +20,6 @@ import {conversationAttitude} from '../utils/api';
 
 export interface ChatListProps {
   id?: string;
-  sessionId: string;
   msgList: MessageItem[];
   isLoading: boolean;
   style: CSSProperties;
@@ -52,7 +51,7 @@ function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
 
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
-    const {id = 'msgList', sessionId, msgList, isLoading, style} = props;
+    const {id = 'msgList', msgList, isLoading, style} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
     const isScrollingRef = useRef<boolean>(false);
     const lastMessageId = useRef<string | undefined>('');
@@ -76,13 +75,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
       [];
     }
 
-    function thumbClick(
-      sessionId: string,
-      messageId: string,
-      attitude: number,
-    ) {
+    function thumbClick(messageId: string, attitude: number) {
       conversationAttitude({
-        sessionId,
         msgId: messageId,
         attitude,
       }).then((res) => {
@@ -250,13 +244,15 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 }}
               >
                 <div
-                  style={{cursor: 'pointer', 
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',}}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
                   onClick={() => {
                     if (messageId) {
-                      thumbClick(sessionId, messageId, 1);
+                      thumbClick(messageId, 1);
                     }
                   }}
                 >
@@ -268,13 +264,15 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 </div>
 
                 <div
-                  style={{cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',}}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
                   onClick={() => {
                     if (messageId) {
-                      thumbClick(sessionId, messageId, 2);
+                      thumbClick(messageId, 2);
                     }
                   }}
                 >
