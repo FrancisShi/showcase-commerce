@@ -250,7 +250,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 }}
               >
                 <div
-                  style={{cursor: 'pointer'}}
+                  style={{cursor: 'pointer', 
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',}}
                   onClick={() => {
                     if (messageId) {
                       thumbClick(sessionId, messageId, 1);
@@ -265,7 +268,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 </div>
 
                 <div
-                  style={{cursor: 'pointer'}}
+                  style={{cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',}}
                   onClick={() => {
                     if (messageId) {
                       thumbClick(sessionId, messageId, 2);

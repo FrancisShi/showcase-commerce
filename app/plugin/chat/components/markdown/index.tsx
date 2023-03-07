@@ -40,7 +40,15 @@ export default function Markdown(props: MarkdownInterface) {
         for (let i = 0; i < pList.length; i++) {
           const ele = pList[i];
           if (ele.parentElement?.id === 'mv_markdown') {
+            // 处理 p
             ele.style.margin = '0px';
+            // 处理 img
+            var children = ele.getElementsByTagName("img");
+            if(children && children.length > 0) {
+              for(let i = 0; i < children.length; i++) {
+                  children[i].style.maxWidth = "100%"
+                }
+            }
           }
         }
       }
@@ -50,6 +58,7 @@ export default function Markdown(props: MarkdownInterface) {
         for (let i = 0; i < ulList.length; i++) {
           const ele = ulList[i];
           if (ele.parentElement?.id === 'mv_markdown') {
+            // 处理 ul
             ele.style.listStyleType = 'disc';
             ele.style.paddingLeft = '16px';
             ele.style.marginTop = '16px';
