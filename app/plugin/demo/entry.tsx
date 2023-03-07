@@ -162,7 +162,7 @@ export function injectHook(key: string, data: PRODUCT | USER) {
       data.sessionId = sessionId;
       data.pageType = 'PRODUCT';
       request({
-        url: '/rest/general/session/env/page/push',
+        url: '/chat/rest/general/session/env/page/push',
         method: 'post',
         data,
       })
@@ -170,7 +170,7 @@ export function injectHook(key: string, data: PRODUCT | USER) {
           console.log('product', res);
         })
         .catch((res) => {
-          console.error('/rest/demo/push/page 调用失败', res);
+          console.error('/chat/rest/demo/push/page 调用失败', res);
         });
     }
   }
