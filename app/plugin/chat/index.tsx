@@ -16,9 +16,11 @@ import MessageItem, {
 } from './model/message-item';
 import {WS_MSG_DATA_TYPE} from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
+import {conversationAttitude} from '../utils/api';
 
 export interface ChatListProps {
   id?: string;
+  sessionId: string;
   msgList: MessageItem[];
   isLoading: boolean;
   style: CSSProperties;
@@ -50,10 +52,11 @@ function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
 
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
-    const {id = 'msgList', msgList, isLoading, style} = props;
+    const {id = 'msgList', sessionId, msgList, isLoading, style} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
     const isScrollingRef = useRef<boolean>(false);
     const lastMessageId = useRef<string | undefined>('');
+    const [attitudeMsg, setAttitudeMsg] = useState<any>({});
 
     function scrollToBottom() {
       const itemList = document.getElementById(id);
@@ -71,6 +74,23 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         }
       }
       [];
+    }
+
+    function thumbClick(
+      sessionId: string,
+      messageId: string,
+      attitude: number,
+    ) {
+      conversationAttitude({
+        sessionId,
+        msgId: messageId,
+        attitude,
+      }).then((res) => {
+        if (res?.data?.code === 200) {
+          attitudeMsg[`${messageId}`] = attitude;
+          setAttitudeMsg({...attitudeMsg});
+        }
+      });
     }
 
     flatMessageList.current = useMemo(() => {
@@ -143,31 +163,123 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
       const receiveWrapView = (
         result: (JSX.Element | null)[],
         index: number,
+        messageId?: string,
       ) => {
         return (
           // 接受消息，wrapper
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'start',
-              maxWidth: '90%',
-              backgroundColor: getColorBgLight(),
-              color: '#3D3D3D',
+              position: 'relative',
               marginBottom:
                 index === flatMessageList.current.length - 1 && !isLoading
                   ? '70px'
+                  : attitudeMsg[`${messageId}`]
+                  ? '35px'
                   : '20px',
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-              boxSizing: 'border-box',
-              borderRadius: '14px',
-              padding: '12px',
-              fontSize: '15px',
             }}
-            key={index}
           >
-            {result}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                maxWidth: '90%',
+                backgroundColor: getColorBgLight(),
+                color: '#3D3D3D',
+
+                whiteSpace: 'normal',
+                wordBreak: 'break-word',
+                boxSizing: 'border-box',
+                borderRadius: '14px',
+                padding: '12px',
+                fontSize: '15px',
+              }}
+              key={index}
+            >
+              {result}
+            </div>
+
+            {attitudeMsg[`${messageId}`] && (
+              <div
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  position: 'absolute',
+                  bottom: '-15px',
+                  left: '0px',
+                  backgroundColor: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img
+                  style={{
+                    width: '15px',
+                    height: '15px',
+                    objectFit: 'cover',
+                  }}
+                  src={
+                    attitudeMsg[`${messageId}`] === 1
+                      ? 'https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png'
+                      : 'https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png'
+                  }
+                  alt=""
+                />
+              </div>
+            )}
+
+            {/* 点赞点踩 */}
+            {!attitudeMsg[`${messageId}`] && (
+              <div
+                style={{
+                  width: '98px',
+                  height: '28px',
+                  borderRadius: '14px',
+                  opacity: 1,
+                  background: '#FFFFFF',
+                  marginTop: '3px',
+                  border: '1px solid #8D8D8D',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingLeft: '21px',
+                  paddingRight: '21px',
+                }}
+              >
+                <div
+                  style={{cursor: 'pointer'}}
+                  onClick={() => {
+                    if (messageId) {
+                      thumbClick(sessionId, messageId, 1);
+                    }
+                  }}
+                >
+                  <img
+                    style={{width: '15px', height: '15px', objectFit: 'cover'}}
+                    src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
+                    alt=""
+                  />
+                </div>
+
+                <div
+                  style={{cursor: 'pointer'}}
+                  onClick={() => {
+                    if (messageId) {
+                      thumbClick(sessionId, messageId, 2);
+                    }
+                  }}
+                >
+                  <img
+                    style={{width: '15px', height: '15px', objectFit: 'cover'}}
+                    src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            )}
           </div>
         );
       };
@@ -185,7 +297,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
               singleItem.sources,
             );
           });
-          return receiveWrapView(itemsView, index);
+          return receiveWrapView(itemsView, index, item[0].messageId);
         } else if (item.length === 1) {
           const singleItem = item[0];
           if (singleItem) {
@@ -196,7 +308,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                 singleItem.sources,
               );
               if (result) {
-                return receiveWrapView([result], index);
+                return receiveWrapView([result], index, singleItem.messageId);
               } else {
                 return <></>;
               }

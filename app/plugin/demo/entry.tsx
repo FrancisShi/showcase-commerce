@@ -95,31 +95,35 @@ export function Container({...props}: {[key: string]: any}) {
             }}
             config={{
               mindConfig: {
-                mindId: '81870359162392576',
+                mindId: '81870359162392576', // pre
+                // mindId: '76643513529405440', // test
                 mindType: WS_MIND_TYPE.original,
               },
               socketConfig: {
                 apiVersion: '1.3.0',
                 platform: 'web',
-                appId: 'os_54b9f83c-58e2-4e32-8cc8-b1dcb872c0aa',
+                appId: 'os_54b9f83c-58e2-4e32-8cc8-b1dcb872c0aa', // pre
+                // appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a', // test
                 bizType: '',
-                merchantId: 'c1dyf',
+                merchantId: 'c1dyf', // pre
+                // merchantId: 'c1e3x', // test
                 mAuthType: 'STATION_KEY',
 
                 refUserId,
 
-                merchantBaseURL: 'https://gateway-pre.mindverse.com/chat',
-                merchantSocketPath: '/rest/general/ws/create',
-                merchantSessionOpenPath: '/rest/general/session/create',
-                merchantSessionClosePath: '/rest/general/session/close',
-                merchantUserRegisterPath: '/rest/general/user/register',
-                merchantSocketCheckPath: '/rest/general/ws/get',
-                merchantSessionCheckPath: '/rest/general/session/get',
+                merchantBaseURL: 'https://gateway-pre.mindverse.com', // pre
+                // merchantBaseURL: 'https://gateway-test.mindverse.com', // test
+                merchantSocketPath: '/chat/rest/general/ws/create',
+                merchantSessionOpenPath: '/chat/rest/general/session/create',
+                merchantSessionClosePath: '/chat/rest/general/session/close',
+                merchantUserRegisterPath: '/chat/rest/general/user/register',
+                merchantSocketCheckPath: '/chat/rest/general/ws/get',
+                merchantSessionCheckPath: '/chat/rest/general/session/get',
 
                 headers: {},
               },
               userConfig: {
-                userName: 'shitou-demo', // document.getElementById("#nickname").value,
+                userName: 'shitou-demo',
                 avatar:
                   'https://cdn.mindverse.com/img/zzzz202302211676948571901%E5%BF%83%E8%AF%86%E5%BC%95%E5%AF%BC%E5%91%98.png',
               },

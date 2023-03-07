@@ -11,17 +11,17 @@ export const userInit = (
   },
 ) => {
   return request({
-    url: '/rest/general/user/init',
+    url: '/chat/rest/general/user/init',
     method: 'post',
     data: {...user, refUserId},
   }).catch((res) => {
-    console.error('/rest/demo/user/init 调用失败', res);
+    console.error('/chat/rest/demo/user/init 调用失败', res);
   });
 };
 
 export const userGet = (params: {refUserId: string}) => {
   return request({
-    url: '/rest/general/user/ref/user/info/query',
+    url: '/chat/rest/general/user/ref/user/info/query',
     method: 'get',
     params,
   })
@@ -41,13 +41,13 @@ export const userGet = (params: {refUserId: string}) => {
       }
     })
     .catch((res) => {
-      console.error('/rest/general/user/ref/user/info/query', res);
+      console.error('/chat/rest/general/user/ref/user/info/query', res);
     });
 };
 
 export const speech2Text = (data: {voiceBase64: string}) => {
   return request({
-    url: '/rest/general/voice/speech/2/text',
+    url: '/chat/rest/general/voice/speech/2/text',
     method: 'post',
     data,
   })
@@ -55,6 +55,23 @@ export const speech2Text = (data: {voiceBase64: string}) => {
       return res.data.data;
     })
     .catch((res) => {
-      console.error('/rest/general/voice/speech/2/text', res);
+      console.error('/chat/rest/general/voice/speech/2/text', res);
     });
+};
+
+export const conversationAttitude = (data: {
+  sessionId: string;
+  msgId: string;
+  attitude: number; //1赞成2反对0无观点
+}) => {
+  return request({
+    url: '/umm/UmmBenchmark/benchmark/conversation/attitude/express',
+    method: 'post',
+    data,
+  }).catch((res) => {
+    console.error(
+      '/umm/UmmBenchmark/benchmark/conversation/attitude/express',
+      res,
+    );
+  });
 };

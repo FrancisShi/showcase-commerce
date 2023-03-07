@@ -64,6 +64,7 @@ export interface ChatListItem {
   singleDataType: WS_MSG_DATA_TYPE; // 单条消息的类型
   content: string;
   sources: string[];
+  messageId?: string;
 }
 
 export const flatMessages = (originSource: MessageItem[]) => {
@@ -98,6 +99,7 @@ export const flatMessages = (originSource: MessageItem[]) => {
             singleDataType: singleData.singleDataType,
             content: content ?? '',
             sources: msgItem.sources ?? [],
+            messageId: msgItem.messageId,
           };
 
           if (msgItem.messageId && msgItem.messageId.length > 0) {
