@@ -737,7 +737,7 @@ function App(props: {
           style={{
             position: 'absolute',
             objectFit: 'cover',
-            left: '17px',
+            right: '17px',
             width: '86px',
             height: '120px',
           }}
@@ -753,7 +753,7 @@ function App(props: {
             display: showShowMsgState ? 'block' : 'none',
             position: 'absolute',
             top: 0,
-            left: '127px',
+            right: '127px',
             backgroundColor: getColorBgLight(),
             marginRight: '20px',
             maxHeight: '90px',
