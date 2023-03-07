@@ -423,6 +423,7 @@ function App(props: {
       msgListRef.current = [...msgListRef.current, item];
     }
     checkHeight();
+    updateState({});
   }
 
   // scroll 需要给定高度
