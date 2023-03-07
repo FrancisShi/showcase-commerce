@@ -2,6 +2,7 @@ import React, {
   CSSProperties,
   forwardRef,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -51,32 +52,40 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
     const {id = 'msgList', msgList, isLoading, style} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
-    const [random, setRandom] = useState<number>();
-
+    const isScrollingRef = useRef<boolean>(false);
     const lastMessageId = useRef<string | undefined>('');
 
     function scrollToBottom() {
       const itemList = document.getElementById(id);
       if (itemList) {
-        scrollTo(itemList, itemList.scrollHeight - itemList.clientHeight, 300);
+        if (!isScrollingRef.current) {
+          isScrollingRef.current = true;
+          scrollTo(
+            itemList,
+            itemList.scrollHeight - itemList.clientHeight,
+            300,
+          );
+          setTimeout(() => {
+            isScrollingRef.current = false;
+          }, 300);
+        }
       }
       [];
     }
 
+    flatMessageList.current = useMemo(() => {
+      return flatMessages(msgList);
+    }, [msgList]);
+
     useEffect(() => {
-      flatMessageList.current = flatMessages(msgList);
       if (msgList[msgList.length - 1]) {
         if (lastMessageId.current !== msgList[msgList.length - 1].messageId) {
           // 来新消息了
-          setRandom(Math.random());
+          scrollToBottom();
           lastMessageId.current = msgList[msgList.length - 1].messageId;
         }
       }
     }, [msgList]);
-
-    useEffect(() => {
-      scrollToBottom();
-    }, [random]);
 
     function renderItemList() {
       if (flatMessageList.current.length == 0) {

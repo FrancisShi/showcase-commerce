@@ -80,15 +80,6 @@ export const flatMessages = (originSource: MessageItem[]) => {
             case WS_MSG_DATA_TYPE.text:
               content = singleData.modal.answer;
               break;
-            case WS_MSG_DATA_TYPE.image:
-              content = singleData.modal.image;
-              break;
-            case WS_MSG_DATA_TYPE.link:
-              content = singleData.modal.link;
-              break;
-            case WS_MSG_DATA_TYPE.html:
-              content = singleData.modal.html;
-              break;
             case WS_MSG_DATA_TYPE.template:
               content = singleData.modal.template;
               break;
