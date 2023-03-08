@@ -775,8 +775,8 @@ function App(props: {
             style={{
               display: showShowMsgState ? 'block' : 'none',
               position: 'absolute',
-              top: 0,
-              right: '127px',
+              top: '10px',
+              right: '60px',
               backgroundColor: getColorBgLight(),
               marginRight: '20px',
               maxHeight: '90px',
