@@ -125,7 +125,7 @@ export function Container({...props}: {[key: string]: any}) {
               userConfig: {
                 userName: 'shitou-demo',
                 avatar:
-                  'https://cdn.mindverse.com/img/zzzz202302211676948571901%E5%BF%83%E8%AF%86%E5%BC%95%E5%AF%BC%E5%91%98.png',
+                  'https://cdn.mindverse.com/img/zzzz202302171676605785456Fj9rkQYWX.png',
               },
               dynamicHeight: true,
               developType: DevelopType.NPM,
