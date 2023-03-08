@@ -226,65 +226,77 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
             )}
 
             {/* 点赞点踩 */}
-            {!attitudeMsg[`${messageId}`] && (
-              <div
-                style={{
-                  width: '98px',
-                  height: '28px',
-                  borderRadius: '14px',
-                  opacity: 1,
-                  background: '#FFFFFF',
-                  marginTop: '3px',
-                  border: '1px solid #8D8D8D',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingLeft: '21px',
-                  paddingRight: '21px',
-                }}
-              >
+            {!attitudeMsg[`${messageId}`] &&
+              //  非第一个的最新消息才展示
+              index !== 0 &&
+              flatMessageList.current.length > 0 &&
+              index === flatMessageList.current.length - 1 && (
                 <div
                   style={{
-                    cursor: 'pointer',
+                    width: '98px',
+                    height: '28px',
+                    borderRadius: '14px',
+                    opacity: 1,
+                    background: '#FFFFFF',
+                    marginTop: '3px',
+                    border: '1px solid #8D8D8D',
                     display: 'flex',
+                    flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                  }}
-                  onClick={() => {
-                    if (messageId) {
-                      thumbClick(messageId, 1);
-                    }
+                    paddingLeft: '21px',
+                    paddingRight: '21px',
                   }}
                 >
-                  <img
-                    style={{width: '15px', height: '15px', objectFit: 'cover'}}
-                    src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
-                    alt=""
-                  />
-                </div>
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                    onClick={() => {
+                      if (messageId) {
+                        thumbClick(messageId, 1);
+                      }
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: '15px',
+                        height: '15px',
+                        objectFit: 'cover',
+                      }}
+                      src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
+                      alt=""
+                    />
+                  </div>
 
-                <div
-                  style={{
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                  onClick={() => {
-                    if (messageId) {
-                      thumbClick(messageId, 2);
-                    }
-                  }}
-                >
-                  <img
-                    style={{width: '15px', height: '15px', objectFit: 'cover'}}
-                    src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
-                    alt=""
-                  />
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                    onClick={() => {
+                      if (messageId) {
+                        thumbClick(messageId, 2);
+                      }
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: '15px',
+                        height: '15px',
+                        objectFit: 'cover',
+                      }}
+                      src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
+                      alt=""
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         );
       };
