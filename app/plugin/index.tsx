@@ -606,8 +606,8 @@ function App(props: {
               style={{
                 position: 'absolute',
                 objectFit: 'cover',
-                right: '25px',
-                bottom: '90px',
+                right: '22px',
+                bottom: '120px',
                 zIndex: 100,
               }}
             >
