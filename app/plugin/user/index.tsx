@@ -255,7 +255,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
                 marginBottom: '13px',
               }}
             >
-              ✋ Your Privacy is on your control~
+              ✋ Your Privacy is in your control.
             </div>
           </div>
 
