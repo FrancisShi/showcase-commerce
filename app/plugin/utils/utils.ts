@@ -24,3 +24,50 @@ export function browserType() {
     return 'pc';
   }
 }
+
+export function showToast(content: string) {
+  const ANIM_TIME = 200;
+  const TOAST_TIME = 2000;
+  const container = document.getElementById('mvMindContainer');
+  const toastContainer = document.createElement('div');
+  if (container && toastContainer) {
+    toastContainer.id = 'mvToast';
+    toastContainer.style.fontSize = '14px';
+    toastContainer.style.color = '#FFFFFF';
+    toastContainer.style.display = 'inherit';
+    toastContainer.style.height = '38px';
+    toastContainer.style.borderRadius = '10px';
+    toastContainer.style.background = 'rgba(52, 52, 52, 0.8)';
+    toastContainer.style.paddingLeft = '22px';
+    toastContainer.style.paddingRight = '22px';
+    toastContainer.style.paddingTop = '10px';
+    toastContainer.style.paddingBottom = '10px';
+    toastContainer.style.position = 'absolute';
+    toastContainer.style.top = '50%';
+    toastContainer.style.left = '50%';
+    toastContainer.style.transform = `translate(-50%, -50%)`;
+    toastContainer.style.maxWidth = '50%';
+    toastContainer.style.whiteSpace = 'nowrap';
+    toastContainer.style.textOverflow = 'ellipsis';
+    toastContainer.style.overflow = 'hidden';
+    toastContainer.style.zIndex = '1000';
+    toastContainer.style.opacity = '0';
+
+    toastContainer.innerText = content;
+    container.appendChild(toastContainer);
+
+    toastContainer.animate([{opacity: 0}, {opacity: 1}], {
+      duration: ANIM_TIME,
+      fill: 'forwards',
+    });
+    setTimeout(() => {
+      toastContainer.animate([{opacity: 1}, {opacity: 0}], {
+        duration: ANIM_TIME,
+        fill: 'forwards',
+      });
+      setTimeout(() => {
+        container.removeChild(toastContainer);
+      }, ANIM_TIME);
+    }, TOAST_TIME);
+  }
+}

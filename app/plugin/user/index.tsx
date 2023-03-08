@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import {userGet, userInit} from '../utils/api';
+import {showToast} from '../utils/utils';
 
 export interface UserInputProps {
   refUserId: string;
@@ -50,7 +51,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
     const onSave = () => {
       userInit(refUserId, userDataState).then((res) => {
         if (res?.data?.code === 0) {
-          alert('Saved');
+          showToast('Saved');
         }
       });
     };

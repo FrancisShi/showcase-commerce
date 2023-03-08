@@ -17,6 +17,7 @@ import MessageItem, {
 import {WS_MSG_DATA_TYPE} from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
 import {conversationAttitude} from '../utils/api';
+import {showToast} from '../utils/utils';
 
 export interface ChatListProps {
   id?: string;

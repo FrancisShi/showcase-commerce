@@ -12,7 +12,7 @@ import MessageItem, {
 import Recorder from 'js-audio-recorder';
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
-import {browserType} from './utils/utils';
+import {browserType, showToast} from './utils/utils';
 import {speech2Text} from './utils/api';
 
 export const EVENT = {
@@ -374,7 +374,7 @@ function App(props: {
           );
         }
       } else {
-        alert('浏览器不支持 getUserMedia');
+        showToast('浏览器不支持 getUserMedia');
       }
     };
     const eventAreaFinish = (e: TouchEvent | MouseEvent) => {
@@ -395,7 +395,7 @@ function App(props: {
               if (res && typeof res === 'string' && res.length > 0) {
                 handleSendMsg(res);
               } else {
-                alert(`No recognizable speech detected, please try again."`);
+                showToast(`No recognizable speech detected, please try again.`);
               }
             });
           }
