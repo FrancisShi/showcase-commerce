@@ -735,42 +735,55 @@ function App(props: {
           zIndex: 50,
           visibility: isExpandRef.current ? 'hidden' : 'visible',
           cursor: 'pointer',
+          pointerEvents: 'none',
           ...closeStyle,
         }}
-        onClick={() => {
-          isExpandRef.current = !isExpandRef.current;
-          updateState({});
-        }}
       >
-        <img
-          style={{
-            position: 'absolute',
-            objectFit: 'cover',
-            right: '17px',
-            width: '86px',
-            height: '120px',
+        <div
+          onClick={() => {
+            isExpandRef.current = !isExpandRef.current;
+            updateState({});
           }}
-          src={userConfig.avatar}
-          alt=""
-        />
+        >
+          <img
+            style={{
+              position: 'absolute',
+              objectFit: 'cover',
+              right: '17px',
+              width: '86px',
+              height: '120px',
+              pointerEvents: 'auto',
+            }}
+            src={userConfig.avatar}
+            alt=""
+          />
+        </div>
 
         {/* 简短消息 */}
-        <ShortChat
-          id="shortChat"
-          msgList={msgListRef.current}
-          style={{
-            display: showShowMsgState ? 'block' : 'none',
-            position: 'absolute',
-            top: 0,
-            right: '127px',
-            backgroundColor: getColorBgLight(),
-            marginRight: '20px',
-            maxHeight: '90px',
-            borderRadius: '14px',
-            padding: '12px',
-            marginBottom: '20px',
+        <div
+          onClick={() => {
+            isExpandRef.current = !isExpandRef.current;
+            updateState({});
           }}
-        />
+        >
+          <ShortChat
+            id="shortChat"
+            msgList={msgListRef.current}
+            style={{
+              display: showShowMsgState ? 'block' : 'none',
+              position: 'absolute',
+              top: 0,
+              right: '127px',
+              backgroundColor: getColorBgLight(),
+              marginRight: '20px',
+              maxHeight: '90px',
+              borderRadius: '14px',
+              padding: '12px',
+              marginBottom: '20px',
+              pointerEvents: 'auto',
+            }}
+          />
+        </div>
       </div>
     </>
   );
