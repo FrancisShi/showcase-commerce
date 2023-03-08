@@ -275,11 +275,12 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
               color: '#000000',
               paddingLeft: '20px',
               paddingRight: '20px',
-              paddingTop: '3px',
+              paddingTop: '4px',
               paddingBottom: '5px',
-              alignSelf: 'flex-end',
-              marginRight: '16px',
-              marginBottom: '11px',
+              alignSelf: 'center',
+              marginBottom: '15px',
+              zIndex: 500,
+              cursor: 'pointer',
             }}
           >
             Save
