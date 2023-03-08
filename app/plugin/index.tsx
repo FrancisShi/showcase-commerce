@@ -582,7 +582,7 @@ function App(props: {
             style={{
               position: 'absolute',
               bottom: '0px',
-              left: '17px',
+              right: '0px',
               width: '86px',
               height: '120px',
               zIndex: 50,
@@ -606,7 +606,7 @@ function App(props: {
               style={{
                 position: 'absolute',
                 objectFit: 'cover',
-                left: '14px',
+                right: '14px',
                 bottom: '90px',
                 zIndex: 100,
               }}
@@ -646,9 +646,10 @@ function App(props: {
             style={{
               display: 'flex',
               flex: 1,
-              marginLeft: '60px',
+              marginLeft: '0px',
               marginTop: '15px',
               zIndex: 50,
+              position: 'relative',
             }}
           >
             <input
@@ -663,7 +664,7 @@ function App(props: {
                 outline: 'none',
                 fontSize: '12px',
                 borderRadius: '20px',
-                marginRight: isMobile ? '15px' : '0px',
+                marginRight: '68px',
               }}
               placeholder={'Message'}
               value={inputValue}
@@ -671,53 +672,55 @@ function App(props: {
             />
 
             {isMobile && (
-              <div
-                id="voiceRecorder"
-                style={{width: '40px', height: '40px', position: 'relative'}}
-              >
-                {!isRecording && (
-                  <img
-                    style={{
-                      width: '30px',
-                      height: '30px',
-                      objectFit: 'cover',
-                      cursor: 'pointer',
-                      pointerEvents: 'none',
-                      marginTop: '5px',
-                    }}
-                    src="https://cdn.mindverse.com/img/zzzz202303041677863805430%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.png"
-                    alt=""
-                  />
-                )}
-
-                {isRecording && (
-                  <div
-                    style={{
-                      width: '90px',
-                      height: '90px',
-                      backgroundColor: '#1B1B1B',
-                      borderRadius: '50%',
-                      position: 'absolute',
-                      right: '-10px',
-                      top: '-50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+              <div style={{position: 'absolute', right: '72px', zIndex: 100}}>
+                <div
+                  id="voiceRecorder"
+                  style={{width: '40px', height: '40px', position: 'relative'}}
+                >
+                  {!isRecording && (
                     <img
                       style={{
-                        width: '24px',
-                        height: '41px',
+                        width: '30px',
+                        height: '30px',
                         objectFit: 'cover',
                         cursor: 'pointer',
                         pointerEvents: 'none',
+                        marginTop: '5px',
                       }}
-                      src="https://cdn.mindverse.com/img/zzzz202303061678103877011%E7%BB%84%206.png"
+                      src="https://cdn.mindverse.com/img/zzzz202303081678277823582%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5%202.png"
                       alt=""
                     />
-                  </div>
-                )}
+                  )}
+
+                  {isRecording && (
+                    <div
+                      style={{
+                        width: '90px',
+                        height: '90px',
+                        backgroundColor: '#1B1B1B',
+                        borderRadius: '50%',
+                        position: 'absolute',
+                        right: '-10px',
+                        top: '-50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: '24px',
+                          height: '41px',
+                          objectFit: 'cover',
+                          cursor: 'pointer',
+                          pointerEvents: 'none',
+                        }}
+                        src="https://cdn.mindverse.com/img/zzzz202303061678103877011%E7%BB%84%206.png"
+                        alt=""
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -749,7 +752,7 @@ function App(props: {
             style={{
               position: 'absolute',
               objectFit: 'cover',
-              right: '17px',
+              right: '0px',
               width: '86px',
               height: '120px',
               pointerEvents: 'auto',
