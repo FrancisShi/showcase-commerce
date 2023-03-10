@@ -1,5 +1,5 @@
 import React from 'react';
-import {CONTAINER_EVENT} from '~/plugin/utils/utils';
+import {CONTAINER_EVENT} from '../../../utils/utils';
 import {DevelopType, getDevelopType} from '../../../index';
 interface WS_MSG_MULTIPLE_TEMPLATE {
   templateName: string;
