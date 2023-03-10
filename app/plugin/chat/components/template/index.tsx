@@ -1,5 +1,6 @@
 import React from 'react';
-import {DevelopType, EVENT, getDevelopType} from '../../../index';
+import {CONTAINER_EVENT} from '~/plugin/utils/utils';
+import {DevelopType, getDevelopType} from '../../../index';
 interface WS_MSG_MULTIPLE_TEMPLATE {
   templateName: string;
   params: {
@@ -20,13 +21,13 @@ export default function Template(props: TemplateInterface) {
     if (getDevelopType() === DevelopType.SCRIPT) {
       window.open(link, '_blank');
     } else if (getDevelopType() === DevelopType.NPM) {
-      const e = new Event(EVENT.EVENT_ROUTER);
+      const e = new Event(CONTAINER_EVENT.EVENT_ROUTER);
       // @ts-ignore
       e.detail = link;
       window.dispatchEvent(e);
 
       // 关闭 avatar
-      const event = new Event(EVENT.EVENT_AVATAR_CLOSE);
+      const event = new Event(CONTAINER_EVENT.EVENT_AVATAR_CLOSE);
       window.dispatchEvent(event);
     }
   };

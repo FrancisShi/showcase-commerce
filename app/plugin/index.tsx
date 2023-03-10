@@ -12,14 +12,8 @@ import MessageItem, {
 import Recorder from 'js-audio-recorder';
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
-import {browserType, showToast} from './utils/utils';
+import {browserType, CONTAINER_EVENT, showToast} from './utils/utils';
 import {speech2Text} from './utils/api';
-
-export const EVENT = {
-  EVENT_ROUTER: 'mv_client_container_router',
-  EVENT_AVATAR_OPEN: 'MV_CONTAINER_EVENT_IS_EXPAND.true',
-  EVENT_AVATAR_CLOSE: 'MV_CONTAINER_EVENT_IS_EXPAND.false',
-};
 export interface MindConfig {
   mindId: string;
   mindType: WS_MIND_TYPE;
@@ -113,6 +107,28 @@ function App(props: {
 
   const isMobile = browserType() === 'mob';
   const [isRecording, setIsRecording] = useState<boolean>(false);
+
+  // 系统消息
+  useEffect(() => {
+    const mindUpdate = () => {
+      if (msgListRef.current.length > 0) {
+        const lastMsg = msgListRef.current[msgListRef.current.length - 1];
+        if (lastMsg.dividerContent !== 'Mind Updated') {
+          appendMsg({
+            type: MessageItemType.SYSTEM,
+            dividerContent: 'Mind Updated',
+            multipleData: [],
+            data: {content: ''},
+            seqId: '',
+          });
+        }
+      }
+    };
+    window.addEventListener(CONTAINER_EVENT.MIND_UPDATE, mindUpdate);
+    return () => {
+      window.removeEventListener(CONTAINER_EVENT.MIND_UPDATE, mindUpdate);
+    };
+  }, [msgListRef.current]);
 
   // 短消息检查
   useEffect(() => {
@@ -285,9 +301,9 @@ function App(props: {
       document.body.style.overflow = '';
     }
     if (isExpandRef.current) {
-      window.parent.postMessage(EVENT.EVENT_AVATAR_OPEN, '*');
+      window.parent.postMessage(CONTAINER_EVENT.EVENT_AVATAR_OPEN, '*');
     } else {
-      window.parent.postMessage(EVENT.EVENT_AVATAR_CLOSE, '*');
+      window.parent.postMessage(CONTAINER_EVENT.EVENT_AVATAR_CLOSE, '*');
     }
 
     const openAvatar = () => {
@@ -298,11 +314,14 @@ function App(props: {
       isExpandRef.current = false;
       updateState({});
     };
-    window.addEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
-    window.addEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+    window.addEventListener(CONTAINER_EVENT.EVENT_AVATAR_OPEN, openAvatar);
+    window.addEventListener(CONTAINER_EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
     return () => {
-      window.removeEventListener(EVENT.EVENT_AVATAR_OPEN, openAvatar);
-      window.removeEventListener(EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
+      window.removeEventListener(CONTAINER_EVENT.EVENT_AVATAR_OPEN, openAvatar);
+      window.removeEventListener(
+        CONTAINER_EVENT.EVENT_AVATAR_CLOSE,
+        closeAvatar,
+      );
     };
   }, [isExpandRef.current]);
 

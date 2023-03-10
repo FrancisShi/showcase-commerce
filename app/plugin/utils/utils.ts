@@ -71,3 +71,11 @@ export function showToast(content: string) {
     }, TOAST_TIME);
   }
 }
+
+export const CONTAINER_EVENT = {
+  MIND_UPDATE: 'mv_container_MIND_UPDATE',
+
+  EVENT_ROUTER: 'mv_client_container_router',
+  EVENT_AVATAR_OPEN: 'MV_CONTAINER_EVENT_IS_EXPAND.true',
+  EVENT_AVATAR_CLOSE: 'MV_CONTAINER_EVENT_IS_EXPAND.false',
+};

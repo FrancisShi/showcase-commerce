@@ -1,14 +1,13 @@
 /**
  * 业务接入样例
  */
-import {useEffect, useRef, useState} from 'react';
-import App, {DevelopType, EVENT} from '../index';
-// import App, {DevelopType, EVENT} from '@mindverse/container';
-import {isBrowser} from 'browser-or-node';
+import {useEffect, useState} from 'react';
+import App, {DevelopType} from '../index';
+// import App, {DevelopType, CONTAINER_EVENT} from '@mindverse/container';
 import request from '../utils/request';
-import {Config} from '@mindverse/accessor-open/src/env';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 import {useNavigate} from '@remix-run/react';
+import {CONTAINER_EVENT} from '../utils/utils';
 
 const EVENT_MV_CONTAINER = {
   REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
@@ -20,7 +19,7 @@ export function Container({...props}: {[key: string]: any}) {
   const [refUserId, setRefUserId] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
-    window.addEventListener(EVENT.EVENT_ROUTER, (e) => {
+    window.addEventListener(CONTAINER_EVENT.EVENT_ROUTER, (e) => {
       // @ts-ignore
       const router = e.detail;
       if (router) {

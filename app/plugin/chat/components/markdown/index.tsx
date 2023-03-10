@@ -54,7 +54,6 @@ export default function Markdown(props: MarkdownInterface) {
       }
 
       const handleList = (list: HTMLCollectionOf<any>, style: string) => {
-        console.log('Francis', list);
         if (list && list.length > 0) {
           for (let i = 0; i < list.length; i++) {
             const ele = list[i];
