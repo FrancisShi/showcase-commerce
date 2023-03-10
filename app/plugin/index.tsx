@@ -12,8 +12,14 @@ import MessageItem, {
 import Recorder from 'js-audio-recorder';
 import Avatar, {TYPE_AVATAR} from './avatar';
 import ShortChat from './chat/shortchat';
-import {browserType, CONTAINER_EVENT, showToast} from './utils/utils';
+import {
+  browserType,
+  CONTAINER_EVENT as _CONTAINER_EVENT,
+  showToast,
+} from './utils/utils';
 import {speech2Text} from './utils/api';
+
+export const CONTAINER_EVENT = _CONTAINER_EVENT;
 export interface MindConfig {
   mindId: string;
   mindType: WS_MIND_TYPE;
