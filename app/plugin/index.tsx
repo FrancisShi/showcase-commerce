@@ -119,10 +119,10 @@ function App(props: {
     const mindUpdate = () => {
       if (msgListRef.current.length > 0) {
         const lastMsg = msgListRef.current[msgListRef.current.length - 1];
-        if (lastMsg.dividerContent !== 'Mind Updated') {
+        if (lastMsg.dividerContent !== 'Genius Updated') {
           appendMsg({
             type: MessageItemType.SYSTEM,
-            dividerContent: 'Mind Updated',
+            dividerContent: 'Genius Updated',
             multipleData: [],
             data: {content: ''},
             seqId: '',
