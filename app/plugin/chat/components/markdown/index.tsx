@@ -43,29 +43,35 @@ export default function Markdown(props: MarkdownInterface) {
             // 处理 p
             ele.style.margin = '0px';
             // 处理 img
-            var children = ele.getElementsByTagName("img");
-            if(children && children.length > 0) {
-              for(let i = 0; i < children.length; i++) {
-                  children[i].style.maxWidth = "100%"
-                }
+            const children = ele.getElementsByTagName('img');
+            if (children && children.length > 0) {
+              for (let i = 0; i < children.length; i++) {
+                children[i].style.maxWidth = '100%';
+              }
             }
           }
         }
       }
 
-      const ulList = document.getElementsByTagName('ul');
-      if (ulList && ulList.length > 0) {
-        for (let i = 0; i < ulList.length; i++) {
-          const ele = ulList[i];
-          if (ele.parentElement?.id === 'mv_markdown') {
-            // 处理 ul
-            ele.style.listStyleType = 'disc';
-            ele.style.paddingLeft = '16px';
-            ele.style.marginTop = '16px';
-            ele.style.marginBottom = '16px';
+      const handleList = (list: HTMLCollectionOf<any>, style: string) => {
+        console.log('Francis', list);
+        if (list && list.length > 0) {
+          for (let i = 0; i < list.length; i++) {
+            const ele = list[i];
+            if (ele.parentElement?.id === 'mv_markdown') {
+              // 处理 ul
+              ele.style.listStyleType = style ?? 'disc';
+              ele.style.paddingLeft = '16px';
+              ele.style.marginTop = '16px';
+              ele.style.marginBottom = '16px';
+            }
           }
         }
-      }
+      };
+      const ulList = document.getElementsByTagName('ul');
+      handleList(ulList, 'disc');
+      const olList = document.getElementsByTagName('ol');
+      handleList(olList, 'decimal');
     }, 0);
   }, [content]);
 
