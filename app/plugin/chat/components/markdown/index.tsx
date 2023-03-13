@@ -1,19 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {marked} from 'marked';
+import React, { useEffect, useState, useRef } from 'react';
+import { marked } from 'marked';
 export interface MarkdownInterface {
   content: string;
 }
 
 export default function Markdown(props: MarkdownInterface) {
-  const {content} = props;
+  const { content } = props;
   const [markdown, setMarkdown] = useState<string>(content);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const html = marked.parse(content);
     setMarkdown(html);
     // 修复markdown html中，p标签自动加边距的情况
     setTimeout(() => {
-      const pList = document.getElementsByTagName('p');
+      const container = containerRef.current;
+      const pList = container?.getElementsByTagName('p');
       if (pList && pList.length > 0) {
         for (let i = 0; i < pList.length; i++) {
           const ele = pList[i];
@@ -31,7 +33,7 @@ export default function Markdown(props: MarkdownInterface) {
         }
       }
 
-      const codes = document.getElementsByTagName('code');
+      const codes = container?.getElementsByTagName('code');
       if (codes && codes.length > 0) {
         for (let i = 0; i < codes.length; i++) {
           const ele = codes[i];
@@ -51,18 +53,21 @@ export default function Markdown(props: MarkdownInterface) {
           }
         }
       };
-      const ulList = document.getElementsByTagName('ul');
-      handleList(ulList, 'disc');
-      const olList = document.getElementsByTagName('ol');
-      handleList(olList, 'decimal');
+      if (container) {
+        const ulList = container.getElementsByTagName('ul');
+        handleList(ulList, 'disc');
+        const olList = container.getElementsByTagName('ol');
+        handleList(olList, 'decimal');
+      }
     }, 0);
   }, [content]);
 
   return (
     <div
+      ref={containerRef}
       id={`mv_markdown`}
-      style={{width: '100%', overflowX: 'hidden'}}
-      dangerouslySetInnerHTML={{__html: markdown}}
-    ></div>
+      style={{ width: '100%', overflowX: 'hidden' }}
+      dangerouslySetInnerHTML={{ __html: markdown }}
+    />
   );
 }
