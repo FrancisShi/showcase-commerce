@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState, CSSProperties} from 'react';
 import {WS_MIND_TYPE, WS_MSG_TYPE} from '@mindverse/accessor-open/src/type';
+import {MSG_TYPE} from '@mindverse/accessor-open/src/socket';
 import {Config} from '@mindverse/accessor-open/src/env';
 import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
 import ChatList from './chat';
@@ -99,6 +100,7 @@ function App(props: {
   const sessionRef = useRef<Session>();
   const [inputValue, setInputValue] = useState('');
   const msgListRef = useRef<MessageItem[]>([]);
+  const hintListRef = useRef<MSG_TYPE[]>([]);
   const [showListLoading, setShowListLoading] = useState(false);
   const [, updateState] = useState<any>();
   const isExpandRef = useRef<boolean>(initialExpand);
@@ -290,6 +292,9 @@ function App(props: {
             data: {content: ''},
             seqId: '',
           });
+        })
+        .setOnHintListener((msg: MSG_TYPE) => {
+          appendHint(msg);
         });
       openSession();
     });
@@ -451,6 +456,11 @@ function App(props: {
     updateState({});
   }
 
+  function appendHint(msg: MSG_TYPE) {
+    hintListRef.current = [...hintListRef.current, msg];
+    updateState({});
+  }
+
   // scroll 需要给定高度
   const checkHeight = () => {
     const container = document.getElementById('mvMindContainer');
@@ -586,6 +596,7 @@ function App(props: {
           <ChatList
             id="assistantChatList"
             msgList={msgListRef.current}
+            hintList={hintListRef.current}
             isLoading={showListLoading}
             style={{
               display: mainContentIndexRef.current === 0 ? 'block' : 'none',

@@ -17,10 +17,11 @@ import MessageItem, {
 import {WS_MSG_DATA_TYPE} from '@mindverse/accessor-open/src/type';
 import {getColorBgDark, getColorBgLight} from '..';
 import {conversationAttitude} from '../utils/api';
-import {showToast} from '../utils/utils';
+import {MSG_TYPE} from '@mindverse/accessor-open/src/socket';
 
 export interface ChatListProps {
   id?: string;
+  hintList: MSG_TYPE[];
   msgList: MessageItem[];
   isLoading: boolean;
   style: CSSProperties;
@@ -52,7 +53,7 @@ function scrollTo(element: {scrollTop: any}, to: number, duration: number) {
 
 export default forwardRef<HTMLDivElement, ChatListProps>(
   (props: ChatListProps, ref) => {
-    const {id = 'msgList', msgList, isLoading, style} = props;
+    const {id = 'msgList', hintList, msgList, isLoading, style} = props;
     const flatMessageList = useRef<ChatListItem[][]>([]);
     const isScrollingRef = useRef<boolean>(false);
     const lastMessageId = useRef<string | undefined>('');
@@ -101,6 +102,53 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         }
       }
     }, [msgList]);
+
+    const hitLayout = () => {
+      const lastMessageId = msgList[msgList.length - 1].messageId;
+      const lastHintList: MSG_TYPE[] = hintList.filter(
+        (item) => item.messageId === lastMessageId,
+      );
+      if (lastHintList.length > 0) {
+        return (
+          <>
+            {lastHintList.map((hint, _) => {
+              return (
+                <div
+                  key={_}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: '10px',
+                  }}
+                >
+                  <img
+                    style={{width: '16px', height: '16px'}}
+                    src="https://cdn.mindverse.com/img/zzzz202303131678715879897%E5%87%8F%E5%8E%BB%E9%A1%B6%E5%B1%82%201%20%281%29.png"
+                    alt=""
+                  />
+                  <div
+                    style={{
+                      fontSize: '15px',
+                      marginLeft: '10px',
+                      lineHeight: '23px',
+                      color: '#FFFFFF',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {hint.multipleData[0]?.modal?.answer}
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        );
+      } else {
+        <></>;
+      }
+    };
 
     function renderItemList() {
       if (flatMessageList.current.length == 0) {
@@ -160,143 +208,152 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         index: number,
         messageId?: string,
       ) => {
+        const isLast = index === flatMessageList.current.length - 1;
+
         return (
           // 接受消息，wrapper
           <div
             style={{
-              position: 'relative',
               marginBottom:
-                index === flatMessageList.current.length - 1 && !isLoading
+                isLast && !isLoading
                   ? '70px'
                   : attitudeMsg[`${messageId}`]
                   ? '35px'
                   : '20px',
             }}
           >
+            {/* 最后一条消息 才展示 */}
+            {isLast && hitLayout()}
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'start',
-                maxWidth: '90%',
-                backgroundColor: getColorBgLight(),
-                color: '#3D3D3D',
-
-                whiteSpace: 'normal',
-                wordBreak: 'break-word',
-                boxSizing: 'border-box',
-                borderRadius: '14px',
-                padding: '12px',
-                fontSize: '15px',
+                position: 'relative',
               }}
-              key={index}
             >
-              {result}
-            </div>
-
-            {attitudeMsg[`${messageId}`] && (
               <div
                 style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '50%',
-                  position: 'absolute',
-                  bottom: '-15px',
-                  left: '0px',
-                  backgroundColor: '#FFFFFF',
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  style={{
-                    width: '15px',
-                    height: '15px',
-                    objectFit: 'cover',
-                  }}
-                  src={
-                    attitudeMsg[`${messageId}`] === 1
-                      ? 'https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png'
-                      : 'https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png'
-                  }
-                  alt=""
-                />
-              </div>
-            )}
+                  flexDirection: 'column',
+                  justifyContent: 'start',
+                  maxWidth: '90%',
+                  backgroundColor: getColorBgLight(),
+                  color: '#3D3D3D',
 
-            {/* 点赞点踩 */}
-            {!attitudeMsg[`${messageId}`] &&
-              //  非第一个的最新消息才展示
-              index !== 0 &&
-              flatMessageList.current.length > 0 &&
-              index === flatMessageList.current.length - 1 && (
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-word',
+                  boxSizing: 'border-box',
+                  borderRadius: '14px',
+                  padding: '12px',
+                  fontSize: '15px',
+                }}
+                key={index}
+              >
+                {result}
+              </div>
+
+              {attitudeMsg[`${messageId}`] && (
                 <div
                   style={{
-                    width: '98px',
-                    height: '28px',
-                    borderRadius: '14px',
-                    opacity: 1,
-                    background: '#FFFFFF',
-                    marginTop: '3px',
-                    border: '1px solid #8D8D8D',
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '50%',
+                    position: 'absolute',
+                    bottom: '-15px',
+                    left: '0px',
+                    backgroundColor: '#FFFFFF',
                     display: 'flex',
-                    flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    paddingLeft: '21px',
-                    paddingRight: '21px',
+                    justifyContent: 'center',
                   }}
                 >
-                  <div
+                  <img
                     style={{
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
+                      width: '15px',
+                      height: '15px',
+                      objectFit: 'cover',
                     }}
-                    onClick={() => {
-                      if (messageId) {
-                        thumbClick(messageId, 1);
-                      }
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: '15px',
-                        height: '15px',
-                        objectFit: 'cover',
-                      }}
-                      src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
-                      alt=""
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                    onClick={() => {
-                      if (messageId) {
-                        thumbClick(messageId, 2);
-                      }
-                    }}
-                  >
-                    <img
-                      style={{
-                        width: '15px',
-                        height: '15px',
-                        objectFit: 'cover',
-                      }}
-                      src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
-                      alt=""
-                    />
-                  </div>
+                    src={
+                      attitudeMsg[`${messageId}`] === 1
+                        ? 'https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png'
+                        : 'https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png'
+                    }
+                    alt=""
+                  />
                 </div>
               )}
+
+              {/* 点赞点踩 */}
+              {!attitudeMsg[`${messageId}`] &&
+                //  非第一个的最新消息才展示
+                index !== 0 &&
+                flatMessageList.current.length > 0 &&
+                index === flatMessageList.current.length - 1 && (
+                  <div
+                    style={{
+                      width: '98px',
+                      height: '28px',
+                      borderRadius: '14px',
+                      opacity: 1,
+                      background: '#FFFFFF',
+                      marginTop: '3px',
+                      border: '1px solid #8D8D8D',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingLeft: '21px',
+                      paddingRight: '21px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                      onClick={() => {
+                        if (messageId) {
+                          thumbClick(messageId, 1);
+                        }
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: '15px',
+                          height: '15px',
+                          objectFit: 'cover',
+                        }}
+                        src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
+                        alt=""
+                      />
+                    </div>
+
+                    <div
+                      style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}
+                      onClick={() => {
+                        if (messageId) {
+                          thumbClick(messageId, 2);
+                        }
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: '15px',
+                          height: '15px',
+                          objectFit: 'cover',
+                        }}
+                        src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
+            </div>
           </div>
         );
       };
@@ -388,6 +445,10 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         {renderItemList()}
 
         {/* loading */}
+        {isLoading &&
+          msgList.length > 0 &&
+          msgList[msgList.length - 1].type === MessageItemType.SEND &&
+          hitLayout()}
         <Loading
           style={{
             backgroundColor: getColorBgLight(),
