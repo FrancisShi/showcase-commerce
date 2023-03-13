@@ -146,7 +146,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           </>
         );
       } else {
-        <></>;
+        return <></>;
       }
     };
 
