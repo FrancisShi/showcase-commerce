@@ -12,7 +12,7 @@ export default function Logo(props: LogoProps) {
       }}
     >
       <a
-        style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+        style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline'}}
         href="https://mindos.mindverse.ai"
         target="_blank"
         rel="noreferrer"
