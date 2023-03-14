@@ -19,6 +19,7 @@ import {
   showToast,
 } from './utils/utils';
 import {speech2Text} from './utils/api';
+import {collapse, expand, hideMenu, showMenu} from './utils/anim';
 
 export const CONTAINER_EVENT = _CONTAINER_EVENT;
 export interface MindConfig {
@@ -37,7 +38,7 @@ export enum DevelopType {
 }
 
 const DEFAUT_CONFIG = {
-  COLOR_BG_DARK: 'rgba(115, 129, 137, 0.5)',
+  COLOR_BG_DARK: 'rgba(52, 52, 52, 0.5)',
   COLOR_BG_LIGHT: '#343434',
 };
 
@@ -530,7 +531,7 @@ function App(props: {
           bottom: 0,
           right: 0,
           width: `${width}px`,
-          minHeight: `${height / 2}px`,
+          minHeight: `${532}px`,
           maxHeight: `${height}px`,
           height: dynamicHeight ? 'auto' : `${height}px`,
           backgroundColor: colorBgDark,
@@ -554,8 +555,15 @@ function App(props: {
             cursor: 'pointer',
           }}
           onClick={() => {
-            isExpandRef.current = !isExpandRef.current;
-            updateState({});
+            collapse(
+              'mvMindContainer',
+              'mvMindContainerCollapse',
+              height,
+              () => {
+                isExpandRef.current = false;
+                updateState({});
+              },
+            );
           }}
         >
           <div
@@ -605,6 +613,7 @@ function App(props: {
 
           {/* 用户信息编辑框 */}
           <UserEdit
+            id={'userEditContainer'}
             refUserId={socketConfig.refUserId}
             style={{
               display: mainContentIndexRef.current === 1 ? 'block' : 'none',
@@ -632,9 +641,15 @@ function App(props: {
             <div
               onClick={(e) => {
                 if (mainContentIndexRef.current === 1) {
-                  mainContentIndexRef.current = 0;
+                  hideMenu('userEditContainer', width, () => {
+                    mainContentIndexRef.current = 0;
+                    updateState({});
+                  });
                 } else if (mainContentIndexRef.current === 0) {
-                  mainContentIndexRef.current = 1;
+                  showMenu('userEditContainer', width, () => {
+                    mainContentIndexRef.current = 1;
+                    updateState({});
+                  });
                 }
                 updateState({});
                 e.stopPropagation();
@@ -765,6 +780,7 @@ function App(props: {
 
       {/* 收缩状态 */}
       <div
+        id="mvMindContainerCollapse"
         style={{
           position: 'fixed',
           bottom: `0px`,
@@ -780,8 +796,10 @@ function App(props: {
       >
         <div
           onClick={() => {
-            isExpandRef.current = !isExpandRef.current;
-            updateState({});
+            expand('mvMindContainer', 'mvMindContainerCollapse', height, () => {
+              isExpandRef.current = true;
+              updateState({});
+            });
           }}
         >
           <img

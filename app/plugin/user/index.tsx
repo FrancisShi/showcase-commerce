@@ -9,13 +9,14 @@ import {userGet, userInit} from '../utils/api';
 import {showToast} from '../utils/utils';
 
 export interface UserInputProps {
+  id: string;
   refUserId: string;
   style: CSSProperties;
 }
 
 export default forwardRef<HTMLDivElement, UserInputProps>(
   (props: UserInputProps, ref) => {
-    const {refUserId, style} = props;
+    const {id, refUserId, style} = props;
     const userItemProp = ['Name', 'Gender', 'Profession', 'Age', 'Description'];
 
     const userData = {
@@ -210,6 +211,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
 
     return (
       <div
+        id={id}
         style={{
           height: '100%',
           paddingTop: '8px',

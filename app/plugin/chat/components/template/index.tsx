@@ -58,7 +58,7 @@ export default function Template(props: TemplateInterface) {
             position: 'relative',
             width: '100%',
             height: '100px',
-            borderRadius: '2px',
+            borderRadius: '12px',
             opacity: 1,
             background: 'white',
             display: 'flex',
