@@ -9,10 +9,16 @@ export default function Logo(props: LogoProps) {
         position: 'absolute',
         bottom: '84px',
         left: '20px',
+        scale: '0.8',
       }}
     >
       <a
-        style={{display: 'flex', flexDirection: 'row', alignItems: 'baseline'}}
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'baseline',
+          textDecoration: 'none',
+        }}
         href="https://mindos.mindverse.ai"
         target="_blank"
         rel="noreferrer"
