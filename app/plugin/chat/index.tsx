@@ -224,6 +224,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
           >
             {/* 最后一条消息 才展示 */}
             {isLast && hitLayout()}
+
+            {/* 接受消息的背景 */}
             <div
               style={{
                 position: 'relative',
@@ -236,8 +238,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                   justifyContent: 'start',
                   maxWidth: '90%',
                   backgroundColor: getColorBgLight(),
-                  color: '#3D3D3D',
-
+                  color: '#FFFFFF',
                   whiteSpace: 'normal',
                   wordBreak: 'break-word',
                   boxSizing: 'border-box',
@@ -273,8 +274,8 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                     }}
                     src={
                       attitudeMsg[`${messageId}`] === 1
-                        ? 'https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png'
-                        : 'https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png'
+                        ? 'https://cdn.mindverse.com/img/zzzz202303141678774798047%E8%B7%AF%E5%BE%84%20%284%29.png'
+                        : 'https://cdn.mindverse.com/img/zzzz202303141678774797120%E8%B7%AF%E5%BE%84%20%285%29.png'
                     }
                     alt=""
                   />
@@ -295,7 +296,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                       opacity: 1,
                       background: '#FFFFFF',
                       marginTop: '3px',
-                      border: '1px solid #8D8D8D',
+                      backgroundColor: getColorBgLight(),
                       display: 'flex',
                       flexDirection: 'row',
                       alignItems: 'center',
@@ -323,7 +324,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                           height: '15px',
                           objectFit: 'cover',
                         }}
-                        src="https://cdn.mindverse.com/img/zzzz202303071678170165699%E8%B7%AF%E5%BE%84.png"
+                        src="https://cdn.mindverse.com/img/zzzz202303141678774729647%E8%B7%AF%E5%BE%84%20%282%29.png"
                         alt=""
                       />
                     </div>
@@ -347,7 +348,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                           height: '15px',
                           objectFit: 'cover',
                         }}
-                        src="https://cdn.mindverse.com/img/zzzz202303071678170166847%E8%B7%AF%E5%BE%84%20%281%29.png"
+                        src="https://cdn.mindverse.com/img/zzzz202303141678774728651%E8%B7%AF%E5%BE%84%20%283%29.png"
                         alt=""
                       />
                     </div>

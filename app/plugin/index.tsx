@@ -38,7 +38,7 @@ export enum DevelopType {
 
 const DEFAUT_CONFIG = {
   COLOR_BG_DARK: 'rgba(115, 129, 137, 0.5)',
-  COLOR_BG_LIGHT: '#DEEFF9',
+  COLOR_BG_LIGHT: '#343434',
 };
 
 let colorBgDark: string = DEFAUT_CONFIG.COLOR_BG_DARK;

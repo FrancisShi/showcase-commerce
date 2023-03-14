@@ -55,7 +55,7 @@ function ShortChat(props: {
         <div
           id="shortMsgContentTxt"
           style={{
-            color: '#3D3D3D',
+            color: '#FFFFFF',
             wordBreak: 'break-word',
             boxSizing: 'border-box',
             fontSize: '15px',
