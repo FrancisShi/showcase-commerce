@@ -9,6 +9,7 @@ import React, {
 import ChatText from './components/text';
 import ChatTemplate from './components/template';
 import Loading from './components/loading';
+import Logo from './components/logo';
 import MessageItem, {
   ChatListItem,
   flatMessages,
@@ -443,6 +444,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
         id={id}
         ref={ref}
       >
+        <Logo />
         {renderItemList()}
 
         {/* loading */}
