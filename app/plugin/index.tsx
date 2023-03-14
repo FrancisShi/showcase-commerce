@@ -708,7 +708,7 @@ function App(props: {
               enterKeyHint="send"
               style={{
                 paddingLeft: '22px',
-                paddingRight: '22px',
+                paddingRight: isMobile ? '50px' : '22px',
                 width: '100%',
                 height: '40px',
                 color: 'black',
