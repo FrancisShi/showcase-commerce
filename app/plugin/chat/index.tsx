@@ -246,6 +246,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                   borderRadius: '14px',
                   padding: '12px',
                   fontSize: '15px',
+                  boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.3)',
                 }}
                 key={index}
               >
@@ -410,6 +411,7 @@ export default forwardRef<HTMLDivElement, ChatListProps>(
                       fontSize: '15px',
                       backgroundColor: '#F6F6F6',
                       color: '#3D3D3D',
+                      boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.3)',
                     }}
                     key={index}
                   >

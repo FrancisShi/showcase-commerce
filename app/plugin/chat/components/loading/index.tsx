@@ -59,6 +59,7 @@ export default function Loading({style}: {style: CSSProperties}) {
         fontSize: '15px',
         alignItems: 'center',
         justifyContent: 'center',
+        boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.3)',
         ...style,
       }}
     >
