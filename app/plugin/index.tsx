@@ -329,12 +329,10 @@ function App(props: {
     }
 
     const openAvatar = () => {
-      isExpandRef.current = true;
-      updateState({});
+      openExpand()
     };
     const closeAvatar = () => {
-      isExpandRef.current = false;
-      updateState({});
+      closeExpand()
     };
     window.addEventListener(CONTAINER_EVENT.EVENT_AVATAR_OPEN, openAvatar);
     window.addEventListener(CONTAINER_EVENT.EVENT_AVATAR_CLOSE, closeAvatar);
@@ -346,6 +344,25 @@ function App(props: {
       );
     };
   }, [isExpandRef.current]);
+
+  const openExpand = () => {
+    expand('mvMindContainer', 'mvMindContainerCollapse', height, () => {
+      isExpandRef.current = true;
+      updateState({});
+    });
+  }
+
+  const closeExpand = () => {
+    collapse(
+      'mvMindContainer',
+      'mvMindContainerCollapse',
+      height,
+      () => {
+        isExpandRef.current = false;
+        updateState({});
+      },
+    );
+  }
 
   // 回车发送消息
   useEffect(() => {
@@ -569,15 +586,7 @@ function App(props: {
             cursor: 'pointer',
           }}
           onClick={() => {
-            collapse(
-              'mvMindContainer',
-              'mvMindContainerCollapse',
-              height,
-              () => {
-                isExpandRef.current = false;
-                updateState({});
-              },
-            );
+            closeExpand()
           }}
         >
           <div
@@ -810,10 +819,7 @@ function App(props: {
       >
         <div
           onClick={() => {
-            expand('mvMindContainer', 'mvMindContainerCollapse', height, () => {
-              isExpandRef.current = true;
-              updateState({});
-            });
+            openExpand()
           }}
         >
           <img
