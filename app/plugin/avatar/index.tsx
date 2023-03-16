@@ -1,5 +1,6 @@
-import React, {CSSProperties} from 'react';
-import Picture from './picture';
+import React, { CSSProperties } from "react";
+import Picture from "./picture";
+import Avatar3D from "./threeD";
 
 export interface ChatImgProps {
   className?: string;
@@ -13,19 +14,23 @@ export enum TYPE_AVATAR {
 }
 
 interface AvatarProps {
-  type: TYPE_AVATAR;
   data: {
     picture: string;
+    model: string;
   };
   style: CSSProperties;
 }
 
 export default function Avatar(props: AvatarProps) {
-  const {type, data, style} = props;
+  const { data, style } = props;
 
-  if (type === TYPE_AVATAR.PICTURE) {
-    return <Picture style={style} picture={data.picture}></Picture>;
+  console.log("Francis", data)
+
+  if (data.model) {
+    return <Avatar3D style={style} model={data.model} />;
+  } else if (data.picture) {
+    return <Picture style={style} picture={data.picture} />;
   } else {
-    return null;
+    return null
   }
 }

@@ -20,6 +20,7 @@ import {
 } from './utils/utils';
 import {speech2Text} from './utils/api';
 import {collapse, expand, hideMenu, showMenu} from './utils/anim';
+import { checkPlayAction } from './utils/playAction';
 
 export const CONTAINER_EVENT = _CONTAINER_EVENT;
 export interface MindConfig {
@@ -29,7 +30,8 @@ export interface MindConfig {
 
 export interface UserConfig {
   userName: string;
-  avatar: string;
+  picture: string;
+  model: string;
 }
 
 export enum DevelopType {
@@ -267,7 +269,15 @@ function App(props: {
       });
     };
 
-    userRegister(userConfig.userName, userConfig.avatar).then((res) => {
+    userRegister(userConfig.userName, userConfig.picture).then((res) => {
+      if(res?.data?.data?.refUserId){
+        socketConfig.refUserId = res?.data?.data?.refUserId
+      }
+      if(!socketConfig.refUserId) {
+        console.error("refUserId empty")
+        return 
+      }
+      setConfig(socketConfig)
       sessionRef.current = new Session(666)
         .setOnMsgUpdateListener((msgList) => {
           console.warn('更新msgList', msgList);
@@ -448,11 +458,14 @@ function App(props: {
   function appendMsg(item: MessageItem) {
     if (item.type === MessageItemType.RECEIVE) {
       appendReceivedMsg(item);
+      checkPlayAction(item?.multipleData[0]?.modal?.answer);
     } else if (item.type === MessageItemType.SEND) {
+      checkPlayAction(item?.data?.content);
       msgListRef.current = [...msgListRef.current, item];
     } else if (item.type === MessageItemType.SYSTEM) {
       msgListRef.current = [...msgListRef.current, item];
     }
+    
     checkHeight();
     updateState({});
   }
@@ -541,6 +554,7 @@ function App(props: {
           ...openStyle,
         }}
       >
+
         {/* 返回框 */}
         <div
           style={{
@@ -630,10 +644,9 @@ function App(props: {
               right: '0px',
               width: '86px',
               height: '120px',
-              zIndex: 50,
+              zIndex: '50'
             }}
-            type={TYPE_AVATAR.PICTURE}
-            data={{picture: userConfig.avatar}}
+            data={{picture: userConfig.picture, model: userConfig.model}}
           />
 
           {/* 用户信息入口 */}
@@ -660,6 +673,7 @@ function App(props: {
                 right: '22px',
                 bottom: '120px',
                 zIndex: 100,
+                cursor: 'pointer'
               }}
             >
               <img
@@ -811,7 +825,7 @@ function App(props: {
               height: '120px',
               pointerEvents: 'auto',
             }}
-            src={userConfig.avatar}
+            src={userConfig.picture}
             alt=""
           />
         </div>

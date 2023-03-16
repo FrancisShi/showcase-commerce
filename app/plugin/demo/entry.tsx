@@ -123,7 +123,7 @@ export function Container({...props}: {[key: string]: any}) {
               },
               userConfig: {
                 userName: 'shitou-demo',
-                avatar:
+                picture:
                   'https://cdn.mindverse.com/files/zzzz20230308167826913484720230308-175144.gif',
               },
               dynamicHeight: true,

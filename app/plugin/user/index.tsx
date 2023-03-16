@@ -8,6 +8,8 @@ import React, {
 import {userGet, userInit} from '../utils/api';
 import {showToast} from '../utils/utils';
 
+export const MindContainerVirtualUserUpdateEventKey = 'com.mindverse.container.update.virtual.user';
+
 export interface UserInputProps {
   id: string;
   refUserId: string;
@@ -36,6 +38,14 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
     }>(userData);
 
     useEffect(() => {
+      updateUser()
+      addEventListener(MindContainerVirtualUserUpdateEventKey, updateUser)
+      return () => {
+        removeEventListener(MindContainerVirtualUserUpdateEventKey, updateUser)
+      }
+    }, []);
+
+    const updateUser = () => {
       userGet({refUserId}).then((user) => {
         if (user) {
           setUserDataState({
@@ -47,7 +57,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
           });
         }
       });
-    }, []);
+    }
 
     const onSave = () => {
       userInit(refUserId, userDataState).then((res) => {

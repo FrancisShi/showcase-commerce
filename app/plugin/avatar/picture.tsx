@@ -4,7 +4,7 @@ export interface PictureProps {
   picture: string;
 }
 
-export default function ChatImg(props: PictureProps) {
+export default function AvatarPicture(props: PictureProps) {
   const {picture, style} = props;
   return (
     <img

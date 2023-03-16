@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.2",
     "@mindverse/accessor-open": "^0.5.7",
     "@mindverse/container": "^1.1.16",
+    "@mindverse/avatar": "^1.1.3",
     "@remix-run/react": "1.12.0",
     "@shopify/cli": "3.29.0",
     "@shopify/cli-hydrogen": "^4.0.5",
