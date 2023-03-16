@@ -63,6 +63,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
       userInit(refUserId, userDataState).then((res) => {
         if (res?.data?.code === 0) {
           showToast('Saved');
+          dispatchEvent(new Event(MindContainerVirtualUserUpdateEventKey))
         }
       });
     };

@@ -24,8 +24,6 @@ interface AvatarProps {
 export default function Avatar(props: AvatarProps) {
   const { data, style } = props;
 
-  console.log("Francis", data)
-
   if (data.model) {
     return <Avatar3D style={style} model={data.model} />;
   } else if (data.picture) {
