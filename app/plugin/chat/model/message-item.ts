@@ -1,15 +1,15 @@
-import {MSG_TYPE} from '@mindverse/accessor-open/src/socket';
+import { MSG_TYPE } from "@mindverse/accessor-open/src/socket";
 import {
   WS_DATA_TYPE_TEXT,
   WS_MSG_CLIENT_TYPE,
   WS_MSG_DATA_TYPE,
   WS_MSG_MULTIPLE_DATA,
-} from '@mindverse/accessor-open/src/type';
+} from "@mindverse/accessor-open/src/type";
 
 export enum MessageItemType {
-  RECEIVE = 'RECEIVE', // 接收的信息
-  SEND = 'SEND', // 发送的信息
-  SYSTEM = 'SYSTEM', // 用于处理分割线
+  RECEIVE = "RECEIVE", // 接收的信息
+  SEND = "SEND", // 发送的信息
+  SYSTEM = "SYSTEM", // 用于处理分割线
 }
 
 export default interface MessageItem {
@@ -24,7 +24,7 @@ export default interface MessageItem {
 
 // 将收到的消息进行转换
 export const transformNewMsg: (msg: MSG_TYPE) => MessageItem = (
-  msg: MSG_TYPE,
+  msg: MSG_TYPE
 ) => {
   return {
     type:
@@ -34,7 +34,7 @@ export const transformNewMsg: (msg: MSG_TYPE) => MessageItem = (
     data:
       msg.__clientType === WS_MSG_CLIENT_TYPE.SEND
         ? (msg.data as WS_DATA_TYPE_TEXT)
-        : {content: ''},
+        : { content: "" },
     multipleData: msg.multipleData,
     messageId: msg.messageId,
     seqId: msg.seqId,
@@ -77,27 +77,56 @@ export const flatMessages = (originSource: MessageItem[]) => {
       case MessageItemType.RECEIVE:
         msgItem.multipleData.forEach((singleData) => {
           let content: string | undefined;
-          switch (singleData.singleDataType) {
-            case WS_MSG_DATA_TYPE.text:
+
+          if (singleData.singleDataType === WS_MSG_DATA_TYPE.text) {
+            let lastParsedCitation;
+            if (singleData.modal.template) {
+              // 之前解析的 citation
+              try {
+                lastParsedCitation = JSON.parse(singleData.modal.template);
+                if (lastParsedCitation?.templateName === "citation") {
+                  if (lastParsedCitation?.params ?? "") {
+                    content = JSON.stringify(lastParsedCitation.params);
+                    singleData.singleDataType = WS_MSG_DATA_TYPE.text;
+                  }
+                }
+              } catch (error) {
+                console.error("template", error);
+              }
+            } else {
+              // normal text
               content = singleData.modal.answer;
-              break;
-            case WS_MSG_DATA_TYPE.template:
-              content = singleData.modal.template;
-              break;
-            default:
-              break;
+            }
+          } else if (singleData.singleDataType === WS_MSG_DATA_TYPE.template) {
+            if (singleData.modal.template) {
+              let template;
+              try {
+                template = JSON.parse(singleData.modal.template);
+              } catch (error) {
+                console.error("template", error);
+              }
+
+              if (template?.templateName === "shopifyCard") {
+                content = singleData.modal.template;
+              } else if (template?.templateName === "citation") {
+                if (template?.params ?? "") {
+                  content = JSON.stringify(template.params);
+                  singleData.singleDataType = WS_MSG_DATA_TYPE.text;
+                }
+              }
+            }
           }
 
           if (
             content === undefined ||
-            (typeof content === 'string' && content.length === 0)
+            (typeof content === "string" && content.length === 0)
           ) {
             return;
           }
           const newItem: ChatListItem = {
             type: msgItem.type,
             singleDataType: singleData.singleDataType,
-            content: content ?? '',
+            content: content ?? "",
             sources: msgItem.sources ?? [],
             messageId: msgItem.messageId,
           };
@@ -129,7 +158,7 @@ export const flatMessages = (originSource: MessageItem[]) => {
                       msgCache[msgItem.messageId].length - 1
                     ].sources,
                     ...newItem.sources,
-                  ]),
+                  ])
                 );
               } else {
                 // 最近的一条消息和新来的消息不都是 text
@@ -164,13 +193,12 @@ export const flatMessages = (originSource: MessageItem[]) => {
           {
             type: msgItem.type,
             singleDataType: WS_MSG_DATA_TYPE.text,
-            content: msgItem.dividerContent ?? '',
+            content: msgItem.dividerContent ?? "",
             sources: [],
           },
         ]);
         break;
     }
   });
-
   return msgList;
 };

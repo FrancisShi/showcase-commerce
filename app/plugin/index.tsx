@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState, CSSProperties} from 'react';
-import {WS_MIND_TYPE, WS_MSG_TYPE} from '@mindverse/accessor-open/src/type';
-import {MSG_TYPE} from '@mindverse/accessor-open/src/socket';
-import {Config} from '@mindverse/accessor-open/src/env';
-import {Session, setConfig, userRegister} from '@mindverse/accessor-open';
+import React, { useEffect, useRef, useState, CSSProperties } from 'react';
+import { WS_MIND_TYPE, WS_MSG_TYPE } from '@mindverse/accessor-open/src/type';
+import { MSG_TYPE } from '@mindverse/accessor-open/src/socket';
+import { Config } from '@mindverse/accessor-open/src/env';
+import { Session, setConfig, userRegister } from '@mindverse/accessor-open';
 import ChatList from './chat';
 import UserEdit from './user';
 import MessageItem, {
@@ -11,15 +11,15 @@ import MessageItem, {
   transformNewMsg,
 } from './chat/model/message-item';
 import Recorder from 'js-audio-recorder';
-import Avatar, {TYPE_AVATAR} from './avatar';
+import Avatar, { TYPE_AVATAR } from './avatar';
 import ShortChat from './chat/shortchat';
 import {
   browserType,
   CONTAINER_EVENT as _CONTAINER_EVENT,
   showToast,
 } from './utils/utils';
-import {speech2Text} from './utils/api';
-import {collapse, expand, hideMenu, showMenu} from './utils/anim';
+import { speech2Text } from './utils/api';
+import { collapse, expand, hideMenu, showMenu } from './utils/anim';
 import { checkPlayAction } from './utils/playAction';
 
 export const CONTAINER_EVENT = _CONTAINER_EVENT;
@@ -118,6 +118,11 @@ function App(props: {
 
   const isMobile = browserType() === 'mob';
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [refUserId, setRefUserId] = useState<string>(socketConfig.refUserId)
+
+  useEffect(()=>{
+    setRefUserId(socketConfig.refUserId)
+  }, [socketConfig])
 
   // 系统消息
   useEffect(() => {
@@ -129,7 +134,7 @@ function App(props: {
             type: MessageItemType.SYSTEM,
             dividerContent: 'Genius Updated',
             multipleData: [],
-            data: {content: ''},
+            data: { content: '' },
             seqId: '',
           });
         }
@@ -146,7 +151,7 @@ function App(props: {
     if (
       msgListRef.current.length > 0 &&
       msgListRef.current[msgListRef.current.length - 1].type ===
-        MessageItemType.RECEIVE
+      MessageItemType.RECEIVE
     ) {
       if (isExpandRef.current) {
         setShowShowMsgState(false);
@@ -170,7 +175,7 @@ function App(props: {
   const showShortAnim = () => {
     const shortChat = document.getElementById('shortChat');
     if (shortChat) {
-      shortChat.animate([{opacity: 0}, {opacity: 1}], {
+      shortChat.animate([{ opacity: 0 }, { opacity: 1 }], {
         duration: 500,
       });
     }
@@ -179,7 +184,7 @@ function App(props: {
   const hideShortAnim = (cb: () => void) => {
     const shortChat = document.getElementById('shortChat');
     if (shortChat) {
-      shortChat.animate([{opacity: 1}, {opacity: 0}], {
+      shortChat.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 500,
       });
       setTimeout(cb, 500);
@@ -270,12 +275,13 @@ function App(props: {
     };
 
     userRegister(userConfig.userName, userConfig.picture).then((res) => {
-      if(res?.data?.data?.refUserId){
+      if (res?.data?.data?.refUserId && !socketConfig.refUserId) {
         socketConfig.refUserId = res?.data?.data?.refUserId
+        setRefUserId(res?.data?.data?.refUserId)
       }
-      if(!socketConfig.refUserId) {
+      if (!socketConfig.refUserId) {
         console.error("refUserId empty")
-        return 
+        return
       }
       setConfig(socketConfig)
       sessionRef.current = new Session(666)
@@ -300,7 +306,7 @@ function App(props: {
             type: MessageItemType.SYSTEM,
             dividerContent: 'Session Ended',
             multipleData: [],
-            data: {content: ''},
+            data: { content: '' },
             seqId: '',
           });
         })
@@ -388,7 +394,7 @@ function App(props: {
     const eventAreaStart = (e: TouchEvent | MouseEvent) => {
       if (navigator.mediaDevices.getUserMedia) {
         if (!granted) {
-          const constraints = {audio: true};
+          const constraints = { audio: true };
           navigator.mediaDevices.getUserMedia(constraints).then(
             (stream) => {
               console.log('授权成功！');
@@ -449,7 +455,7 @@ function App(props: {
         ) {
           const result = base64data.split('data:audio/wav;base64,')[1];
           if (result) {
-            speech2Text({voiceBase64: result}).then((res) => {
+            speech2Text({ voiceBase64: result }).then((res) => {
               if (res && typeof res === 'string' && res.length > 0) {
                 handleSendMsg(res);
               } else {
@@ -482,7 +488,7 @@ function App(props: {
     } else if (item.type === MessageItemType.SYSTEM) {
       msgListRef.current = [...msgListRef.current, item];
     }
-    
+
     checkHeight();
     updateState({});
   }
@@ -510,9 +516,9 @@ function App(props: {
     if (
       msgListRef.current.length >= 2 &&
       msgListRef.current[msgListRef.current.length - 1].type ===
-        MessageItemType.RECEIVE &&
+      MessageItemType.RECEIVE &&
       msgListRef.current[msgListRef.current.length - 2].type !==
-        MessageItemType.RECEIVE
+      MessageItemType.RECEIVE
     ) {
       onlyOneReceive = true;
     }
@@ -546,7 +552,7 @@ function App(props: {
 
   const handleSendMsg = (value: string) => {
     if (!value) return;
-    sessionRef.current?.sendMsg('text', {content: value});
+    sessionRef.current?.sendMsg('text', { content: value });
     setShowListLoading(true);
     setInputValue('');
   };
@@ -561,7 +567,7 @@ function App(props: {
           bottom: 0,
           right: 0,
           width: `${width}px`,
-          minHeight: `${532}px`,
+          // minHeight: `${532}px`,
           maxHeight: `${height}px`,
           height: dynamicHeight ? 'auto' : `${height}px`,
           backgroundColor: colorBgDark,
@@ -635,13 +641,17 @@ function App(props: {
           />
 
           {/* 用户信息编辑框 */}
-          <UserEdit
-            id={'userEditContainer'}
-            refUserId={socketConfig.refUserId}
-            style={{
-              display: mainContentIndexRef.current === 1 ? 'block' : 'none',
-            }}
-          />
+          {refUserId && (
+            <UserEdit
+              id={'userEditContainer'}
+              refUserId={() => {
+                return socketConfig.refUserId
+              }}
+              style={{
+                display: mainContentIndexRef.current === 1 ? 'block' : 'none',
+              }}
+            />
+          )}
         </div>
 
         {/* avatar */}
@@ -655,7 +665,7 @@ function App(props: {
               height: '120px',
               zIndex: '50'
             }}
-            data={{picture: userConfig.picture, model: userConfig.model}}
+            data={{ picture: userConfig.picture, model: userConfig.model }}
           />
 
           {/* 用户信息入口 */}
@@ -746,10 +756,10 @@ function App(props: {
             />
 
             {isMobile && (
-              <div style={{position: 'absolute', right: '72px', zIndex: 100}}>
+              <div style={{ position: 'absolute', right: '72px', zIndex: 100 }}>
                 <div
                   id="voiceRecorder"
-                  style={{width: '40px', height: '40px', position: 'relative'}}
+                  style={{ width: '40px', height: '40px', position: 'relative' }}
                 >
                   {!isRecording && (
                     <img

@@ -1,5 +1,5 @@
-import React from 'react';
-import Markdown from '../markdown';
+import React from "react";
+import Markdown from "../markdown";
 
 export interface ChatTextProps {
   className?: string;
@@ -8,7 +8,7 @@ export interface ChatTextProps {
 }
 
 export default function ChatText(props: ChatTextProps) {
-  const {content, sources} = props;
+  const { content, sources } = props;
 
   return <Markdown content={content}></Markdown>;
 }

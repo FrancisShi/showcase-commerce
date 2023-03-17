@@ -1,7 +1,7 @@
-import React from 'react';
-import {CONTAINER_EVENT} from '../../../utils/utils';
-import {DevelopType, getDevelopType} from '../../../index';
-interface WS_MSG_MULTIPLE_TEMPLATE {
+import React from "react";
+import { CONTAINER_EVENT } from "../../../utils/utils";
+import { DevelopType, getDevelopType } from "../../../index";
+export interface WS_MSG_MULTIPLE_TEMPLATE {
   templateName: string;
   params: {
     price: string;
@@ -15,11 +15,11 @@ export interface TemplateInterface {
 }
 
 export default function Template(props: TemplateInterface) {
-  const {content} = props;
+  const { content } = props;
 
   const clickTemplate = (link: string) => {
     if (getDevelopType() === DevelopType.SCRIPT) {
-      window.open(link, '_blank');
+      window.open(link, "_blank");
     } else if (getDevelopType() === DevelopType.NPM) {
       const e = new Event(CONTAINER_EVENT.EVENT_ROUTER);
       // @ts-ignore
@@ -37,7 +37,7 @@ export default function Template(props: TemplateInterface) {
     return null;
   }
 
-  if (template.templateName === 'shopifyCard') {
+  if (template.templateName === "shopifyCard") {
     const data = template.params;
 
     return (
@@ -46,32 +46,32 @@ export default function Template(props: TemplateInterface) {
           clickTemplate(data.link);
         }}
         style={{
-          marginBottom: '10px',
-          marginTop: '10px',
-          position: 'relative',
-          cursor: 'pointer',
+          marginBottom: "10px",
+          marginTop: "10px",
+          position: "relative",
+          cursor: "pointer",
         }}
       >
         <div
           onClick={() => clickTemplate(data.link)}
           style={{
-            position: 'relative',
-            width: '100%',
-            height: '100px',
-            borderRadius: '12px',
+            position: "relative",
+            width: "100%",
+            height: "100px",
+            borderRadius: "12px",
             opacity: 1,
-            background: 'white',
-            display: 'flex',
-            flexDirection: 'row',
+            background: "white",
+            display: "flex",
+            flexDirection: "row",
           }}
         >
           <img
             style={{
-              objectFit: 'cover',
-              width: '86px',
-              height: '86px',
-              marginLeft: '8px',
-              marginTop: '7px',
+              objectFit: "cover",
+              width: "86px",
+              height: "86px",
+              marginLeft: "8px",
+              marginTop: "7px",
             }}
             src={data.pic}
             alt=""
@@ -79,16 +79,16 @@ export default function Template(props: TemplateInterface) {
         </div>
         <div
           style={{
-            position: 'absolute',
-            lineHeight: '20px',
-            height: '40px',
-            overflow: 'hidden',
-            top: '14px',
-            left: '110px',
-            fontSize: '12px',
-            color: '#3D3D3D',
-            wordBreak: 'break-all',
-            marginRight: '10px',
+            position: "absolute",
+            lineHeight: "20px",
+            height: "40px",
+            overflow: "hidden",
+            top: "14px",
+            left: "110px",
+            fontSize: "12px",
+            color: "#3D3D3D",
+            wordBreak: "break-all",
+            marginRight: "10px",
           }}
         >
           {data.title}
@@ -96,18 +96,19 @@ export default function Template(props: TemplateInterface) {
 
         <div
           style={{
-            position: 'absolute',
-            bottom: '17px',
-            left: '110px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#3D3D3D',
+            position: "absolute",
+            bottom: "17px",
+            left: "110px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#3D3D3D",
           }}
         >
           {data.price}
         </div>
       </div>
     );
+  } else {
+    return null;
   }
-  return null;
 }

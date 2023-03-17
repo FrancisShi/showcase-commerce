@@ -12,7 +12,7 @@ export const MindContainerVirtualUserUpdateEventKey = 'com.mindverse.container.u
 
 export interface UserInputProps {
   id: string;
-  refUserId: string;
+  refUserId: ()=>string;
   style: CSSProperties;
 }
 
@@ -46,7 +46,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
     }, []);
 
     const updateUser = () => {
-      userGet({refUserId}).then((user) => {
+      userGet({refUserId:refUserId()}).then((user) => {
         if (user) {
           setUserDataState({
             name: user.name ?? '',
@@ -60,7 +60,7 @@ export default forwardRef<HTMLDivElement, UserInputProps>(
     }
 
     const onSave = () => {
-      userInit(refUserId, userDataState).then((res) => {
+      userInit(refUserId(), userDataState).then((res) => {
         if (res?.data?.code === 0) {
           showToast('Saved');
           dispatchEvent(new Event(MindContainerVirtualUserUpdateEventKey))
