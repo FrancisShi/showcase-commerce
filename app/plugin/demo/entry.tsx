@@ -2,8 +2,8 @@
  * 业务接入样例
  */
 import {useEffect, useState} from 'react';
-import App, {DevelopType} from '../index';
-// import App, {DevelopType, CONTAINER_EVENT} from '@mindverse/container';
+// import App, {DevelopType} from '../index';
+import App, {DevelopType, CONTAINER_EVENT} from '@mindverse/container';
 import request from '../utils/request';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 import {useNavigate} from '@remix-run/react';
