@@ -1513,16 +1513,16 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@mindverse/accessor-open@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.7.tgz#d6574caeee299dc60b4dc2fc50455ad8e31bfd1c"
-  integrity sha512-eDMf2Ctr+T3HOi2i57MzYc+mc+7lEjqcZfpKQyzBpyDQ0nHAYoPv7wV4JAudln0FAHvhue7qOr2mHhl4TwJX+Q==
+"@mindverse/accessor-open@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.5.14.tgz#f941eed630608ebefee5416359ab1c1645b66249"
+  integrity sha512-lh7e9AVk+hkKxyV79Zei/Ws4pSkjK/cDPgtPRdRYn3mWJIOSPxPQ4Ok4sPkHQT0L6xXTmNUzPLwoRmlPldQWYw==
   dependencies:
     axios "^0.27.2"
     blueimp-md5 "^2.19.0"
     uuid "^9.0.0"
 
-"@mindverse/avatar@^1.1.1", "@mindverse/avatar@^1.1.3":
+"@mindverse/avatar@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@mindverse/avatar/-/avatar-1.1.3.tgz#3c70a0ca2d98d8be3ed17eaa57ea1ca2ed06c576"
   integrity sha512-POjgUPxv7tmkTfZvenkWAkLzvk52h6YlaxmggVg+zzFt4M0v7FLf7n2WYgJz9LzPzIYvlIhaNmeapqEYGDrAzg==
@@ -1532,16 +1532,17 @@
     lodash "^4.17.21"
     three "^0.124.0"
 
-"@mindverse/container@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.4.1.tgz#d0b2b9f8516c26b143af2e6ee5ae19535e461330"
-  integrity sha512-j1m4TJLqnHDoI1a0wWiYfZ8xpdRkUuARVh/otQ5yC3LR58Tsx6Qc03OX9mKUL4i/nOQXbczEPxXSmcHAxUEKPA==
+"@mindverse/container@^1.4.18":
+  version "1.4.18"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.4.18.tgz#e93a17ea5e401658490d1dd35ee01ee524dba0a1"
+  integrity sha512-/4Sdx649n7FaxR+l79sl0uAWtLTACHtPE+urj3UcXCKl+/Fs0bvW+p7R+wod+X79h3wsiCpw4MapHyT2D2tCWg==
   dependencies:
-    "@mindverse/accessor-open" "^0.5.7"
-    "@mindverse/avatar" "^1.1.1"
+    "@mindverse/accessor-open" "^0.5.14"
+    "@mindverse/avatar" "^1.1.3"
     "@vespaiach/axios-fetch-adapter" "^0.3.1"
     js-audio-recorder "^1.0.7"
     marked "^4.2.12"
+    moment "^2.29.4"
 
 "@miniflare/cache@^2.10.0":
   version "2.12.1"
@@ -7566,6 +7567,11 @@ mlly@^1.1.0, mlly@^1.1.1:
     pathe "^1.1.0"
     pkg-types "^1.0.1"
     ufo "^1.1.0"
+
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mri@^1.1.0:
   version "1.2.0"

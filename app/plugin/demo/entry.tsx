@@ -2,12 +2,10 @@
  * 业务接入样例
  */
 import {useEffect, useState} from 'react';
-// import App, {DevelopType} from '../index';
-import App, {DevelopType, CONTAINER_EVENT} from '@mindverse/container';
-import request from '../utils/request';
+// import App, {DevelopType, CONTAINER_EVENT, request} from '../index';
+import App, {DevelopType, CONTAINER_EVENT, request} from '@mindverse/container';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 import {useNavigate} from '@remix-run/react';
-import {CONTAINER_EVENT} from '../utils/utils';
 
 const EVENT_MV_CONTAINER = {
   REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
