@@ -2,6 +2,7 @@
  * 业务接入样例
  */
 import {useEffect, useState} from 'react';
+import Fingerprint2 from "fingerprintjs2"; // 引入fingerprintjs2
 // import App, {DevelopType, CONTAINER_EVENT, request} from '../index';
 import App, {DevelopType, CONTAINER_EVENT, request} from '@mindverse/container';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
@@ -14,6 +15,8 @@ const EVENT_MV_CONTAINER = {
 let sessionId = '';
 export function Container({...props}: {[key: string]: any}) {
   const [isMobile, setIsMobile] = useState(false);
+
+  // todo 增加 MindId 前缀
   const [refUserId, setRefUserId] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
@@ -44,21 +47,35 @@ export function Container({...props}: {[key: string]: any}) {
   }, []);
 
   useEffect(() => {
-    const ss = window.localStorage;
-    const userId = ss.getItem('mv_shopify_userId');
-    if (userId) {
-      setRefUserId(userId);
+    const browserId = localStorage.getItem("browserId");
+    if (browserId) {
+      setRefUserId(browserId);
     } else {
-      const fakeId = `anonymity_${new Date().getTime()}_${
-        Math.random() * 10000
-      }`;
-      ss.setItem('mv_shopify_userId', fakeId);
-      setRefUserId(fakeId);
+      // 选择哪些信息作为浏览器指纹生成的依据
+      const options = {
+        fonts: {
+          extendedJsFonts: true,
+        },
+        excludes: {
+          audio: true,
+          userAgent: true,
+          enumerateDevices: true,
+          touchSupport: true,
+        },
+      };
+      // 浏览器指纹
+      const fingerprint = Fingerprint2.get(options, (components) => {
+        // 参数只有回调函数或者options为{}时，默认浏览器指纹依据所有配置信息进行生成
+        const values = components.map((component) => component.value); // 配置的值的数组
+        const murmur = Fingerprint2.x64hash128(values.join(""), 31); // 生成浏览器指纹
+        localStorage.setItem("browserId", murmur); // 存储浏览器指纹，在项目中用于校验用户身份和埋点
+        setRefUserId(murmur);
+      });
     }
 
     // 接受消息 reopen session
     const reopenSession = () => {
-      const userId = ss.getItem('mv_shopify_userId');
+      const userId = localStorage.getItem('browserId');
       if (userId) {
         setRefUserId('');
         setTimeout(() => {
