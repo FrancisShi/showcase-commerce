@@ -1532,10 +1532,10 @@
     lodash "^4.17.21"
     three "^0.124.0"
 
-"@mindverse/container@^1.4.30":
-  version "1.4.30"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.4.30.tgz#f04c77242b07bbb55b58291144ef82b454d91517"
-  integrity sha512-hHD/8xNwkYXD98IIBEXXaG/Wv8fTXHBRcrwR832YriyT70mR7uLvWeK31ZzKhfphSMy7FahPjuUnk3F0LNiHag==
+"@mindverse/container@^1.4.31":
+  version "1.4.31"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.4.31.tgz#9ccae8b15ab2646b6fa74fe76943b02e5bb7f55b"
+  integrity sha512-7KLMG+vefWgqlvVp75jubgGX+RMb4fDdcBpSD2kQtqc1tm7SeuwR5WgYPcbcaCufewiqdaycqdHJqVamcqILUg==
   dependencies:
     "@mindverse/accessor-open" "^0.5.14"
     "@mindverse/avatar" "^1.1.13"
