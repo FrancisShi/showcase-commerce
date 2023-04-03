@@ -141,6 +141,9 @@ export function Container({...props}: {[key: string]: any}) {
                 picture:
                   'https://cdn.mindverse.com/files/zzzz20230308167826913484720230308-175144.gif',
               },
+              openStyle: {
+                position: 'fixed',
+              },
               dynamicHeight: true,
               developType: DevelopType.NPM,
             }}
