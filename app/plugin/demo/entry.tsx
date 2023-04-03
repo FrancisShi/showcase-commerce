@@ -2,11 +2,12 @@
  * 业务接入样例
  */
 import {useEffect, useState} from 'react';
-import Fingerprint2 from "fingerprintjs2"; // 引入fingerprintjs2
+import Fingerprint2 from 'fingerprintjs2'; // 引入fingerprintjs2
 // import App, {DevelopType, CONTAINER_EVENT, request} from '../index';
 import App, {DevelopType, CONTAINER_EVENT, request} from '@mindverse/container';
 import {WS_MIND_TYPE} from '@mindverse/accessor-open/src/type';
 import {useNavigate} from '@remix-run/react';
+import {Readability} from '@mozilla/readability';
 
 const EVENT_MV_CONTAINER = {
   REOPEN_SESSION: 'mv_EVENT_MV_CONTAINER_REOPEN_SESSION',
@@ -47,7 +48,7 @@ export function Container({...props}: {[key: string]: any}) {
   }, []);
 
   useEffect(() => {
-    const browserId = localStorage.getItem("browserId");
+    const browserId = localStorage.getItem('browserId');
     if (browserId) {
       setRefUserId(browserId);
     } else {
@@ -67,8 +68,8 @@ export function Container({...props}: {[key: string]: any}) {
       const fingerprint = Fingerprint2.get(options, (components) => {
         // 参数只有回调函数或者options为{}时，默认浏览器指纹依据所有配置信息进行生成
         const values = components.map((component) => component.value); // 配置的值的数组
-        const murmur = Fingerprint2.x64hash128(values.join(""), 31); // 生成浏览器指纹
-        localStorage.setItem("browserId", murmur); // 存储浏览器指纹，在项目中用于校验用户身份和埋点
+        const murmur = Fingerprint2.x64hash128(values.join(''), 31); // 生成浏览器指纹
+        localStorage.setItem('browserId', murmur); // 存储浏览器指纹，在项目中用于校验用户身份和埋点
         setRefUserId(murmur);
       });
     }
@@ -175,13 +176,14 @@ export interface USER {
 export function injectHook(key: string, data: PRODUCT | USER) {
   if (key === 'product' && data) {
     if (sessionId) {
-      data = data as PRODUCT;
-      data.sessionId = sessionId;
-      data.pageType = 'PRODUCT';
+      const documentClone = document.cloneNode(true);
+      const article = new Readability(documentClone).parse();
       request({
         url: '/chat/rest/general/session/env/page/push',
         method: 'post',
-        data,
+        data: {
+          freetext: article,
+        },
       })
         .then((res) => {
           console.log('product', res);
