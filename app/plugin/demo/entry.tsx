@@ -110,24 +110,20 @@ export function Container({...props}: {[key: string]: any}) {
             }}
             config={{
               mindConfig: {
-                mindId: '81870359162392576', // pre
-                // mindId: '76643513529405440', // test
+                mindId: '85538147164884992',
                 mindType: WS_MIND_TYPE.original,
               },
               socketConfig: {
                 apiVersion: '1.3.0',
                 platform: 'web',
-                appId: 'os_54b9f83c-58e2-4e32-8cc8-b1dcb872c0aa', // pre
-                // appId: 'os_742e9fcd-d543-4c99-94d7-404119bea18a', // test
+                appId: 'os_6749495f-ae3c-4f87-9233-f233d670e3dc',
                 bizType: '',
-                merchantId: 'c1dyf', // pre
-                // merchantId: 'c1e3x', // test
+                merchantId: 'c1dyy',
                 mAuthType: 'STATION_KEY',
 
                 refUserId,
 
-                merchantBaseURL: 'https://gateway-pre.mindverse.com', // pre
-                // merchantBaseURL: 'https://gateway-test.mindverse.com', // test
+                merchantBaseURL: 'https://gateway.sg.mindverse.ai',
                 merchantSocketPath: '/chat/rest/general/ws/create',
                 merchantSessionOpenPath: '/chat/rest/general/session/create',
                 merchantSessionClosePath: '/chat/rest/general/session/close',
