@@ -177,7 +177,7 @@ export function injectHook(key: string, data: PRODUCT | USER) {
       data.pageType = 'PRODUCT';
       const documentClone = document.cloneNode(true);
       const article = new Readability(documentClone).parse();
-      data.freetext = article;
+      data.freetext = JSON.stringify(article);
       request({
         url: '/chat/rest/general/session/env/page/push',
         method: 'post',
