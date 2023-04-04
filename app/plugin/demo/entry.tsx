@@ -176,14 +176,16 @@ export interface USER {
 export function injectHook(key: string, data: PRODUCT | USER) {
   if (key === 'product' && data) {
     if (sessionId) {
+      data = data as PRODUCT;
+      data.sessionId = sessionId;
+      data.pageType = 'PRODUCT';
       const documentClone = document.cloneNode(true);
       const article = new Readability(documentClone).parse();
+      data.freetext = article;
       request({
         url: '/chat/rest/general/session/env/page/push',
         method: 'post',
-        data: {
-          freetext: article,
-        },
+        data,
       })
         .then((res) => {
           console.log('product', res);
