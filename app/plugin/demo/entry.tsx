@@ -136,12 +136,25 @@ export function Container({...props}: {[key: string]: any}) {
               userConfig: {
                 userName: 'shitou-demo',
                 picture:
-                  'https://cdn.mindverse.com/files/zzzz20230308167826913484720230308-175144.gif',
+                  'https://cdn.mindverse.com/img/zzzz202304111681207263197%E5%A5%B38.png',
+                type: 'pictureModel',
               },
+              initialExpand: false,
               openStyle: {
                 position: 'fixed',
               },
-              dynamicHeight: true,
+              closeStyle: {
+                position: 'fixed',
+              },
+              avatarStyle: {
+                position: 'fixed',
+                right: '0px',
+                bottom: '0px',
+              },
+              avatar2dStyle: {
+                objectFit: 'fill',
+              },
+              dynamicHeight: false,
               developType: DevelopType.NPM,
             }}
           />

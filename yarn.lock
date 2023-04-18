@@ -1575,32 +1575,32 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@mindverse/accessor-open@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.6.3.tgz#322abaf0effbd2bf165f370575d5c218e51ba30a"
-  integrity sha512-eOOfc1iA6/04NqQFtwodapmjZ6zF2My3lZ7VXYN17cENoPAqwdPtkPqAnQn1rYdgP8KRTsjbJotiF0pbB1TtWg==
+"@mindverse/accessor-open@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.7.4.tgz#80598c945c241f9e5634d0d4277e5d9ec9c79fa0"
+  integrity sha512-mdU22dis6+DxXpQ7M0SN8EY4kA3DcTxtCtDNffWqNcKg9Dz5zDqmhHhS4v1CMZ3u5f4vajWajYNbHyD9Nu1prw==
   dependencies:
     axios "^0.27.2"
     blueimp-md5 "^2.19.0"
     uuid "^9.0.0"
 
-"@mindverse/avatar@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@mindverse/avatar/-/avatar-1.1.13.tgz#3811954ab7864336bd34b764bbd38e622eac7757"
-  integrity sha512-t0YZ9nbgmqFyEkYpEuuY9y3XPadZxF42EYra4g9Forihf0HlL6FZflT22XFipC3bfn0hh+CyYqPA77xqryyPiw==
+"@mindverse/avatar@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@mindverse/avatar/-/avatar-1.2.5.tgz#9d610535bb49bb43f9fc631fb689dc2ae84ca6de"
+  integrity sha512-AerLbghl4qesd69gAWJKxYdSRydb8ZOdXItPtcDgKY0cAs1+q9NPKaJqNGHKs/P3ZWEYSZJzYb7LbJgJefsWWg==
   dependencies:
     "@tweenjs/tween.js" "^18.6.4"
     axios "^0.27.2"
     lodash "^4.17.21"
     three "^0.124.0"
 
-"@mindverse/container@^1.6.0":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.6.1.tgz#9f3ef660e2861e8858271fcf892432b5e4df54a1"
-  integrity sha512-wfukkdu1KFlSL/oNVEtCCd+iucpfUVOjM7iPvjC7e7TKIV1lxL7FVfVp0om1RLgh0IyoiJSs8+Hs8lYiIWtDhQ==
+"@mindverse/container@^1.8.23":
+  version "1.8.23"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.8.23.tgz#fab85ff31de2db1463688727ed7a07ca77a027aa"
+  integrity sha512-wLsO5lq8h842w7+ryUAnqPIEEwGeH+miDVV5lVjcTYVfvPgfSxXPwRlJeLXH2qgdNVGL05Z/rqNzO5ICTK8jLg==
   dependencies:
-    "@mindverse/accessor-open" "^0.6.3"
-    "@mindverse/avatar" "^1.1.13"
+    "@mindverse/accessor-open" "^0.7.4"
+    "@mindverse/avatar" "^1.2.5"
     "@vespaiach/axios-fetch-adapter" "^0.3.1"
     antd "5.2.1"
     js-audio-recorder "^1.0.7"

@@ -187,3 +187,216 @@ shop-pay-button {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.index_container__5ZXUv .index_weblink__G2Jvn {
+  display: inline-block;
+}
+.index_container__5ZXUv .index_upload__k-0Mt {
+  display: inline-block;
+  margin-left: 12px;
+}
+
+.index_container__O1383 {
+  min-height: 378px;
+  max-height: 598px;
+}
+.index_container__O1383 .index_uploadContainer__vmgEu {
+  margin-top: 40px;
+  overflow: auto;
+}
+
+.index_container__Wpd4z .index_headerTitle__1rZfa {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.index_container__Wpd4z .index_headerTitle__1rZfa .index_title__qf3SU {
+  color: rgba(0, 0, 0, 0.6);
+}
+.index_container__Wpd4z .index_desc__EJxCb {
+  color: #AFAEAE;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.index_container__d9ciQ {
+  display: flex;
+  flex-direction: column;
+}
+.index_container__d9ciQ .index_section__-dMl1 {
+  margin-top: 40px;
+}
+.index_container__d9ciQ .index_section__-dMl1 .index_sectionTitle__z-in- {
+  margin-bottom: 12px;
+}
+.index_container__d9ciQ .index_section__-dMl1 .index_textArea__-6tlw {
+  height: 280px;
+}
+.index_container__d9ciQ .index_Recrawl__MvtqU {
+  margin-top: 20px;
+}
+
+.index_container__hjDdR {
+  height: 38px;
+}
+.index_container__hjDdR h4 {
+  color: #6fa293 !important;
+  position: relative;
+  display: inline-block;
+}
+.index_container__hjDdR h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #6fa293;
+}
+
+.index_title__cfLEd {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+.index_container__zgk7N {
+  overflow-y: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.index_hiddenScrollbar__-4tz8 {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.index_hiddenScrollbar__-4tz8 -webkit-scrollbar {
+  display: none;
+}
+.index_hiddenScrollbar__-4tz8::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: none;
+}
+
+/* For modern browsers */
+.index_input__pzc2j::-moz-placeholder {
+  color: #afaeae;
+}
+.index_input__pzc2j::placeholder {
+  color: #afaeae;
+}
+/* For older WebKit browsers */
+.index_input__pzc2j::-webkit-input-placeholder {
+  color: #afaeae;
+}
+/* For older Firefox browsers */
+.index_input__pzc2j::-moz-placeholder {
+  color: #afaeae;
+  opacity: 1;
+  /* Required to style 'color' in older Firefox browsers */
+}
+/* For Internet Explorer 10+ */
+.index_input__pzc2j:-ms-input-placeholder {
+  color: #afaeae;
+}
+
+.picture_fullScreenType__BOr80 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  z-index: 20;
+}
+.picture_widgetTypeExpanded__-vdI0 {
+  width: 114px;
+  height: 148px;
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+  z-index: 50;
+  pointer-events: 'auto';
+}
+.picture_widgetTypeUnExpanded__6rZLq {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #D8D8D8;
+  pointer-events: 'auto';
+}
+
+.icon_fullScreenType__EZz-J {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  z-index: 20;
+  border-radius: 50%;
+}
+.icon_widgetTypeExpanded__Zf-LB {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  right: 20px;
+  bottom: 14px;
+  z-index: 50;
+  border-radius: 50%;
+}
+.icon_widgetTypeUnExpanded__921Hj {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  right: 20px;
+  bottom: 14px;
+  border-radius: 50%;
+}
+
+.index_scrollView__CAC8Z {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+  width: 100%;
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
+}
+.index_scrollView__CAC8Z::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+.index_item__pRr-- {
+  display: inline-flex;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 31px;
+  padding: 4px 20px;
+  background: #ffffff;
+  margin-right: 10px;
+  color: #6fa293;
+  vertical-align: middle;
+  cursor: pointer;
+  align-items: center;
+}
