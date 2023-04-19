@@ -1594,10 +1594,10 @@
     lodash "^4.17.21"
     three "^0.124.0"
 
-"@mindverse/container@^1.8.28":
-  version "1.8.28"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.8.28.tgz#ead0c810d0dfe4260f9e2d6f62327c1ce8ba0c82"
-  integrity sha512-mYHVhj1UKZ0ndXmVdYPhpRN6q+mFJUUylFhkZWOFXJFpdTKj7//YGhC9BRaybVII6Vib/Q//KWWG3PS/vtENUQ==
+"@mindverse/container@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.9.0.tgz#29749ff1608f184096885540bd57bb7daf6b754b"
+  integrity sha512-52qX8daeLm9hYdUD+rJL93psslGcyfJKNPTEW7ntkjKBTdqRvTfO4D23CTh2Z7kYxLnpo/JhiUy6qcP6b+a/YA==
   dependencies:
     "@mindverse/accessor-open" "^0.7.4"
     "@mindverse/avatar" "^1.2.5"
