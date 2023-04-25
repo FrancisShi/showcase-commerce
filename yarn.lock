@@ -1575,10 +1575,10 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@mindverse/accessor-open@^0.7.12":
-  version "0.7.12"
-  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.7.12.tgz#2a2e40b11da293591d22eb033cd4768a5f8847f8"
-  integrity sha512-QCC3yDvzIa0Hk6vDJ8YmuDNy6upARHAjpsPPF0rSBAGlJgucpaatGP8aR2hO2knqe1mZApBZUEL5E775GBRu1w==
+"@mindverse/accessor-open@^0.7.16":
+  version "0.7.16"
+  resolved "https://registry.yarnpkg.com/@mindverse/accessor-open/-/accessor-open-0.7.16.tgz#785c6a095b99385cc44ec1874dde1346e41b3316"
+  integrity sha512-AnqMl4IZcrk5ZHaYJOBIKPTV//bQ97AHtaW5iuw7X942sctmkzyS3Mgl9xSyyHUUQzaS54l5flEWEVOu1eyJxg==
   dependencies:
     axios "^0.27.2"
     blueimp-md5 "^2.19.0"
@@ -1594,12 +1594,12 @@
     lodash "^4.17.21"
     three "^0.124.0"
 
-"@mindverse/container@^1.9.11":
-  version "1.9.11"
-  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.9.11.tgz#941d250aec145e498deffc00a71af559b143bdd6"
-  integrity sha512-sh/Yqxo7jBA0Gdyw1kYduGB40DdqYxZ3/ulVupKvFNpTqxzInTPW0i/WYG+tT7igTFj96GAJ/Ubm4jrrhPo56g==
+"@mindverse/container@^1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@mindverse/container/-/container-1.10.3.tgz#b13cd718f7d92af34aaadac3777956cb42788aa8"
+  integrity sha512-2qki8vW5KQtKaQ3eMgJ2IEIDe+51AvgPTeJjYy2xeeuGd/gpm7bKtDBa2HPIaI0kt4MjfQx3X8/kmc+FyQ0L3w==
   dependencies:
-    "@mindverse/accessor-open" "^0.7.12"
+    "@mindverse/accessor-open" "^0.7.16"
     "@mindverse/avatar" "^1.2.5"
     "@vespaiach/axios-fetch-adapter" "^0.3.1"
     antd "5.2.1"
